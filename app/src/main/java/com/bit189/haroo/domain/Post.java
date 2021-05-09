@@ -13,4 +13,3 @@ public class Post {
   private boolean state;
   private ArrayList<String> attachedFile;
 }
-

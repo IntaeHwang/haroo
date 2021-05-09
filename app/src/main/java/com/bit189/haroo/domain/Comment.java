@@ -3,12 +3,11 @@ package com.bit189.haroo.domain;
 import java.sql.Date;
 import java.sql.Time;
 
-public class Service {
+public class Comment {
   private int no;
-  private String name;
-  private String intro;
-  private String coverImage;
-  private double averageRate;
+  private int storyNo;
+  private Member writer;
+  private String content;
   private boolean state;
   private Date registeredDate;
   private Time registeredTime;

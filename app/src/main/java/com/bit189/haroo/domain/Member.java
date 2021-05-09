@@ -12,7 +12,7 @@ public class Member {
   private String nickname;
   private String profilePicture;
   private String phone;  
-  private int sex;
+  private boolean sex;
   private Date birthDate;
   private String zipcode;
   private String address;
@@ -22,9 +22,9 @@ public class Member {
   private String rank;
   private boolean state;
   private ArrayList<Tutor> following;
-  private ArrayList<Service> myHaroo;
-  private ArrayList<Service> wishlist;
-  private ArrayList<Service> myBasket;
+  private ArrayList<ServiceInformation> myHaroo;
+  private ArrayList<ServiceInformation> wishlist;
+  private ArrayList<ServiceInformation> myBasket;
   private ArrayList<Question> myQuestion;
   private ArrayList<Review> myReview;
   private ArrayList<Alarm> myAlarm;
