@@ -22,9 +22,9 @@ public class Member {
   private String rank;
   private boolean state;
   private ArrayList<Tutor> following;
-  private ArrayList<ServiceInformation> myHaroo;
-  private ArrayList<ServiceInformation> wishlist;
-  private ArrayList<ServiceInformation> myBasket;
+  private ArrayList<ServiceInfo> myHaroo;
+  private ArrayList<ServiceInfo> wishlist;
+  private ArrayList<ServiceInfo> myBasket;
   private ArrayList<Question> myQuestion;
   private ArrayList<Review> myReview;
   private ArrayList<Alarm> myAlarm;

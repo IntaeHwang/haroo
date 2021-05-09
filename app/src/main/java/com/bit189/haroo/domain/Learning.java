@@ -2,7 +2,7 @@ package com.bit189.haroo.domain;
 
 import java.util.ArrayList;
 
-public class Learning extends ServiceInformation {
+public class Learning extends ServiceInfo {
   private Tutor owner;
   private int sigungu;
   private int minPeople;

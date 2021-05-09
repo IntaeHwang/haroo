@@ -4,7 +4,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 
-public class ServiceInformation {
+public class ServiceInfo {
   private int no;
   private String name;
   private String intro;
