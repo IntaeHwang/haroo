@@ -3,12 +3,13 @@ package com.bit189.haroo.domain;
 import java.sql.Date;
 import java.sql.Time;
 
-public class Comment {
+public class ReComment {
   private int no;
-  private int feedNo;
+  private int commentNo;
   private Member writer;
   private String content;
-  private boolean state;
   private Date registeredDate;
   private Time registeredTime;
+  private Member taggedMember;
+  private boolean state;
 }

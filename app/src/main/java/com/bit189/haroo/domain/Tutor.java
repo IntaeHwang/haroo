@@ -11,8 +11,8 @@ public class Tutor extends Member{
   private Time promotedTime;
   private ArrayList<Learning> learnings;
   private ArrayList<Product> products;
-  private ArrayList<District> tutorDistricts;
-  private ArrayList<Category> tutorCategories;
+  private ArrayList<Sigungu> tutorDistricts;
+  private ArrayList<NarrowCategory> tutorCategories;
   private ArrayList<Question> tutorQuestions;
   private ArrayList<Feed> feeds;
 }

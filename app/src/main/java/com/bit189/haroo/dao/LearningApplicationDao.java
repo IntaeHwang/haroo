@@ -1,5 +1,9 @@
 package com.bit189.haroo.dao;
 
-public interface LearningApplicationDao {
+import java.util.Map;
 
+public interface LearningApplicationDao {
+  int insert(Map<String,Object> params) throws Exception;
+
+  int delete(int no) throws Exception;
 }

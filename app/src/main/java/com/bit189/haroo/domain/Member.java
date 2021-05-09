@@ -27,6 +27,5 @@ public class Member {
   private ArrayList<ServiceInfo> myBasket;
   private ArrayList<Question> myQuestion;
   private ArrayList<Review> myReview;
-  private ArrayList<Alarm> myAlarm;
 }
 
