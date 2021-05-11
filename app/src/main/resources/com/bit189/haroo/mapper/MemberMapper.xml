@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bit189.haroo.dao.MemberDao">
+
+<resultMap id="memberMap" type="member">
+    <id column="mno" property="no"/>
+    <result column="name" property="name"/>
+    <result column="email" property="email"/>
+    <result column="tel" property="tel"/>
+    <result column="profile_pic" property="profilePicture"/>
+    <result column="rdttm" property="registeredDate"/>
+    <result column="rdttm" property="registeredTime"/>
+    <result column="nickname" property="nickname"/>
+    <result column="bdate" property="birthDate"/>
+    <result column="sex" property="sex"/>
+    <result column="zipcode" property="zipcode"/>
+    <result column="addr" property="address"/>
+    <result column="det_addr" property="detatilAddress"/>
+    <result column="mstat" property="state"/>
+    <result column="mem_rank" property="rank"/>
+  </resultMap>
+  
+<insert id="insert" parameterType="member">
+   insert into hat_member(name,email,password,nickname,profile_pic,
+                          bdate,tel,sex,zipcode,addr,det_addr) 
+    values(#{name}, #{email}, password(#{password}), #{nickname}, #{profilePicture},
+     #{birthDate},#{tel},#{sex},#{zipcode},#{address},#{detatilAddress})
+  </insert>
+  
+  <select id="findAll" resultMap="memberMap" >
+  select 
+      mno,
+      name,
+      email,
+      profile_pic,
+      tel,
+      nickname,
+      sex
+    from har_member 
+    order by name asc
+  </select>
+  
+  
+  </mapper>

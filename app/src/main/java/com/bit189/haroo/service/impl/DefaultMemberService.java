@@ -44,7 +44,8 @@ public class DefaultMemberService implements MemberService {
   // 내정보 수정시 비밀번호 재검증 - Dao에 없음
   @Override
   public Member get(String password) throws Exception {
-    return memberDao.findyByPassword(password);
+    //    return memberDao.findyByPassword(password);
+    return null;
   }
 
   @Override
@@ -64,6 +65,7 @@ public class DefaultMemberService implements MemberService {
 
   @Override
   public List<Member> Search(int tutorNo) throws Exception {
-    return memberDao.findFollowerByNo(tutorNo);
+    //    return memberDao.findFollowerByNo(tutorNo);
+    return null;
   }
 }
