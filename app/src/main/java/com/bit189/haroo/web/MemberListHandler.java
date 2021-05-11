@@ -29,6 +29,10 @@ public class MemberListHandler extends HttpServlet {
     try {
       List<Member> list = memberService.list();
 
+      if(list.size() == 0) {
+        out.println("등록된 회원이 없습니다.");
+        return;
+      }
       for (Member m : list) {
         out.printf("%d, %s, %s, %s, %s, %s, %s\n", 
             m.getNo(), 

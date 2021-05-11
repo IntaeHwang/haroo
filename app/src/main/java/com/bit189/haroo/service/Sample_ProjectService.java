@@ -1,12 +1,12 @@
 package com.bit189.haroo.service;
 
 import java.util.List;
-import com.eomcs.pms.domain.Member;
+import com.bit189.haroo.domain.Product;
 import com.eomcs.pms.domain.Project;
 
 public interface Sample_ProjectService {
 
-  int add(Project project) throws Exception;
+  int add(Product project) throws Exception;
 
   List<Project> list() throws Exception;
 

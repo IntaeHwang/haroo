@@ -53,6 +53,8 @@ public class AppInitHandler implements Servlet {
       // 4) 서비스 객체를 ServletContext 보관소에 저장한다.
       ServletContext servletContext = config.getServletContext();
 
+      System.out.println("서블릿" + memberService);
+
       servletContext.setAttribute("memberService", memberService);
 
       System.out.println("의존 객체를 모두 준비하였습니다.");

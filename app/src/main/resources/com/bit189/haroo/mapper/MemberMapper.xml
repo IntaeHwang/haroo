@@ -24,6 +24,7 @@
   </resultMap>
   
 <insert id="insert" parameterType="member">
+<<<<<<< HEAD
    insert into har_member(name,email,password,nickname,profile_pic,
                           bdate,tel,sex,zipcode,addr,det_addr) 
     values(#{name}, #{email}, password(#{password}), #{nickname}, #{profilePicture},
