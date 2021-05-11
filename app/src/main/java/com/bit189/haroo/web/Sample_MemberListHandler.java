@@ -12,7 +12,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import com.bit189.haroo.service.Sample_MemberService;
 
-@WebServlet("/1111member/list") 
+//@WebServlet("/1111member/list") 
 public class Sample_MemberListHandler implements Servlet {
 
   @Override
