@@ -4,15 +4,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.eomcs.pms.domain.Member;
-import com.eomcs.pms.service.MemberService;
+import com.bit189.haroo.service.Sample_MemberService;
 
 @SuppressWarnings("serial")
-@WebServlet("/member/add")
+//@WebServlet("/member/add")
 public class Sample_MemberAddHandler extends HttpServlet {
 
   @Override
