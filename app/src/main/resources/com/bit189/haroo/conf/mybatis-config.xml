@@ -24,6 +24,7 @@
   
   <mappers>
     <!--  매퍼 생성 해야함 -->
+     <mapper resource="com/bit189/haroo/mapper/MemberMapper.xml"/>
   </mappers>
 </configuration>
 

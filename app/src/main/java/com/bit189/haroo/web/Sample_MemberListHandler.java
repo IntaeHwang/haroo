@@ -10,10 +10,9 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
-import com.eomcs.pms.domain.Member;
-import com.eomcs.pms.service.MemberService;
+import com.bit189.haroo.service.Sample_MemberService;
 
-@WebServlet("/member/list") 
+@WebServlet("/1111member/list") 
 public class Sample_MemberListHandler implements Servlet {
 
   @Override
