@@ -63,7 +63,6 @@ public class MemberListHandler extends HttpServlet {
                 m.getTel(),
                 m.getNickname(),
                 Member.getStatusLabel(m.getSex()));
-        //                m.getSex());
       }
       out.println("</tbody>");
       out.println("</table>");
