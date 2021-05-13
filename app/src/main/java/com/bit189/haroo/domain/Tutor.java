@@ -4,7 +4,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 
-public class Tutor extends Member{
+public class Tutor extends Member {
   private String intro;
   private String application;
   private Date promotedDate;
@@ -76,6 +76,4 @@ public class Tutor extends Member{
   public void setFeeds(ArrayList<Feed> feeds) {
     this.feeds = feeds;
   }
-
-
 }

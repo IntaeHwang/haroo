@@ -1,8 +1,9 @@
 package com.bit189.haroo.domain;
 
-public class BroadCategory {
+public class AttachedFile {
   private int no;
   private String name;
+  private boolean state;
 
   public int getNo() {
     return no;
@@ -16,4 +17,12 @@ public class BroadCategory {
   public void setName(String name) {
     this.name = name;
   }
+  public boolean isState() {
+    return state;
+  }
+  public void setState(boolean state) {
+    this.state = state;
+  }
+
+
 }

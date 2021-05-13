@@ -17,5 +17,4 @@ public interface LearningDao {
   int delete(int no) throws Exception;
 
   List<Learning> findByTutor(int tutorNo) throws Exception;
-
 }

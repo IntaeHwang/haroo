@@ -6,10 +6,11 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
-//@WebFilter("/*")
-public class Sample_RequestLogFilter implements Filter {
+@WebFilter("/*")
+public class RequestLogFilter implements Filter {
 
   @Override
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain nextChain)

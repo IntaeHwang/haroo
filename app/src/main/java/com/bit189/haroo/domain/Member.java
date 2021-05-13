@@ -31,13 +31,12 @@ public class Member {
   @Override
   public String toString() {
     return "Member [no=" + no + ", email=" + email + ", name=" + name + ", nickname=" + nickname
-        + ", profilePicture=" + profilePicture + ", tel=" + tel + ", sex=" + sex + ", birthDate="
-        + birthDate + ", zipcode=" + zipcode + ", address=" + address + ", detailAddress="
         + detailAddress + ", registeredDate=" + registeredDate + ", registeredTime="
         + registeredTime + ", rank=" + rank + ", state=" + state + ", following=" + following
         + ", myHaroo=" + myHaroo + ", wishlist=" + wishlist + ", myBasket=" + myBasket
-        + ", myQuestion=" + myQuestion + ", myReview=" + myReview + "]";
+        + ", myQuestion=" + myQuestion + ", myReview=" + myReview;
   }
+
   public int getNo() {
     return no;
   }
