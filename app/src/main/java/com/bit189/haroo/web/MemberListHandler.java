@@ -22,33 +22,68 @@ public class MemberListHandler extends HttpServlet {
 
     MemberService memberService = (MemberService) request.getServletContext().getAttribute("memberService");
 
-    response.setContentType("text/plain;charset=UTF-8");
+    response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
-    out.println("[회원 목록]");
+
+    out.println("<!DOCTYPE html>");
+    out.println("<html>");
+    out.println("<head>");
+    out.println("<title>회원 목록</title>");
+    out.println("</head>");
+    out.println("<body>");
+    out.println("<h1>회원 목록</h1>");
+
+    out.println("<p><a href='form.html'>회원등록</a></p>");
 
     try {
-      List<Member> list = memberService.list();
+      List<Member> list = memberService.list(request.getParameter("keyword"));
 
-      if(list.size() == 0) {
-        out.println("등록된 회원이 없습니다.");
-        return;
-      }
+      out.println("<table border='1'>");
+      out.println("<thead>");
+      out.println("<tr>");
+      out.println("<th>번호</th> <th>이름</th> <th>이메일</th> <th>사진</th>"
+          + " <th>전화번호</th> <th>닉네임</th> <th>성별</th>");
+      out.println("</tr>");
+      out.println("</thead>");
+      out.println("<tbody>");
+
       for (Member m : list) {
-        out.printf("%d, %s, %s, %s, %s, %s, %s\n", 
+        out.printf("<tr>"
+            + " <td>%d</td>"
+            + " <td>%s</td>"
+            + " <td><a href='detail?no=%1$d'>%s</a></td>"
+            + "  <td><img src='%s'></td>"
+            + " <td>%s</td>"
+            + " <td>%s</td>"
+            + " <td>%s</td> </tr>\n",
             m.getNo(), 
             m.getName(), 
             m.getEmail(),
-            m.getProfilePicture(),
-            m.getTel(),
-            m.getNickname(),
-            m.getSex());
+            m.getProfilePicture() != null ? "../upload/" + m.getProfilePicture() + "_30x30.jpg" : "../images/person_30x30.jpg",
+                m.getTel(),
+                m.getNickname(),
+                Member.getStatusLabel(m.getSex()));
+        //                m.getSex());
       }
+      out.println("</tbody>");
+      out.println("</table>");
+
+      out.println("<form action='list' method='get'>");
+      String keyword = request.getParameter("keyword");
+      out.printf("<input type='search' name='keyword' value='%s'> \n", 
+          keyword != null ? keyword : "");
+      out.println("<button>검색</button>");
+      out.println("</form>");
+
     } catch (Exception e) {
       StringWriter strWriter = new StringWriter();
       PrintWriter printWriter = new PrintWriter(strWriter);
       e.printStackTrace(printWriter);
-      out.println(strWriter.toString());
+      out.printf("<pre>%s</pre>\n", strWriter.toString());
     }
+
+    out.println("</body>");
+    out.println("</html>");
   }
 
 }

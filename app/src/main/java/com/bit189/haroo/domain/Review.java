@@ -13,7 +13,7 @@ public class Review extends Post {
         + ", recommandCount=" + recommandCount + ", rate=" + rate + ", getNo()=" + getNo()
         + ", getContent()=" + getContent() + ", getWritingDate()=" + getWritingDate()
         + ", getViewCount()=" + getViewCount() + ", isState()=" + isState() + ", getAttachedFile()="
-        + getAttachedFile() + "]";
+        + getAttachedFiles() + "]";
   }
 
   public String getTitle() {

@@ -1,14 +1,12 @@
 package com.bit189.haroo.domain;
 
 import java.sql.Date;
-import java.sql.Time;
 import java.util.ArrayList;
 
 public class Tutor extends Member{
   private String intro;
   private String application;
   private Date promotedDate;
-  private Time promotedTime;
   private ArrayList<Learning> learnings;
   private ArrayList<Product> products;
   private ArrayList<Sigungu> tutorDistricts;
@@ -33,12 +31,6 @@ public class Tutor extends Member{
   }
   public void setPromotedDate(Date promotedDate) {
     this.promotedDate = promotedDate;
-  }
-  public Time getPromotedTime() {
-    return promotedTime;
-  }
-  public void setPromotedTime(Time promotedTime) {
-    this.promotedTime = promotedTime;
   }
   public ArrayList<Learning> getLearnings() {
     return learnings;
@@ -76,6 +68,5 @@ public class Tutor extends Member{
   public void setFeeds(ArrayList<Feed> feeds) {
     this.feeds = feeds;
   }
-
-
 }
+

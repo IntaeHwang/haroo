@@ -10,8 +10,14 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import com.bit189.Mybatis.MybatisDaoFactory;
 import com.bit189.Mybatis.SqlSessionFactoryProxy;
 import com.bit189.Mybatis.TransactionManager;
+import com.bit189.haroo.dao.FeedDao;
+import com.bit189.haroo.dao.LearningDao;
 import com.bit189.haroo.dao.MemberDao;
+import com.bit189.haroo.service.FeedService;
+import com.bit189.haroo.service.LearningService;
 import com.bit189.haroo.service.MemberService;
+import com.bit189.haroo.service.impl.DefaultFeedService;
+import com.bit189.haroo.service.impl.DefaultLearningService;
 import com.bit189.haroo.service.impl.DefaultMemberService;
 
 
@@ -33,14 +39,20 @@ public class ContextLoaderListener implements ServletContextListener {
       // 2) DAO 관련 객체 준비
       MybatisDaoFactory daoFactory = new MybatisDaoFactory(sqlSessionFactoryProxy);
       MemberDao memberDao = daoFactory.createDao(MemberDao.class);
+      FeedDao feedDao = daoFactory.createDao(FeedDao.class);
+      LearningDao learningDao = daoFactory.createDao(LearningDao.class);
 
       // 3) 서비스 관련 객체 준비
       TransactionManager txManager = new TransactionManager(sqlSessionFactoryProxy);
 
       MemberService memberService = new DefaultMemberService(memberDao);
+      FeedService feedService = new DefaultFeedService(feedDao);
+      LearningService learningService = new DefaultLearningService(learningDao);
 
       // 4) 서비스 객체를 ServletContext 보관소에 저장한다.
       servletContext.setAttribute("memberService", memberService);
+      servletContext.setAttribute("feedService", feedService);
+      servletContext.setAttribute("learningService", learningService);
 
       System.out.println("ContextLoaderListener: 의존 객체를 모두 준비하였습니다.");
 

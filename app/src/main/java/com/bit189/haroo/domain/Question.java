@@ -2,7 +2,7 @@ package com.bit189.haroo.domain;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.util.ArrayList;
+import java.util.List;
 
 public class Question extends Post {
   private Member writer;
@@ -11,5 +11,5 @@ public class Question extends Post {
   private String replyContent;
   private Date replyDate;
   private Time replyTime;
-  private ArrayList<String> replyAttachedFile;
+  private List<String> replyAttachedFile;
 }

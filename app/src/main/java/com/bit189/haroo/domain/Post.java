@@ -1,7 +1,7 @@
 package com.bit189.haroo.domain;
 
 import java.sql.Date;
-import java.util.ArrayList;
+import java.util.List;
 
 public class Post {
   private int no;
@@ -9,12 +9,12 @@ public class Post {
   private Date writingDate;
   private int viewCount;
   private boolean state;
-  private ArrayList<String> attachedFile;
+  private List<AttachedFile> attachedFiles;
 
   @Override
   public String toString() {
     return "Post [no=" + no + ", content=" + content + ", writingDate=" + writingDate
-        + ", viewCount=" + viewCount + ", state=" + state + ", attachedFile=" + attachedFile + "]";
+        + ", viewCount=" + viewCount + ", state=" + state + ", attachedFile=" + attachedFiles + "]";
   }
 
   public int getNo() {
@@ -57,12 +57,12 @@ public class Post {
     this.state = state;
   }
 
-  public ArrayList<String> getAttachedFile() {
-    return attachedFile;
+  public List<AttachedFile> getAttachedFiles() {
+    return attachedFiles;
   }
 
-  public void setAttachedFile(ArrayList<String> attachedFile) {
-    this.attachedFile = attachedFile;
+  public void setAttachedFiles(List<AttachedFile> attachedFiles) {
+    this.attachedFiles = attachedFiles;
   }
 
 }

@@ -19,7 +19,7 @@ public class Member {
   private String detailAddress; // 오타나서 바꿈
   private Date registeredDate;
   private Time registeredTime;
-  private String rank;
+  private int rank;
   private boolean state;
   private ArrayList<Tutor> following;
   private ArrayList<ServiceInfo> myHaroo;
@@ -27,16 +27,16 @@ public class Member {
   private ArrayList<ServiceInfo> myBasket;
   private ArrayList<Question> myQuestion;
   private ArrayList<Review> myReview;
+
   @Override
   public String toString() {
     return "Member [no=" + no + ", email=" + email + ", name=" + name + ", nickname=" + nickname
-        + ", profilePicture=" + profilePicture + ", tel=" + tel + ", sex=" + sex + ", birthDate="
-        + birthDate + ", zipcode=" + zipcode + ", address=" + address + ", detailAddress="
         + detailAddress + ", registeredDate=" + registeredDate + ", registeredTime="
         + registeredTime + ", rank=" + rank + ", state=" + state + ", following=" + following
         + ", myHaroo=" + myHaroo + ", wishlist=" + wishlist + ", myBasket=" + myBasket
-        + ", myQuestion=" + myQuestion + ", myReview=" + myReview + "]";
+        + ", myQuestion=" + myQuestion + ", myReview=" + myReview;
   }
+
   public int getNo() {
     return no;
   }
@@ -121,10 +121,10 @@ public class Member {
   public void setRegisteredTime(Time registeredTime) {
     this.registeredTime = registeredTime;
   }
-  public String getRank() {
+  public int getRank() {
     return rank;
   }
-  public void setRank(String rank) {
+  public void setRank(int rank) {
     this.rank = rank;
   }
   public boolean isState() {
@@ -170,5 +170,13 @@ public class Member {
     this.myReview = myReview;
   }
 
-}
+  public static String getStatusLabel(int status) {
+    switch (status) {
+      case 1:
+        return "남";
+      default:
+        return "여";
+    }
+  }
 
+}

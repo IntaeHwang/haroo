@@ -7,7 +7,7 @@ import com.bit189.haroo.domain.LearningApplication;
 import com.bit189.haroo.domain.LearningSchedule;
 import com.bit189.haroo.service.LearningApplicationService;
 
-public class DefaultLearningApplicationService implements LearningApplicationService{
+public class DefaultLearningApplicationService implements LearningApplicationService {
 
   LearningApplicationDao learningApplicationDao;
   LearningScheduleDao learningScheduleDao;
