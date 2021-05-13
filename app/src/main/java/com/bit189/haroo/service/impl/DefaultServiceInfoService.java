@@ -1,27 +1,27 @@
 package com.bit189.haroo.service.impl;
 
 import java.util.List;
-import com.bit189.haroo.dao.LearningDao;
+import com.bit189.haroo.dao.ServiceInfoDao;
 import com.bit189.haroo.domain.Learning;
-import com.bit189.haroo.service.LearningService;
+import com.bit189.haroo.service.ServiceInfoService;
 
-public class DefaultLearningService implements LearningService {
+public class DefaultServiceInfoService implements ServiceInfoService {
 
-  LearningDao learningDao;
+  ServiceInfoDao serviceInfoDao;
 
-  public DefaultLearningService(LearningDao learningDao) {
-    this.learningDao = learningDao;
+  public DefaultServiceInfoService(ServiceInfoDao serviceInfoDao) {
+    this.serviceInfoDao = serviceInfoDao;
   }
 
   @Override
   public int add(Learning learning) throws Exception {
     return 0;
-    // 튜터번호 add
   }
 
   @Override
   public List<Learning> list() throws Exception {
-    return learningDao.findAll();
+    // TODO Auto-generated method stub
+    return null;
   }
 
   @Override
