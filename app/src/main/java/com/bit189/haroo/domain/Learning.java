@@ -1,10 +1,12 @@
 package com.bit189.haroo.domain;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class Learning extends ServiceInfo {
+public class Learning extends ServiceInfo{
+  private int no;
+  private String sigungu;
+  private String sido;
   private Tutor owner;
-  private int sigungu;
   private int minPeople;
   private int maxPeople;
   private String progressOrder;
@@ -13,5 +15,90 @@ public class Learning extends ServiceInfo {
   private String address;
   private String detailAddress;
   private String refundInformation;
-  private ArrayList<LearningSchedule> schedules;
+  private List<LearningSchedule> schedules;
+
+  @Override
+  public int getNo() {
+    return no;
+  }
+  @Override
+  public void setNo(int no) {
+    this.no = no;
+  }
+  public String getSigungu() {
+    return sigungu;
+  }
+  public void setSigungu(String sigungu) {
+    this.sigungu = sigungu;
+  }
+  public String getSido() {
+    return sido;
+  }
+  public void setSido(String sido) {
+    this.sido = sido;
+  }
+  public Tutor getOwner() {
+    return owner;
+  }
+  public void setOwner(Tutor owner) {
+    this.owner = owner;
+  }
+  public int getMinPeople() {
+    return minPeople;
+  }
+  public void setMinPeople(int minPeople) {
+    this.minPeople = minPeople;
+  }
+  public int getMaxPeople() {
+    return maxPeople;
+  }
+  public void setMaxPeople(int maxPeople) {
+    this.maxPeople = maxPeople;
+  }
+  public String getProgressOrder() {
+    return progressOrder;
+  }
+  public void setProgressOrder(String progressOrder) {
+    this.progressOrder = progressOrder;
+  }
+  public int getPrice() {
+    return price;
+  }
+  public void setPrice(int price) {
+    this.price = price;
+  }
+  public String getZipCode() {
+    return zipCode;
+  }
+  public void setZipCode(String zipCode) {
+    this.zipCode = zipCode;
+  }
+  public String getAddress() {
+    return address;
+  }
+  public void setAddress(String address) {
+    this.address = address;
+  }
+  public String getDetailAddress() {
+    return detailAddress;
+  }
+  public void setDetailAddress(String detailAddress) {
+    this.detailAddress = detailAddress;
+  }
+  public String getRefundInformation() {
+    return refundInformation;
+  }
+  public void setRefundInformation(String refundInformation) {
+    this.refundInformation = refundInformation;
+  }
+  public List<LearningSchedule> getSchedules() {
+    return schedules;
+  }
+  public void setSchedules(List<LearningSchedule> schedules) {
+    this.schedules = schedules;
+  }
+
+
+
+
 }
