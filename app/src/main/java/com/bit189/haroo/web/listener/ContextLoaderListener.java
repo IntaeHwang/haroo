@@ -1,9 +1,9 @@
-package com.bit189.haroo.web;
+package com.bit189.haroo.web.listener;
 
 import java.io.InputStream;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -17,20 +17,19 @@ import com.bit189.haroo.service.MemberService;
 import com.bit189.haroo.service.impl.DefaultFeedService;
 import com.bit189.haroo.service.impl.DefaultMemberService;
 
-// web.xml에 배치정보 설정
-@SuppressWarnings("serial")
-public class AppInitHandler extends HttpServlet {
 
+// 웹 애플리케이션을 시작하거나 종료할 때 서버로부터 보고를 받는다.
+// 즉 톰캣 서버가 웹 애플리케이션을 시작하거나 종료하면 리스너 규칙에 따라 메서드를 호출한다는 뜻이다.
+// 
+public class ContextLoaderListener implements ServletContextListener {
   @Override
-  public void init() throws ServletException {
-    // 서블릿 객체를 생성할 때 톰캣 서버가 호출하는 과정
-    // 톰캣 서버 => 서블릿 인스턴스 생성 => 생성자 호출 => init(ServletConfig) 호출 => ini() 호출
-    //
-
+  public void contextInitialized(ServletContextEvent sce) {
     try {
+      ServletContext servletContext = sce.getServletContext();
+
       // 1) Mybatis 관련 객체 준비
       InputStream mybatisConfigStream = Resources.getResourceAsStream(
-          this.getInitParameter("mybatis-config"));
+          servletContext.getInitParameter("mybatis-config"));
       SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(mybatisConfigStream);
       SqlSessionFactoryProxy sqlSessionFactoryProxy = new SqlSessionFactoryProxy(sqlSessionFactory);
 
@@ -46,16 +45,13 @@ public class AppInitHandler extends HttpServlet {
       FeedService feedService = new DefaultFeedService(feedDao);
 
       // 4) 서비스 객체를 ServletContext 보관소에 저장한다.
-      ServletContext servletContext = this.getServletContext();
-
       servletContext.setAttribute("memberService", memberService);
       servletContext.setAttribute("feedService", feedService);
 
-      System.out.println("AppInitHandler: 의존 객체를 모두 준비하였습니다.");
+      System.out.println("ContextLoaderListener: 의존 객체를 모두 준비하였습니다.");
 
     } catch (Exception e) {
       e.printStackTrace();
     }
   }
-
 }
