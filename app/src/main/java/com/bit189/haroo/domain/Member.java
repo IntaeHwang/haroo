@@ -19,7 +19,7 @@ public class Member {
   private String detailAddress; // 오타나서 바꿈
   private Date registeredDate;
   private Time registeredTime;
-  private String rank;
+  private int rank;
   private boolean state;
   private ArrayList<Tutor> following;
   private ArrayList<ServiceInfo> myHaroo;
@@ -30,7 +30,6 @@ public class Member {
 
   @Override
   public String toString() {
-<<<<<<< HEAD
     return "Member [no=" + no + ", email=" + email + ", name=" + name + ", nickname=" + nickname
         + ", profilePicture=" + profilePicture + ", tel=" + tel + ", sex=" + sex + ", birthDate="
         + birthDate + ", zipcode=" + zipcode + ", address=" + address + ", detailAddress="
@@ -110,87 +109,6 @@ public class Member {
   }
   public void setDetailAddress(String detailAddress) {
     this.detailAddress = detailAddress;
-=======
-    return "no=" + no + ", email=" + email + ", name=" + name + ", nickname=" + nickname
-        + ", profilePicture=" + profilePicture + ", tel=" + tel + ", sex=" + sex + ", birthDate="
-        + birthDate + ", zipcode=" + zipcode + ", address=" + address + ", detatilAddress="
-        + detatilAddress + ", registeredDate=" + registeredDate + ", registeredTime="
-        + registeredTime + ", rank=" + rank + ", state=" + state + ", following=" + following
-        + ", myHaroo=" + myHaroo + ", wishlist=" + wishlist + ", myBasket=" + myBasket
-        + ", myQuestion=" + myQuestion + ", myReview=" + myReview;
-  }
-  public int getNo() {
-    return no;
-  }
-  public void setNo(int no) {
-    this.no = no;
-  }
-  public String getEmail() {
-    return email;
-  }
-  public void setEmail(String email) {
-    this.email = email;
-  }
-  public String getPassword() {
-    return password;
-  }
-  public void setPassword(String password) {
-    this.password = password;
-  }
-  public String getName() {
-    return name;
-  }
-  public void setName(String name) {
-    this.name = name;
-  }
-  public String getNickname() {
-    return nickname;
-  }
-  public void setNickname(String nickname) {
-    this.nickname = nickname;
-  }
-  public String getProfilePicture() {
-    return profilePicture;
-  }
-  public void setProfilePicture(String profilePicture) {
-    this.profilePicture = profilePicture;
-  }
-  public String getTel() {
-    return tel;
-  }
-  public void setTel(String tel) {
-    this.tel = tel;
-  }
-  public int getSex() {
-    return sex;
-  }
-  public void setSex(int sex) {
-    this.sex = sex;
-  }
-  public Date getBirthDate() {
-    return birthDate;
-  }
-  public void setBirthDate(Date birthDate) {
-    this.birthDate = birthDate;
-  }
-  public String getZipcode() {
-    return zipcode;
-  }
-  public void setZipcode(String zipcode) {
-    this.zipcode = zipcode;
-  }
-  public String getAddress() {
-    return address;
-  }
-  public void setAddress(String address) {
-    this.address = address;
-  }
-  public String getDetatilAddress() {
-    return detatilAddress;
-  }
-  public void setDetatilAddress(String detatilAddress) {
-    this.detatilAddress = detatilAddress;
->>>>>>> branch 'main' of https://github.com/IntaeHwang/haroo.git
   }
   public Date getRegisteredDate() {
     return registeredDate;
@@ -204,10 +122,10 @@ public class Member {
   public void setRegisteredTime(Time registeredTime) {
     this.registeredTime = registeredTime;
   }
-  public String getRank() {
+  public int getRank() {
     return rank;
   }
-  public void setRank(String rank) {
+  public void setRank(int rank) {
     this.rank = rank;
   }
   public boolean isState() {
@@ -253,7 +171,14 @@ public class Member {
     this.myReview = myReview;
   }
 
-
+  public static String getStatusLabel(int status) {
+    switch (status) {
+      case 1:
+        return "남";
+      default:
+        return "여";
+    }
+  }
 
 }
 

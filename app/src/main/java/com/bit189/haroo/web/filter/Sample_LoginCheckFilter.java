@@ -6,10 +6,9 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
-@WebFilter("/12123131212")
+//@WebFilter("/*")
 public class Sample_LoginCheckFilter implements Filter {
   @Override
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain nextChain)
@@ -20,7 +19,7 @@ public class Sample_LoginCheckFilter implements Filter {
 
     String servletPath = httpRequest.getServletPath().toLowerCase();
 
-    if (//servletPath.endsWith("add") ||   // 예) /board/add
+    if (servletPath.endsWith("add") ||   // 예) /board/add
         servletPath.endsWith("update") ||  // 예) /board/update, /project/memberUpdate
         servletPath.endsWith("delete")) { //  예) /board/delete, /project/memberDelete
 
