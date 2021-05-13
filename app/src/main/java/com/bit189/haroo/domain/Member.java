@@ -11,12 +11,12 @@ public class Member {
   private String name;
   private String nickname;
   private String profilePicture;
-  private String phone;  
-  private boolean sex;
+  private String tel;  
+  private int sex;
   private Date birthDate;
   private String zipcode;
   private String address;
-  private String detatilAddress;
+  private String detailAddress; // 오타나서 바꿈
   private Date registeredDate;
   private Time registeredTime;
   private String rank;
@@ -27,6 +27,17 @@ public class Member {
   private ArrayList<ServiceInfo> myBasket;
   private ArrayList<Question> myQuestion;
   private ArrayList<Review> myReview;
+
+  @Override
+  public String toString() {
+    return "no=" + no + ", email=" + email + ", name=" + name + ", nickname=" + nickname
+        + ", profilePicture=" + profilePicture + ", tel=" + tel + ", sex=" + sex + ", birthDate="
+        + birthDate + ", zipcode=" + zipcode + ", address=" + address + ", detatilAddress="
+        + detailAddress + ", registeredDate=" + registeredDate + ", registeredTime="
+        + registeredTime + ", rank=" + rank + ", state=" + state + ", following=" + following
+        + ", myHaroo=" + myHaroo + ", wishlist=" + wishlist + ", myBasket=" + myBasket
+        + ", myQuestion=" + myQuestion + ", myReview=" + myReview;
+  }
 
   public int getNo() {
     return no;
@@ -64,16 +75,16 @@ public class Member {
   public void setProfilePicture(String profilePicture) {
     this.profilePicture = profilePicture;
   }
-  public String getPhone() {
-    return phone;
+  public String getTel() {
+    return tel;
   }
-  public void setPhone(String phone) {
-    this.phone = phone;
+  public void setTel(String tel) {
+    this.tel = tel;
   }
-  public boolean isSex() {
+  public int getSex() {
     return sex;
   }
-  public void setSex(boolean sex) {
+  public void setSex(int sex) {
     this.sex = sex;
   }
   public Date getBirthDate() {
@@ -94,11 +105,11 @@ public class Member {
   public void setAddress(String address) {
     this.address = address;
   }
-  public String getDetatilAddress() {
-    return detatilAddress;
+  public String getDetailAddress() {
+    return detailAddress;
   }
-  public void setDetatilAddress(String detatilAddress) {
-    this.detatilAddress = detatilAddress;
+  public void setDetailAddress(String detailAddress) {
+    this.detailAddress = detailAddress;
   }
   public Date getRegisteredDate() {
     return registeredDate;
