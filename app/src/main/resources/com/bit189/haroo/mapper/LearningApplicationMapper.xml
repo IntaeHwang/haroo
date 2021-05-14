@@ -3,63 +3,77 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="com.bit189.haroo.dao.LearningApplicationDao">
   
-  <resultMap id="learningApplicationMap" type="learningApplication">
+  <resultMap id="LearningApplicationMap" type="LearningApplication">
     <id column="lrn_appl_no" property="no"/>
-    <result column="appl_size" property="applySize"/>
+    <result column="mno" property="membereNo"/>
+     <result column="sess_no" property="schedules"/>
     <result column="appl_dttm" property="registeredDate"/>
+    <result column="appl_size" property="applySize"/>
+    
+     <association property="memberNo" javaType="member">
+      <id column="mno" property="no"/>
+    </association>
+    
+    <collection property="schedules" ofType="LearningSchedule">
+      <id column="sess_no" property="no"/>
+       <result column="lno" property="no"/>
+       <result column="date" property="LearningDate"/>
+          <result column="stm" property="startTime"/>
+          <result column="etm" property="endTime"/>
+    </collection>
+    
   </resultMap>
-  
-  <insert id="insert" parameterType="learnApplication">
-    insert into har_lrn_appl(appl_size,appl_dttm) 
-    values(#{applySize}, #{registerDate})
+
+    
+  <insert id="insert" parameterType="LearningApplication">
+    insert into har_lrn_appl(sess_no,appl_size,appl_dttm) 
+    values(#{no},#{applySize},#{registeredDate})
   </insert>
   
-  <select id="findAll" resultMap="learnApplicationMap">
-    select 
-      no,
-      applySize,
-      registerDate
-    from har_lrn_appl 
-    order by name registerDate
+  <select id="findAll" resultMap="LearningApplicationMap">
+    select
+      l.no
+      l.sess_no,
+      l.appl_dttm,
+      l.appl_size,
+    from har_lrn_appl l
+      inner join har_session s on l.sess_no=s.sess_no
+      inner join har_member m on l.mno=m.mno
+  </select>
+
+<select id="findAllSchedules" resultMap="LearningScheduleMap">
+      select
+      l.no
+      l.sess_no,
+      l.appl_dttm,
+      l.appl_size,
+    from har_lrn_appl l
+      inner join har_session s on l.sess_no=s.sess_no
+      inner join har_member m on l.mno=m.mno
   </select>
   
-  <select id="findAllSchedules" resultMap="learnScheduleMap">
-    select 
-     no,
-      applySize,
-      registerDate
-    from har_lrn_appl 
-    order by name registerDate
-  </select>
-  
-  <select id="findByNo" resultMap="learnApplicationMap" parameterType="int">
-    select 
-     no,
-      applySize,
-      registerDate
-    from har_lrn_appl 
+  <select id="findByNo" resultMap="LearningApplicationMap" parameterType="int">
+   select
+      l.no
+      l.sess_no,
+      l.appl_dttm,
+      l.appl_size,
+    from har_lrn_appl l
+      inner join har_session s on l.sess_no=s.sess_no
+      inner join har_member m on l.mno=m.mno
     where no = #{value}
   </select>
   
-  <update id="update" parameterType="learningApplication">
-    update har_lrn_appl
-    <set> 
-      <if test="applySize != ''">applySize=#{applySize},</if>
-      <if test="registerDate != ''">registerDate=#{registerDate},</if>
-     
-    </set>
-    where no=#{no}
-  </update>
   
   <delete id="delete" parameterType="int">
     delete from har_lrn_appl
     where no=#{value}
   </delete>
-
 </mapper>
+
+
 -->
 
 
