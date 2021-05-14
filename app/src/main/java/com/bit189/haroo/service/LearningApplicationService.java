@@ -19,9 +19,11 @@ public interface LearningApplicationService {
 
   List<LearningSchedule> listSchedules() throws Exception;
 
-  List<LearningSchedule> search(Date LearningDate, Time startTime, Time endTime) throws Exception;
+  List<Learning> search(Date LearningDate, Time startTime, Time endTime) throws Exception;
 
   List<Learning> listLearning() throws Exception;
+
+
 }
 
 
