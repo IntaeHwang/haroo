@@ -12,9 +12,7 @@ import com.bit189.Mybatis.SqlSessionFactoryProxy;
 import com.bit189.Mybatis.TransactionManager;
 import com.bit189.haroo.dao.FeedDao;
 import com.bit189.haroo.dao.MemberDao;
-import com.bit189.haroo.service.FeedService;
 import com.bit189.haroo.service.MemberService;
-import com.bit189.haroo.service.impl.DefaultFeedService;
 import com.bit189.haroo.service.impl.DefaultMemberService;
 
 // web.xml에 배치정보 설정
@@ -43,13 +41,13 @@ public class AppInitHandler extends HttpServlet {
       TransactionManager txManager = new TransactionManager(sqlSessionFactoryProxy);
 
       MemberService memberService = new DefaultMemberService(memberDao);
-      FeedService feedService = new DefaultFeedService(feedDao);
+      //      FeedService feedService = new DefaultFeedService(feedDao);
 
       // 4) 서비스 객체를 ServletContext 보관소에 저장한다.
       ServletContext servletContext = this.getServletContext();
 
       servletContext.setAttribute("memberService", memberService);
-      servletContext.setAttribute("feedService", feedService);
+      //      servletContext.setAttribute("feedService", feedService);
 
       System.out.println("AppInitHandler: 의존 객체를 모두 준비하였습니다.");
 

@@ -1,14 +1,12 @@
 package com.bit189.haroo.domain;
 
 import java.sql.Date;
-import java.sql.Time;
 import java.util.List;
 
 public class Post {
   private int no;
   private String content;
   private Date writingDate;
-  private Time writingTime;
   private int viewCount;
   private boolean state;
   private List<AttachedFile> attachedFiles;
@@ -30,12 +28,6 @@ public class Post {
   }
   public void setWritingDate(Date writingDate) {
     this.writingDate = writingDate;
-  }
-  public Time getWritingTime() {
-    return writingTime;
-  }
-  public void setWritingTime(Time writingTime) {
-    this.writingTime = writingTime;
   }
   public int getViewCount() {
     return viewCount;

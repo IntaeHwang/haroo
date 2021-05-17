@@ -10,12 +10,22 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import com.bit189.Mybatis.MybatisDaoFactory;
 import com.bit189.Mybatis.SqlSessionFactoryProxy;
 import com.bit189.Mybatis.TransactionManager;
+import com.bit189.haroo.dao.CommentDao;
 import com.bit189.haroo.dao.FeedDao;
 import com.bit189.haroo.dao.MemberDao;
+import com.bit189.haroo.dao.PostDao;
+import com.bit189.haroo.dao.ReCommentDao;
+import com.bit189.haroo.dao.TutorDao;
+import com.bit189.haroo.service.CommentService;
 import com.bit189.haroo.service.FeedService;
 import com.bit189.haroo.service.MemberService;
+import com.bit189.haroo.service.PostService;
+import com.bit189.haroo.service.TutorService;
+import com.bit189.haroo.service.impl.DefaultCommentService;
 import com.bit189.haroo.service.impl.DefaultFeedService;
 import com.bit189.haroo.service.impl.DefaultMemberService;
+import com.bit189.haroo.service.impl.DefaultPostService;
+import com.bit189.haroo.service.impl.DefaultTutorService;
 
 
 // 웹 애플리케이션을 시작하거나 종료할 때 서버로부터 보고를 받는다.
@@ -37,16 +47,29 @@ public class ContextLoaderListener implements ServletContextListener {
       MybatisDaoFactory daoFactory = new MybatisDaoFactory(sqlSessionFactoryProxy);
       MemberDao memberDao = daoFactory.createDao(MemberDao.class);
       FeedDao feedDao = daoFactory.createDao(FeedDao.class);
+      CommentDao commentDao = daoFactory.createDao(CommentDao.class);
+      ReCommentDao reCommentDao = daoFactory.createDao(ReCommentDao.class);
+      TutorDao tutorDao = daoFactory.createDao(TutorDao.class);
+      PostDao postDao = daoFactory.createDao(PostDao.class);
+      //      AttachedFileDao attachedFileDao = daoFactory.createDao(AttachedFileDao.class);
+
 
       // 3) 서비스 관련 객체 준비
       TransactionManager txManager = new TransactionManager(sqlSessionFactoryProxy);
 
       MemberService memberService = new DefaultMemberService(memberDao);
-      FeedService feedService = new DefaultFeedService(feedDao);
+      FeedService feedService = new DefaultFeedService(feedDao, commentDao, reCommentDao);
+      CommentService commentService = new DefaultCommentService(commentDao);
+      TutorService tutorService = new DefaultTutorService(tutorDao);
+      PostService postService = new DefaultPostService(postDao);
+      //      AttachedFileService attachedFileService = new DefaultAttachedFileService(attachedFileDao);
 
       // 4) 서비스 객체를 ServletContext 보관소에 저장한다.
       servletContext.setAttribute("memberService", memberService);
       servletContext.setAttribute("feedService", feedService);
+      servletContext.setAttribute("commentService", commentService);
+      servletContext.setAttribute("postService", postService);
+      //      servletContext.setAttribute("attachedFileService", attachedFileService);
 
       System.out.println("ContextLoaderListener: 의존 객체를 모두 준비하였습니다.");
 
