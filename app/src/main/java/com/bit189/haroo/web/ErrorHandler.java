@@ -17,14 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/error")
 public class ErrorHandler extends HttpServlet {
 
-  // 포워딩하는 측에서 클라이언트로부터 GET 요청을 받은 상태라면 
-  // 포워딩 할 때 이 서블릿에 대해 GET으로 요청할 것이다.
-  // 포워딩하는 측에서 클라이언트로부터 POST 요청을 받은 상태라면
-  // 포워딩 할 때 이 서블릿에 대해 POST 로 요청할 것이다.
-  // 결론!
-  // - 따라서 이 서블릿은 GET 요청, POST 요청을 모두 처리할 수 있어야 한다.
-  // 
-
   @Override
   protected void service(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {

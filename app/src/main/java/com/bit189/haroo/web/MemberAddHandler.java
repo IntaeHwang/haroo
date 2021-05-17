@@ -88,7 +88,6 @@ public class MemberAddHandler extends HttpServlet {
       m.setZipcode(request.getParameter("zipcode"));
       m.setAddress(request.getParameter("addr"));
       m.setDetailAddress(request.getParameter("det_addr"));
-      //      m.setRank(request.getParameter("mrno"));
       m.setRank(1);
 
       memberService.add(m);
