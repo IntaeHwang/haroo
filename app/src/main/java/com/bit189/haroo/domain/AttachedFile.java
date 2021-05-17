@@ -5,6 +5,11 @@ public class AttachedFile {
   private String name;
   private boolean state;
 
+  @Override
+  public String toString() {
+    return "AttachedFile [no=" + no + ", name=" + name + ", state=" + state + "]";
+  }
+
   public int getNo() {
     return no;
   }
@@ -23,6 +28,5 @@ public class AttachedFile {
   public void setState(boolean state) {
     this.state = state;
   }
-
 
 }

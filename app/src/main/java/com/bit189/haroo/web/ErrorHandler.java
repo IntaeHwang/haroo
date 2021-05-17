@@ -21,32 +21,19 @@ public class ErrorHandler extends HttpServlet {
   protected void service(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    response.setContentType("text/html;charset=UTF-8");
-    PrintWriter out = response.getWriter();
-
-    out.println("<!DOCTYPE html>");
-    out.println("<html>");
-    out.println("<head>");
-    out.println("<title>실행 오류</title>");
-    out.println("</head>");
-    out.println("<body>");
-    out.println("<h1>요청 처리 중 오류 발생!</h1>");
-
     Exception e = (Exception) request.getAttribute("javax.servlet.error.exception");
-    if (e != null) {
-      if (e.getMessage() != null) {
-        out.printf("<p>%s</p>\n", e.getMessage());
-      }
 
-      StringWriter strWriter = new StringWriter();
-      PrintWriter printWriter = new PrintWriter(strWriter);
-      e.printStackTrace(printWriter);
+    StringWriter strWriter = new StringWriter();
+    PrintWriter printWriter = new PrintWriter(strWriter);
+    e.printStackTrace(printWriter);
 
-      out.printf("<pre>%s</pre>\n", strWriter.toString());
-    }
+    request.setAttribute("error", strWriter.toString());
+    request.setAttribute("errorMessage", e.getMessage());
 
-    out.println("</body>");
-    out.println("</html>");
+    response.setContentType("text/html;charset=UTF-8");
+    request.getRequestDispatcher("/jsp/error/errorServletException.jsp")
+    .include(request, response);
+
   }
 }
 
