@@ -8,4 +8,3 @@ public interface LearningScheduleDao {
 
   List<LearningSchedule> findByKeywords(Map<String,Object> params) throws Exception;
 }
-1
