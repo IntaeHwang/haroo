@@ -9,7 +9,7 @@
 <title>사용자 정보</title>
 </head>
 <body>
-<h1>사용자 정보(JSP + JSP 액션태그)</h1>
+<h1>사용자 정보</h1>
 <jsp:useBean id="loginUser" type="com.bit189.haroo.domain.Member" scope="session"></jsp:useBean>
 <%
 if (loginUser == null) {

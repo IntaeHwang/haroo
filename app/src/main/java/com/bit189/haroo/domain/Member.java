@@ -69,8 +69,11 @@ public class Member {
   }
 
   public String getNickname() {
-    // 이름으로
+    if (nickname == null || nickname.equals("")) {
+      return getName();
+    } 
     return nickname;
+
   }
 
   public void setNickname(String nickname) {
