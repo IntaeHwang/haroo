@@ -1,57 +1,63 @@
 package com.bit189.haroo.domain;
 
 import java.sql.Date;
-import java.sql.Time;
+import java.util.List;
 
 public class LearningApplication {
   private int no;
-  private int memberNo;
-  private int scheduleNo;
-  private Date LearningDate;
-  private Time LearningTime;
+  private Member memberNo;
+  private List<LearningSchedule> schedules;
+  private Date registeredDate;
   private int applySize;
+
   @Override
   public String toString() {
-    return "LearningApplication [no=" + no + ", memberNo=" + memberNo + ", scheduleNo=" + scheduleNo
-        + ", LearningDate=" + LearningDate + ", LearningTime=" + LearningTime + ", applySize="
-        + applySize + "]";
+    return "LearningApplication [no=" + no + ", memberNo=" + memberNo + ", schedules=" + schedules
+        + ", registeredDate=" + registeredDate + ", applySize=" + applySize + "]";
   }
+
   public int getNo() {
     return no;
   }
+
   public void setNo(int no) {
     this.no = no;
   }
-  public int getMemberNo() {
+
+  public Member getMemberNo() {
     return memberNo;
   }
-  public void setMemberNo(int memberNo) {
+
+  public void setMemberNo(Member memberNo) {
     this.memberNo = memberNo;
   }
-  public int getScheduleNo() {
-    return scheduleNo;
+
+  public List<LearningSchedule> getSchedules() {
+    return schedules;
   }
-  public void setScheduleNo(int scheduleNo) {
-    this.scheduleNo = scheduleNo;
+
+  public void setSchedules(List<LearningSchedule> schedules) {
+    this.schedules = schedules;
   }
-  public Date getLearningDate() {
-    return LearningDate;
+
+  public Date getRegisteredDate() {
+    return registeredDate;
   }
-  public void setLearningDate(Date learningDate) {
-    LearningDate = learningDate;
+
+  public void setRegisteredDate(Date registeredDate) {
+    this.registeredDate = registeredDate;
   }
-  public Time getLearningTime() {
-    return LearningTime;
-  }
-  public void setLearningTime(Time learningTime) {
-    LearningTime = learningTime;
-  }
+
   public int getApplySize() {
     return applySize;
   }
+
   public void setApplySize(int applySize) {
     this.applySize = applySize;
   }
+
+
+
 
 
 
