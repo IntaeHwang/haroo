@@ -1,8 +1,8 @@
 package com.bit189.haroo.domain;
 
-public class Sido {
-  int no;
-  String name;
+public class MetropolitanCity {
+  private int no;
+  private String name;
 
   public int getNo() {
     return no;

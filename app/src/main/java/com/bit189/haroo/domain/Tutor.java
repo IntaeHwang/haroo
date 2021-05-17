@@ -7,13 +7,8 @@ public class Tutor extends Member{
   private String intro;
   private String application;
   private Date promotedDate;
-
-  private List<Learning> learnings;
-  private List<Product> products;
   private List<Sigungu> tutorDistricts;
-  private List<NarrowCategory> tutorCategories;
-  private List<Question> tutorQuestions;
-  private List<Feed> feeds;
+  private List<TutorCategory> tutorCategories;
 
   public String getIntro() {
     return intro;
@@ -69,6 +64,6 @@ public class Tutor extends Member{
   public void setFeeds(List<Feed> feeds) {
     this.feeds = feeds;
   }
-  
+
 }
 

@@ -21,8 +21,6 @@ public class Member {
   private boolean state;
   private List<Tutor> following;
   private List<ServiceInfo> myHaroo;
-  private List<ServiceInfo> wishlist;
-  private List<ServiceInfo> myBasket;
   private List<Question> myQuestion;
   private List<Review> myReview;
 

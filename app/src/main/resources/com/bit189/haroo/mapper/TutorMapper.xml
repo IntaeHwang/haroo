@@ -1,4 +1,4 @@
-<!--   <?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -10,21 +10,28 @@
     <result column="tintro" property="intro"/>
     <result column="tappl" property="application"/>
     <result column="rdttm" property="promotedDate"/>
+    <result column="name" property="name"/>
+    <result column="email" property="email"/>
+    <result column="tel" property="tel"/>
+    <result column="profile_pic" property="profilePicture"/>
+    <result column="nickname" property="nickname"/>
+    <result column="bdate" property="birthDate"/>
+    <result column="sex" property="sex"/>
+    <result column="zipcode" property="zipcode"/>
+    <result column="addr" property="address"/>
+    <result column="det_addr" property="detailAddress"/>
+    <result column="mstat" property="state"/>
+    <result column="mrno" property="rank"/>
   
-  <association property="tutorDistricts" javaType="Sigungu">
-      <id column="sgg_no" property="no"/>
-      <result column="sgg_name" property="SigunguName"/>
-      <result column="sido_name" property="SidoName"/>
-      <result column="nickname" property="nickname"/>
-    </association> 
+    <collection property="tutorDistricts" ofType="TutorDistrict">
+      <result column="sgg_name" property="no"/>
+      <result column="mcp_name" property="endTime"/>
+    </collection>
     
-    <association property="tutorCategories" javaType="BroadCategory">
-      <id column="ncat_no" property="no"/>
-      <result column="profile_pic" property="profilePicture"/>
-      <result column="name" property="name"/>
-      <result column="nickname" property="nickname"/>
-    </association> 
-    
+    <collection property="tutorCategories" ofType="TutorCategory">
+      <result column="ncat_name" property="narrowCategory"/>
+      <result column="bcat_name" property="broadCategory"/>
+    </collection>
   </resultMap>
 
 <insert id="insert" parameterType="tutor">
@@ -43,16 +50,13 @@
       m.nickname,
       m.sex 
     from har_tutor t
-      inner join har_member m on m.mno=t.tno 
-    <where>
-      <if test="keyword != null and keyword != ''">
-      name like concat('%', #{keyword}, '%')
-      or email like concat('%', #{keyword}, '%')
-      or tel like concat('%', #{keyword}, '%')
-      or nickname like concat('%', #{keyword}, '%')
-      or tno like concat('%', #{keyword}, '%')
-      </if>
-    </where>
+    inner join har_member m on m.mno=t.tno
+    inner join har_tcat tc on tc.tno=t.tno
+    inner join har_narrow_cat nc on nc.ncat_no=tc.ncat_no
+    inner join har_broad_cat bc on bc.bcat_no=nc.bcat_no
+    inner join har_tdist td on td.tno=t.tno
+    inner join har_sigungu sg on sg.ssg_no=td.ssg_no
+    inner har_mcityprov mc on mc.mcp_no=sg.mcp_no
     order by t.tno asc 
   </select>
   
@@ -62,4 +66,4 @@
     where tno=#{value}
   </delete>
   
-  </mapper>-->
+  </mapper>
