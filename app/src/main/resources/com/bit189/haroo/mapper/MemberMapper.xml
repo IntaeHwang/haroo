@@ -61,6 +61,7 @@
       or email like concat('%', #{keyword}, '%')
       or tel like concat('%', #{keyword}, '%')
       or nickname like concat('%', #{keyword}, '%')
+      or mno like concat('%', #{keyword}, '%')
       </if>
     </where>
     order by mno asc 

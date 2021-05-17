@@ -1,8 +1,6 @@
 package com.bit189.haroo.web;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +11,7 @@ import com.bit189.haroo.domain.LearningApplication;
 import com.bit189.haroo.service.LearningApplicationService;
 
 @SuppressWarnings("serial")
-@WebServlet("/learningApplication/list")
+@WebServlet("/application/list")
 public class LearningApplicationListHandler extends HttpServlet{
 
 
@@ -24,54 +22,24 @@ public class LearningApplicationListHandler extends HttpServlet{
     LearningApplicationService learningApplicationService = (LearningApplicationService)
         request.getServletContext().getAttribute("learningApplicationService");
 
-    response.setContentType("text/html;charset=UTF-8");
-    PrintWriter out = response.getWriter();
-
-    out.println("<!DOCTYPE html>");
-    out.println("<html>");
-    out.println("<head>");
-    out.println("<title>체험신청</title>");
-    out.println("</head>");
-    out.println("<body>");
-    out.println("<h1>체험신청</h1>");
-
-
-
     try {
-      List<LearningApplication> learningApplication = learningApplicationService.list();
+      String keyword = request.getParameter("keyword");
+      List<LearningApplication> learningApplication = null;
 
-      out.println("<table border='1'>");
-      out.println("<thread>");
-      out.println("<tr>");
-      out.println("<th>번호<th> <th>신청일시</th> <th>신청수량</th>");
-      out.println("</tr>");
-      out.println(" </thead>");
-      out.println("<tbody>");
-
-      for (LearningApplication l : learningApplication) {
-        out.printf("<tr"
-            + " <td>%d</td>"
-            + " <td><a href='detail?no=%1$d'>%s</a></td>"
-            + " <td>%d</td>"
-            + " <td>%d</td> </tr>\n", 
-            l.getNo(), 
-            l.getLearningDate(), 
-            l.getApplySize());
+      if (keyword != null && keyword.length() > 0) {
+        learningApplication = learningApplicationService.search(keyword);
+      } else {
+        learningApplication = learningApplicationService.list();
       }
-      out.println("</tbody>");
-      out.println("</table>");
+
+      request.setAttribute("list", learningApplication);
+
+      response.setContentType("text/html;charset=UTF-8");
+      request.getRequestDispatcher("/jsp/board/list.jsp").include(request, response);
 
     } catch (Exception e) {
+      throw new ServletException(e);
 
-      StringWriter strWriter = new StringWriter();
-      PrintWriter printWriter = new PrintWriter(strWriter);
-      e.printStackTrace(printWriter);
-
-      out.printf("<pre>%s</pre>\n", strWriter.toString());
     }
-
-    out.println("</body>");
-    out.println("<html>");
-
   }
 }
