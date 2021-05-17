@@ -37,18 +37,18 @@
 <insert id="insert" parameterType="tutor">
   </insert>
   
-  <select id="findByKeyword" resultMap="tutor" parameterType="string">
+  <select id="findByKeyword" resultMap="tutorMap" parameterType="string">
     select 
       t.tno,
-      t.tintro,
-      t.tappl,
-      t.rdttm,
       m.name,
       m.email,
       m.profile_pic,
-      m.tel,
       m.nickname,
-      m.sex 
+      m.sex,
+      nc.ncat_name,
+      bc.bcat_name,
+      sg.sgg_name,
+      mc.mcp_name
     from har_tutor t
     inner join har_member m on m.mno=t.tno
     inner join har_tcat tc on tc.tno=t.tno
@@ -57,9 +57,48 @@
     inner join har_tdist td on td.tno=t.tno
     inner join har_sigungu sg on sg.ssg_no=td.ssg_no
     inner har_mcityprov mc on mc.mcp_no=sg.mcp_no
+    <where>
+      <if test="keyword != null and keyword != ''">
+       m.name like concat('%', #{keyword}, '%')
+       or m.email like concat('%', #{keyword}, '%')
+       or sg.sgg_name like concat('%', #{keyword}, '%')
+       or mc.mcp_name like concat('%', #{keyword}, '%')
+       or nc.ncat_name like concat('%', #{keyword}, '%')
+       or bc.bcat_name like concat('%', #{keyword}, '%')
+      </if>
+    </where>
     order by t.tno asc 
   </select>
   
+  <select id="findByNo" resultMap="tutorMap" parameterType="int">
+  select 
+      t.tno,
+      m.name,
+      m.email,
+      m.profile_pic,
+      m.nickname,
+      m.sex,
+      m.bdate,
+      m.zipcode,
+      m.addr,
+      m.det_addr,
+      m.rdttm,
+      m.mrno,
+      m.mstat
+      nc.ncat_name,
+      bc.bcat_name,
+      sg.sgg_name,
+      mc.mcp_name
+    from har_tutor t
+    inner join har_member m on m.mno=t.tno
+    inner join har_tcat tc on tc.tno=t.tno
+    inner join har_narrow_cat nc on nc.ncat_no=tc.ncat_no
+    inner join har_broad_cat bc on bc.bcat_no=nc.bcat_no
+    inner join har_tdist td on td.tno=t.tno
+    inner join har_sigungu sg on sg.ssg_no=td.ssg_no
+    inner har_mcityprov mc on mc.mcp_no=sg.mcp_no
+    where tno = #{value}
+  </select>
   
   <delete id="delete" parameterType="int">
   delete from har_tutor 
