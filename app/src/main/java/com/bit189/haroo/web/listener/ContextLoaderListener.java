@@ -12,11 +12,15 @@ import com.bit189.Mybatis.SqlSessionFactoryProxy;
 import com.bit189.Mybatis.TransactionManager;
 import com.bit189.haroo.dao.FeedDao;
 import com.bit189.haroo.dao.LearningDao;
+import com.bit189.haroo.dao.LearningReviewDao;
+import com.bit189.haroo.dao.LearningReviewRecommendDao;
 import com.bit189.haroo.dao.MemberDao;
 import com.bit189.haroo.service.FeedService;
+import com.bit189.haroo.service.LearningReviewService;
 import com.bit189.haroo.service.LearningService;
 import com.bit189.haroo.service.MemberService;
 import com.bit189.haroo.service.impl.DefaultFeedService;
+import com.bit189.haroo.service.impl.DefaultLearningReviewService;
 import com.bit189.haroo.service.impl.DefaultLearningService;
 import com.bit189.haroo.service.impl.DefaultMemberService;
 
@@ -41,6 +45,8 @@ public class ContextLoaderListener implements ServletContextListener {
       MemberDao memberDao = daoFactory.createDao(MemberDao.class);
       FeedDao feedDao = daoFactory.createDao(FeedDao.class);
       LearningDao learningDao = daoFactory.createDao(LearningDao.class);
+      LearningReviewDao learningReviewDao = daoFactory.createDao(LearningReviewDao.class);
+      LearningReviewRecommendDao learningReviewRecommendDao = daoFactory.createDao(LearningReviewRecommendDao.class);
 
       // 3) 서비스 관련 객체 준비
       TransactionManager txManager = new TransactionManager(sqlSessionFactoryProxy);
@@ -48,11 +54,14 @@ public class ContextLoaderListener implements ServletContextListener {
       MemberService memberService = new DefaultMemberService(memberDao);
       FeedService feedService = new DefaultFeedService(feedDao);
       LearningService learningService = new DefaultLearningService(learningDao);
+      LearningReviewService learningReviewService = new DefaultLearningReviewService(
+          txManager, learningReviewDao, learningReviewRecommendDao);
 
       // 4) 서비스 객체를 ServletContext 보관소에 저장한다.
       servletContext.setAttribute("memberService", memberService);
       servletContext.setAttribute("feedService", feedService);
       servletContext.setAttribute("learningService", learningService);
+      servletContext.setAttribute("learningReviewService", learningReviewService);
 
       System.out.println("ContextLoaderListener: 의존 객체를 모두 준비하였습니다.");
 

@@ -29,34 +29,19 @@ public class ErrorHandler extends HttpServlet {
   protected void service(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
+    Exception e = (Exception) request.getAttribute("javax.servlet.error.exception");
+
+    StringWriter strWriter = new StringWriter();
+    PrintWriter printWriter = new PrintWriter(strWriter);
+    e.printStackTrace(printWriter);
+
+    request.setAttribute("error", strWriter.toString());
+    request.setAttribute("errorMessage", e.getMessage());
+
     response.setContentType("text/html;charset=UTF-8");
-    PrintWriter out = response.getWriter();
+    request.getRequestDispatcher("/jsp/error/errorServletException.jsp")
+    .include(request, response);
 
-    out.println("<!DOCTYPE html>");
-    out.println("<html>");
-    out.println("<head>");
-    out.println("<title>실행 오류</title>");
-    out.println("</head>");
-    out.println("<body>");
-    out.println("<h1>요청 처리 중 오류 발생!</h1>");
-
-    Exception e = (Exception) request.getAttribute("exception");
-    if (e != null) {
-      // 예외 객체에 간단한 메시지 정보가 들어 있다면 출력한다.
-      if (e.getMessage() != null) {
-        out.printf("<p>%s</p>\n", e.getMessage());
-      }
-
-      // 예외에 대한 상세 정보를 출력한다.
-      StringWriter strWriter = new StringWriter();
-      PrintWriter printWriter = new PrintWriter(strWriter);
-      e.printStackTrace(printWriter);
-
-      out.printf("<pre>%s</pre>\n", strWriter.toString());
-    }
-
-    out.println("</body>");
-    out.println("</html>");
   }
 }
 

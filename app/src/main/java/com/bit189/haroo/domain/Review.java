@@ -2,18 +2,18 @@ package com.bit189.haroo.domain;
 
 public class Review extends Post {
   private String title;
-  private int writerNo;
-  private int scheduleNo;
-  private int recommandCount;
+  private Member writer;
+  private ServiceInfo serviceInfo;
+  private int recommendCount;
   private double rate;
 
   @Override
   public String toString() {
-    return "Review [title=" + title + ", writerNo=" + writerNo + ", scheduleNo=" + scheduleNo
-        + ", recommandCount=" + recommandCount + ", rate=" + rate + ", getNo()=" + getNo()
+    return "Review [title=" + title + ", writer=" + writer + ", serviceInfo=" + serviceInfo
+        + ", recommendCount=" + recommendCount + ", rate=" + rate + ", getNo()=" + getNo()
         + ", getContent()=" + getContent() + ", getWritingDate()=" + getWritingDate()
-        + ", getViewCount()=" + getViewCount() + ", isState()=" + isState() + ", getAttachedFile()="
-        + getAttachedFiles() + "]";
+        + ", getViewCount()=" + getViewCount() + ", isState()=" + isState()
+        + ", getAttachedFiles()=" + getAttachedFiles() + "]";
   }
 
   public String getTitle() {
@@ -24,28 +24,28 @@ public class Review extends Post {
     this.title = title;
   }
 
-  public int getWriterNo() {
-    return writerNo;
+  public Member getWriter() {
+    return writer;
   }
 
-  public void setWriterNo(int writerNo) {
-    this.writerNo = writerNo;
+  public void setWriter(Member writer) {
+    this.writer = writer;
   }
 
-  public int getScheduleNo() {
-    return scheduleNo;
+  public ServiceInfo getServiceInfo() {
+    return serviceInfo;
   }
 
-  public void setScheduleNo(int scheduleNo) {
-    this.scheduleNo = scheduleNo;
+  public void setServiceInfo(ServiceInfo serviceInfo) {
+    this.serviceInfo = serviceInfo;
   }
 
-  public int getRecommandCount() {
-    return recommandCount;
+  public int getRecommendCount() {
+    return recommendCount;
   }
 
-  public void setRecommandCount(int recommandCount) {
-    this.recommandCount = recommandCount;
+  public void setRecommendCount(int recommendCount) {
+    this.recommendCount = recommendCount;
   }
 
   public double getRate() {
