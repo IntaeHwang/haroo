@@ -2,10 +2,9 @@ package com.bit189.haroo.domain;
 
 import java.util.List;
 
-public class Learning extends ServiceInfo{
-  private int no;
+public class Learning extends ServiceInfo {
+  private String metropolitanCity;
   private String sigungu;
-  private String sido;
   private Tutor owner;
   private int minPeople;
   private int maxPeople;
@@ -17,25 +16,17 @@ public class Learning extends ServiceInfo{
   private String refundInformation;
   private List<LearningSchedule> schedules;
 
-  @Override
-  public int getNo() {
-    return no;
+  public String getMetropolitanCity() {
+    return metropolitanCity;
   }
-  @Override
-  public void setNo(int no) {
-    this.no = no;
+  public void setMetropolitanCity(String metropolitanCity) {
+    this.metropolitanCity = metropolitanCity;
   }
   public String getSigungu() {
     return sigungu;
   }
   public void setSigungu(String sigungu) {
     this.sigungu = sigungu;
-  }
-  public String getSido() {
-    return sido;
-  }
-  public void setSido(String sido) {
-    this.sido = sido;
   }
   public Tutor getOwner() {
     return owner;
@@ -97,8 +88,4 @@ public class Learning extends ServiceInfo{
   public void setSchedules(List<LearningSchedule> schedules) {
     this.schedules = schedules;
   }
-
-
-
-
 }

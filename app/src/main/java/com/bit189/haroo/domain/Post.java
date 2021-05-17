@@ -11,6 +11,12 @@ public class Post {
   private boolean state;
   private List<AttachedFile> attachedFiles;
 
+  @Override
+  public String toString() {
+    return "Post [no=" + no + ", content=" + content + ", writingDate=" + writingDate
+        + ", viewCount=" + viewCount + ", state=" + state + ", attachedFile=" + attachedFiles + "]";
+  }
+
   public int getNo() {
     return no;
   }
@@ -47,9 +53,4 @@ public class Post {
   public void setAttachedFiles(List<AttachedFile> attachedFiles) {
     this.attachedFiles = attachedFiles;
   }
-
-
-
-
-
 }

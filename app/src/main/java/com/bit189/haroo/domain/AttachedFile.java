@@ -31,5 +31,4 @@ public class AttachedFile {
     this.state = state;
   }
 
-
 }

@@ -15,6 +15,7 @@ import com.bit189.haroo.dao.MemberDao;
 import com.bit189.haroo.service.MemberService;
 import com.bit189.haroo.service.impl.DefaultMemberService;
 
+// --------------------사용하지 않는 클래스입니다.--------------------
 // web.xml에 배치정보 설정
 @SuppressWarnings("serial")
 public class AppInitHandler extends HttpServlet {

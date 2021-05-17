@@ -1,10 +1,11 @@
 package com.bit189.haroo.domain;
 
 import java.sql.Date;
-import java.util.ArrayList;
+import java.util.List;
 
 public class ServiceInfo {
   private int no;
+  private String broadCategory;
   private String narrowCategory;
   private String name;
   private String intro;
@@ -12,8 +13,8 @@ public class ServiceInfo {
   private double averageRate;
   private boolean state;
   private Date registeredDate;
-  private ArrayList<Question> questions;
-  private ArrayList<Review> reviews;
+  private List<Question> questions;
+  private List<Review> reviews;
 
   public int getNo() {
     return no;
@@ -21,11 +22,11 @@ public class ServiceInfo {
   public void setNo(int no) {
     this.no = no;
   }
-  public String getNarrowCategory() {
-    return narrowCategory;
+  public String getBroadCategory() {
+    return broadCategory;
   }
-  public void setNarrowCategory(String narrowCategory) {
-    this.narrowCategory = narrowCategory;
+  public void setBroadCategory(String broadCategory) {
+    this.broadCategory = broadCategory;
   }
   public String getName() {
     return name;
@@ -63,18 +64,22 @@ public class ServiceInfo {
   public void setRegisteredDate(Date registeredDate) {
     this.registeredDate = registeredDate;
   }
-  public ArrayList<Question> getQuestions() {
+  public List<Question> getQuestions() {
     return questions;
   }
-  public void setQuestions(ArrayList<Question> questions) {
+  public void setQuestions(List<Question> questions) {
     this.questions = questions;
   }
-  public ArrayList<Review> getReviews() {
+  public List<Review> getReviews() {
     return reviews;
   }
-  public void setReviews(ArrayList<Review> reviews) {
+  public void setReviews(List<Review> reviews) {
     this.reviews = reviews;
   }
-
-
+  public String getNarrowCategory() {
+    return narrowCategory;
+  }
+  public void setNarrowCategory(String narrowCategory) {
+    this.narrowCategory = narrowCategory;
+  }
 }

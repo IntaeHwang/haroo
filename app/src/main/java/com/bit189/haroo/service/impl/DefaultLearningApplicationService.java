@@ -1,8 +1,13 @@
 package com.bit189.haroo.service.impl;
 
+import java.sql.Date;
+import java.sql.Time;
+import java.util.HashMap;
 import java.util.List;
 import com.bit189.haroo.dao.LearningApplicationDao;
+import com.bit189.haroo.dao.LearningDao;
 import com.bit189.haroo.dao.LearningScheduleDao;
+import com.bit189.haroo.domain.Learning;
 import com.bit189.haroo.domain.LearningApplication;
 import com.bit189.haroo.domain.LearningSchedule;
 import com.bit189.haroo.service.LearningApplicationService;
@@ -11,11 +16,13 @@ public class DefaultLearningApplicationService implements LearningApplicationSer
 
   LearningApplicationDao learningApplicationDao;
   LearningScheduleDao learningScheduleDao;
+  LearningDao learningDao;
 
   public DefaultLearningApplicationService(LearningApplicationDao learningApplicationDao,  
-      LearningScheduleDao learningScheduleDao) {
+      LearningScheduleDao learningScheduleDao, LearningDao learningDao) {
     this.learningApplicationDao = learningApplicationDao;
     this.learningScheduleDao = learningScheduleDao;
+    this.learningDao = learningDao;
   }
 
   @Override
@@ -39,14 +46,26 @@ public class DefaultLearningApplicationService implements LearningApplicationSer
     return learningApplicationDao.findByNo(no);
   }
 
-  @Override
-  public int update(LearningApplication learningApplication) throws Exception {
-    return learningApplicationDao.update(learningApplication);
-  }
 
   @Override
   public int delete(int no) throws Exception {
     return learningApplicationDao.delete(no);
+  }
+
+  @Override
+  public List<LearningSchedule> search(Date LearningDate, Time startTime, Time endTime)
+      throws Exception {
+    HashMap<String,Object> params = new HashMap<>();
+    params.put("LearningDate", LearningDate);
+    params.put("startTime", startTime);
+    params.put("endTime", endTime);
+    return learningScheduleDao.findByKeywords(params);
+  }
+
+  @Override
+  public List<Learning> listLearning() throws Exception {
+
+    return learningDao.findAll();
   }
 
 

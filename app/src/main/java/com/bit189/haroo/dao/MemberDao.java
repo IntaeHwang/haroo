@@ -7,7 +7,7 @@ import com.bit189.haroo.domain.Member;
 public interface MemberDao {
   int insert(Member member) throws Exception;
 
-  List<Member> findAll() throws Exception;
+  List<Member> findByKeyword(String keyword) throws Exception;
 
   Member findByNo(int no) throws Exception;
 
@@ -18,4 +18,6 @@ public interface MemberDao {
   int delete(int no) throws Exception;
 
   Member findByName(String name) throws Exception;
+
+  List<Member> findFollowerByNo(int tutorNo) throws Exception;
 }

@@ -22,8 +22,8 @@ public class DefaultMemberService implements MemberService {
   }
 
   @Override
-  public List<Member> list() throws Exception {
-    return memberDao.findAll();
+  public List<Member> list(String keyword) throws Exception {
+    return memberDao.findByKeyword(keyword);
   }
 
   // 내정보 상세보기
