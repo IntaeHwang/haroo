@@ -48,8 +48,12 @@ public class AppInitHandler extends HttpServlet {
       TransactionManager txManager = new TransactionManager(sqlSessionFactoryProxy);
 
       MemberService memberService = new DefaultMemberService(memberDao);
+
       FeedService feedService = new DefaultFeedService(feedDao);
       LearningApplicationService learningApplicationService = new DefaultLearningApplicationService(learningApplicationDao, null);
+
+      //      FeedService feedService = new DefaultFeedService(feedDao);
+
 
       // 4) 서비스 객체를 ServletContext 보관소에 저장한다.
       ServletContext servletContext = this.getServletContext();
@@ -57,6 +61,8 @@ public class AppInitHandler extends HttpServlet {
       servletContext.setAttribute("memberService", memberService);
       servletContext.setAttribute("feedService", feedService);
       servletContext.setAttribute("learningApplicationService", learningApplicationService);
+      //      servletContext.setAttribute("feedService", feedService);
+
 
       System.out.println("AppInitHandler: 의존 객체를 모두 준비하였습니다.");
 

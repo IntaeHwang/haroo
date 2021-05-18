@@ -1,8 +1,6 @@
 package com.bit189.haroo.web;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.sql.Date;
 import java.util.UUID;
 import javax.servlet.ServletException;
@@ -32,22 +30,20 @@ public class MemberAddHandler extends HttpServlet {
   }
 
   @Override
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
+
+    response.setContentType("text/html;charset=UTF-8");
+    request.getRequestDispatcher("/jsp/member/form.jsp").include(request, response);
+  }
+
+  @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) 
       throws ServletException, IOException {
 
     MemberService memberService = (MemberService) request.getServletContext().getAttribute("memberService");
 
-    response.setContentType("text/html;charset=UTF-8");
-    PrintWriter out = response.getWriter();
-
-    out.println("<!DOCTYPE html>");
-    out.println("<html>");
-    out.println("<head>");
-    out.println("<title>회원 가입</title>");
-
     try {
-      request.setCharacterEncoding("UTF-8");
-
       Member m = new Member();
       m.setName(request.getParameter("name"));
       m.setEmail(request.getParameter("email"));
@@ -88,24 +84,14 @@ public class MemberAddHandler extends HttpServlet {
       m.setZipcode(request.getParameter("zipcode"));
       m.setAddress(request.getParameter("addr"));
       m.setDetailAddress(request.getParameter("det_addr"));
-      //      m.setRank(request.getParameter("mrno"));
       m.setRank(1);
 
       memberService.add(m);
-
       response.sendRedirect("list");
-
     }catch (Exception e) {
-      StringWriter strWriter = new StringWriter();
-      PrintWriter printWriter = new PrintWriter(strWriter);
-      e.printStackTrace(printWriter);
-
-      out.printf("<pre>%s</pre>\n", strWriter.toString());
-      out.println("<p><a href='list'>목록</a></p>");
+      throw new ServletException(e);
     }
 
-    out.println("</body>");
-    out.println("</html>");
   }
 }
 

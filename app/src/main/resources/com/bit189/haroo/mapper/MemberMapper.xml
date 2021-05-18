@@ -12,7 +12,6 @@
     <result column="tel" property="tel"/>
     <result column="profile_pic" property="profilePicture"/>
     <result column="rdttm" property="registeredDate"/>
-    <result column="rdttm" property="registeredTime"/>
     <result column="nickname" property="nickname"/>
     <result column="bdate" property="birthDate"/>
     <result column="sex" property="sex"/>
@@ -57,8 +56,8 @@
     from har_member 
     <where>
       <if test="keyword != null and keyword != ''">
-      name like concat('%', #{keyword}, '%')
-      or email like concat('%', #{keyword}, '%')
+       name like concat('%', #{keyword}, '%')
+       email like concat('%', #{keyword}, '%')
       or tel like concat('%', #{keyword}, '%')
       or nickname like concat('%', #{keyword}, '%')
       or mno like concat('%', #{keyword}, '%')

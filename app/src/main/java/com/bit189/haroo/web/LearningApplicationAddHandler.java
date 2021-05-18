@@ -47,7 +47,7 @@ public class LearningApplicationAddHandler extends HttpServlet{
       LearningSchedule schedules = new LearningSchedule();
 
       schedules.setLearningDate(Date.valueOf(request.getParameter("schedules")));
-      la.setSchedules(schedules);
+      // la.setSchedules(schedules);
       la.setApplySize(Integer.parseInt(request.getParameter("applySize")));
 
       learningApplicationService.add(la);
