@@ -7,7 +7,7 @@ public class Tutor extends Member{
   private String intro;
   private String application;
   private Date promotedDate;
-  private List<Sigungu> tutorDistricts;
+  private List<TutorDistrict> tutorDistricts;
   private List<TutorCategory> tutorCategories;
 
   @Override
@@ -16,7 +16,6 @@ public class Tutor extends Member{
         + promotedDate + ", tutorDistricts=" + tutorDistricts + ", tutorCategories="
         + tutorCategories + "]";
   }
-
   public String getIntro() {
     return intro;
   }
@@ -35,10 +34,10 @@ public class Tutor extends Member{
   public void setPromotedDate(Date promotedDate) {
     this.promotedDate = promotedDate;
   }
-  public List<Sigungu> getTutorDistricts() {
+  public List<TutorDistrict> getTutorDistricts() {
     return tutorDistricts;
   }
-  public void setTutorDistricts(List<Sigungu> tutorDistricts) {
+  public void setTutorDistricts(List<TutorDistrict> tutorDistricts) {
     this.tutorDistricts = tutorDistricts;
   }
   public List<TutorCategory> getTutorCategories() {

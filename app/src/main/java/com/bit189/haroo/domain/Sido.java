@@ -1,6 +1,6 @@
 package com.bit189.haroo.domain;
 
-public class MetropolitanCity {
+public class Sido {
   private int no;
   private String name;
 
