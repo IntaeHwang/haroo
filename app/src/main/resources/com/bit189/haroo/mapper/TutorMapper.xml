@@ -56,7 +56,7 @@
     inner join har_broad_cat bc on bc.bcat_no=nc.bcat_no
     inner join har_tdist td on td.tno=t.tno
     inner join har_sigungu sg on sg.ssg_no=td.ssg_no
-    inner har_mcityprov mc on mc.mcp_no=sg.mcp_no
+    inner join har_mcityprov mc on mc.mcp_no=sg.mcp_no
     <where>
       <if test="keyword != null and keyword != ''">
        m.name like concat('%', #{keyword}, '%')
