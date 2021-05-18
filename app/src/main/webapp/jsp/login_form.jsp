@@ -8,7 +8,7 @@
 <title>로그인</title>
 </head>
 <body>
-<h1>로그인(JSP + JSP 액션태그)</h1>
+<h1>로그인</h1>
 <form method='post'>
 <table border='1'>
 <tbody>

@@ -1,8 +1,8 @@
 package com.bit189.haroo.domain;
 
-public class Sido {
-  int no;
-  String name;
+public class MetropolitanCity {
+  private int no;
+  private String name;
 
   public int getNo() {
     return no;
@@ -16,4 +16,10 @@ public class Sido {
   public void setName(String name) {
     this.name = name;
   }
+  @Override
+  public String toString() {
+    return "MetropolitanCity [no=" + no + ", name=" + name + "]";
+  }
+
+
 }

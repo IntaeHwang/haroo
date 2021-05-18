@@ -1,13 +1,14 @@
 package com.bit189.haroo.domain;
 
 public class NarrowCategory {
-  private int no;
-  private String nmae;
+  int no;
+  String name;
+  int broadCategoryNo;
 
   @Override
   public String toString() {
-    return "NarrowCategory [no=" + no + ", nmae=" + nmae + ", getNo()=" + getNo() + ", getNmae()="
-        + getNmae() + "]";
+    return "NarrowCategory [no=" + no + ", name=" + name + ", broadCategoryNo=" + broadCategoryNo
+        + "]";
   }
 
   public int getNo() {
@@ -16,10 +17,17 @@ public class NarrowCategory {
   public void setNo(int no) {
     this.no = no;
   }
-  public String getNmae() {
-    return nmae;
+  public String getName() {
+    return name;
   }
-  public void setNmae(String nmae) {
-    this.nmae = nmae;
+  public void setName(String name) {
+    this.name = name;
   }
+  public int getBroadCategoryNo() {
+    return broadCategoryNo;
+  }
+  public void setBroadCategoryNo(int broadCategoryNo) {
+    this.broadCategoryNo = broadCategoryNo;
+  }
+
 }

@@ -2,19 +2,21 @@ package com.bit189.haroo.domain;
 
 public class AttachedFile {
   private int no;
+  private int postNo;
   private String name;
   private boolean state;
-
-  @Override
-  public String toString() {
-    return "AttachedFile [no=" + no + ", name=" + name + ", state=" + state + "]";
-  }
 
   public int getNo() {
     return no;
   }
   public void setNo(int no) {
     this.no = no;
+  }
+  public int getPostNo() {
+    return postNo;
+  }
+  public void setPostNo(int postNo) {
+    this.postNo = postNo;
   }
   public String getName() {
     return name;

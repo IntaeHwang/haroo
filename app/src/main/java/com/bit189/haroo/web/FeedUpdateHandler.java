@@ -4,20 +4,18 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.bit189.haroo.domain.Comment;
 import com.bit189.haroo.domain.Feed;
 import com.bit189.haroo.service.CommentService;
 import com.bit189.haroo.service.FeedService;
 
 @SuppressWarnings("serial")
-@WebServlet("/feed/detail")
-public class FeedDetailHandler extends HttpServlet {
+@WebServlet("/feed/update")
+public class FeedUpdateHandler extends HttpServlet {
 
   SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -31,15 +29,19 @@ public class FeedDetailHandler extends HttpServlet {
     int no = Integer.parseInt(request.getParameter("no"));
 
     try {
-      Feed feed = feedService.get(no);
-      List<Comment> comments = commentService.get(no);
+      Feed oldFeed = feedService.get(no);
 
-      request.setAttribute("feed", feed);
-      request.setAttribute("comments", comments);
+      if (oldFeed == null) {
+        throw new Exception("해당 번호의 스토리가 없습니다.");
+      }
 
-      response.setContentType("text/html;charset=UTF-8");
+      Feed feed = new Feed();
 
-      request.getRequestDispatcher("/jsp/feed/detail.jsp").include(request, response);
+
+
+
+
+      response.sendRedirect("list");
 
     } catch (Exception e) {
       StringWriter strWriter = new StringWriter();

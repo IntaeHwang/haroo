@@ -22,18 +22,6 @@
     <result column="mrno" property="rank"/>
   </resultMap>
   
-  <sql id="select1">
-  select 
-      mno,
-      name,
-      email,
-      profile_pic,
-      tel,
-      nickname,
-      sex 
-    from har_member
-    </sql>
-    
 <insert id="insert" parameterType="member">
    insert into har_member(name,email,password,nickname,profile_pic,
                           bdate,tel,sex,zipcode,addr,det_addr,mrno) 
@@ -56,39 +44,7 @@
   </select>
   -->
   
-  <select id="findByKeyword" resultMap="memberMap" parameterType="map">
-    <include refid="select1"/>
-    <where>
-        <if test="item == 1 or item == 0">
-        tel like concat('%', #{keyword}, '%')
-        </if>
-        <if test="item == 2 or item == 0">
-        or email like concat('%', #{keyword}, '%')
-        </if>
-        <if test="item == 3 or item == 0">
-        or nickname like concat('%', #{keyword}, '%')
-        </if>
-    </where>
-    order by nickname asc
-  </select>
-  
-  <select id="findByKeywords" resultMap="memberMap" parameterType="map">
-    <include refid="select1"/>
-    <where>
-      <if test="tel != null and tel != ''">
-        tel like concat('%', #{tel}, '%')
-      </if>
-      <if test="email != null and email != ''">
-        and email like concat('%', #{email}, '%')
-      </if>
-      <if test="nickname != null and nickname != ''">
-        and nickname like concat('%', #{nickname}, '%')
-      </if>
-    </where>
-    order by nickname asc
-  </select>
-  
-  <!-- <select id="findByKeyword" resultMap="memberMap" parameterType="string">
+  <select id="findByKeyword" resultMap="memberMap" parameterType="string">
     select 
       mno,
       name,
@@ -108,7 +64,7 @@
       </if>
     </where>
     order by mno asc 
-  </select> -->
+  </select>
   
   <select id="findByNo" resultMap="memberMap" parameterType="int">
   select 

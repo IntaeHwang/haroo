@@ -7,13 +7,15 @@ public class Tutor extends Member{
   private String intro;
   private String application;
   private Date promotedDate;
-
-  private List<Learning> learnings;
-  private List<Product> products;
   private List<Sigungu> tutorDistricts;
-  private List<NarrowCategory> tutorCategories;
-  private List<Question> tutorQuestions;
-  private List<Feed> feeds;
+  private List<TutorCategory> tutorCategories;
+
+  @Override
+  public String toString() {
+    return "Tutor [intro=" + intro + ", application=" + application + ", promotedDate="
+        + promotedDate + ", tutorDistricts=" + tutorDistricts + ", tutorCategories="
+        + tutorCategories + "]";
+  }
 
   public String getIntro() {
     return intro;
@@ -33,42 +35,20 @@ public class Tutor extends Member{
   public void setPromotedDate(Date promotedDate) {
     this.promotedDate = promotedDate;
   }
-  public List<Learning> getLearnings() {
-    return learnings;
-  }
-  public void setLearnings(List<Learning> learnings) {
-    this.learnings = learnings;
-  }
-  public List<Product> getProducts() {
-    return products;
-  }
-  public void setProducts(List<Product> products) {
-    this.products = products;
-  }
   public List<Sigungu> getTutorDistricts() {
     return tutorDistricts;
   }
   public void setTutorDistricts(List<Sigungu> tutorDistricts) {
     this.tutorDistricts = tutorDistricts;
   }
-  public List<NarrowCategory> getTutorCategories() {
+  public List<TutorCategory> getTutorCategories() {
     return tutorCategories;
   }
-  public void setTutorCategories(List<NarrowCategory> tutorCategories) {
+  public void setTutorCategories(List<TutorCategory> tutorCategories) {
     this.tutorCategories = tutorCategories;
   }
-  public List<Question> getTutorQuestions() {
-    return tutorQuestions;
-  }
-  public void setTutorQuestions(List<Question> tutorQuestions) {
-    this.tutorQuestions = tutorQuestions;
-  }
-  public List<Feed> getFeeds() {
-    return feeds;
-  }
-  public void setFeeds(List<Feed> feeds) {
-    this.feeds = feeds;
-  }
-  
+
+
+
 }
 
