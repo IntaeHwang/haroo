@@ -14,10 +14,8 @@ import com.bit189.haroo.dao.FeedDao;
 import com.bit189.haroo.dao.LearningApplicationDao;
 import com.bit189.haroo.dao.MemberDao;
 import com.bit189.haroo.service.FeedService;
-import com.bit189.haroo.service.LearningApplicationService;
 import com.bit189.haroo.service.MemberService;
 import com.bit189.haroo.service.impl.DefaultFeedService;
-import com.bit189.haroo.service.impl.DefaultLearningApplicationService;
 import com.bit189.haroo.service.impl.DefaultMemberService;
 
 // --------------------사용하지 않는 클래스입니다.--------------------
@@ -50,7 +48,7 @@ public class AppInitHandler extends HttpServlet {
       MemberService memberService = new DefaultMemberService(memberDao);
 
       FeedService feedService = new DefaultFeedService(feedDao);
-      LearningApplicationService learningApplicationService = new DefaultLearningApplicationService(learningApplicationDao, null);
+      //  LearningApplicationService learningApplicationService = new DefaultLearningApplicationService(learningApplicationDao, null);
 
       //      FeedService feedService = new DefaultFeedService(feedDao);
 
@@ -60,7 +58,7 @@ public class AppInitHandler extends HttpServlet {
 
       servletContext.setAttribute("memberService", memberService);
       servletContext.setAttribute("feedService", feedService);
-      servletContext.setAttribute("learningApplicationService", learningApplicationService);
+      //  servletContext.setAttribute("learningApplicationService", learningApplicationService);
       //      servletContext.setAttribute("feedService", feedService);
 
 
