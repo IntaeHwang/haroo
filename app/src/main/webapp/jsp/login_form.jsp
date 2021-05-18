@@ -12,8 +12,7 @@
 <form method='post'>
 <table border='1'>
 <tbody>
-<jsp:useBean id="email" type="java.lang.String" scope="request"/>
-<tr><th>이메일</th><td><input name='email' type='email' value='<%=email%>'></td></tr>
+<tr><th>이메일</th><td><input name='email' type='email' value='${cookie.email.value}'></td></tr>
 <tr><th>암호</th><td><input name='password' type='password'></td></tr>
 </tbody>
 <tfoot>

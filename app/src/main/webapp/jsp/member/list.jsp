@@ -1,9 +1,8 @@
-<%@page import="com.bit189.haroo.domain.Member"%>
-<%@page import="java.util.List"%>
 <%@ page language="java" 
     contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" 
     trimDirectiveWhitespaces="true"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,22 +18,24 @@
 </tr>
 </thead>
 <tbody>
-<jsp:useBean id="list" type="List<Member>" scope="request"/>
-<%
-for (Member m : list) {
-  pageContext.setAttribute("m", m);
-  pageContext.setAttribute("profilePictureUrl",
-      m.getProfilePicture() != null ? "../upload/" + m.getProfilePicture() + "_30x30.jpg" : "../images/person_30x30.jpg");
-%>
-<tr>
-<td>${m.no}</td>
-<td>${m.name}</td>
-<td><a href='detail?no=${m.no}'>${m.email}</a></td>
-<td><img src='${profilePictureUrl}'></td> 
-<td>${m.tel}</td>
-<td>${m.nickname}</td>
-<td><%=m.getSex() == 1 ? "남" : "여"%></td> </tr>
-<%}%>
+<c:forEach items="${list}" var="m">
+	  <c:if test="${not empty m.profilePicture}">
+	    <c:set var="profilePictureUrl">../upload/${m.profilePicture}_30x30.jpg</c:set>
+	  </c:if>
+	  <c:if test="${empty m.profilePicture}">
+	   <c:set var="profilePictureUrl">../upload/_30x30.jpg</c:set>
+	  </c:if>
+  <tr>
+		<td>${m.no}</td>
+		<td>${m.name}</td>
+		<td><a href='detail?no=${m.no}'>${m.email}</a></td>
+		<td><img src='${profilePictureUrl}'></td> 
+		<td>${m.tel}</td>
+		<td>${m.nickname}</td>
+		<td>${m.sex == 1 ? "남" : "여"}</td> 
+  </tr>
+</c:forEach>
+
 </tbody>
 </table>
 

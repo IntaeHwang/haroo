@@ -24,8 +24,8 @@
     <result column="mrno" property="rank"/>
   
     <collection property="tutorDistricts" ofType="TutorDistrict">
-      <result column="sgg_name" property="no"/>
-      <result column="mcp_name" property="endTime"/>
+      <result column="sgg_name" property="sigungu"/>
+      <result column="mcp_name" property="metropolitanCity"/>
     </collection>
     
     <collection property="tutorCategories" ofType="TutorCategory">
@@ -99,6 +99,18 @@
     inner har_mcityprov mc on mc.mcp_no=sg.mcp_no
     where tno = #{value}
   </select>
+  
+  <update id="update" parameterType="tutor">
+  update har_tutor set 
+    tintro=#{intro},
+    tappl=#{application},
+    sgg_name=#{sigungu},
+    mcp_name=#{metropolitanCity},
+    ncat_name=#{narrowCategory},
+    bcat_name=#{broadCategory}
+  where no = #{no}
+  </update>
+  
   
   <delete id="delete" parameterType="int">
   delete from har_tutor 
