@@ -21,6 +21,7 @@ public class MemberListHandler extends HttpServlet {
     MemberService memberService = (MemberService) request.getServletContext().getAttribute("memberService");
 
     try {
+      System.out.println("여기1");
       List<Member> list = memberService.list(request.getParameter("keyword"));
 
       request.setAttribute("list", list);

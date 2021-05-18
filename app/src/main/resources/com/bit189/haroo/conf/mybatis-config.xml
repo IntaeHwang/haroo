@@ -23,9 +23,7 @@
   </environments>
   
   <mappers>
-
-  <mapper resource="com/bit189/haroo/mapper/LearningApplicationMapper.xml"/>
-
+    <mapper resource="com/bit189/haroo/mapper/LearningApplicationMapper.xml"/>
     <mapper resource="com/bit189/haroo/mapper/PostMapper.xml"/>
     <mapper resource="com/bit189/haroo/mapper/LearningMapper.xml"/>
     <mapper resource="com/bit189/haroo/mapper/FeedMapper.xml"/>
