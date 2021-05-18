@@ -1,6 +1,6 @@
 -- table_remove_v3
 -- 광역시도
-DROP TABLE IF EXISTS `MY_SCHEMA`.`har_mcityprov` RESTRICT;
+DROP TABLE IF EXISTS `MY_SCHEMA`.`har_sido` RESTRICT;
 
 -- 글
 DROP TABLE IF EXISTS `MY_SCHEMA`.`har_post` RESTRICT;
