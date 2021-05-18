@@ -4,6 +4,12 @@ public class NarrowCategory {
   private int no;
   private String nmae;
 
+  @Override
+  public String toString() {
+    return "NarrowCategory [no=" + no + ", nmae=" + nmae + ", getNo()=" + getNo() + ", getNmae()="
+        + getNmae() + "]";
+  }
+
   public int getNo() {
     return no;
   }
