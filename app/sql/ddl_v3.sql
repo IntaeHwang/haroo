@@ -3,7 +3,7 @@
 
 -- ddl
 -- 광역시도
-DROP TABLE IF EXISTS `MY_SCHEMA`.`har_mcityprov` RESTRICT;
+DROP TABLE IF EXISTS `MY_SCHEMA`.`har_sido` RESTRICT;
 
 -- 글
 DROP TABLE IF EXISTS `MY_SCHEMA`.`har_post` RESTRICT;
@@ -114,27 +114,27 @@ DROP TABLE IF EXISTS `MY_SCHEMA`.`har_member` RESTRICT;
 DROP TABLE IF EXISTS `MY_SCHEMA`.`har_mrank` RESTRICT;
 
 -- 광역시도
-CREATE TABLE `MY_SCHEMA`.`har_mcityprov` (
-  `mcp_no`   INTEGER     NOT NULL COMMENT '광역시도번호', -- 광역시도번호
-  `mcp_name` VARCHAR(50) NOT NULL COMMENT '시도명' -- 시도명
+CREATE TABLE `MY_SCHEMA`.`har_sido` (
+  `sido_no`   INTEGER     NOT NULL COMMENT '광역시도번호', -- 광역시도번호
+  `sido_name` VARCHAR(50) NOT NULL COMMENT '시도명' -- 시도명
 )
 COMMENT '광역시도';
 
 -- 광역시도
-ALTER TABLE `MY_SCHEMA`.`har_mcityprov`
-  ADD CONSTRAINT `PK_har_mcityprov` -- 광역시도 기본키
+ALTER TABLE `MY_SCHEMA`.`har_sido`
+  ADD CONSTRAINT `PK_har_sido` -- 광역시도 기본키
     PRIMARY KEY (
-      `mcp_no` -- 광역시도번호
+      `sido_no` -- 광역시도번호
     );
 
 -- 광역시도 유니크 인덱스
-CREATE UNIQUE INDEX `UIX_har_mcityprov`
-  ON `MY_SCHEMA`.`har_mcityprov` ( -- 광역시도
-    `mcp_name` ASC -- 시도명
+CREATE UNIQUE INDEX `UIX_har_sido`
+  ON `MY_SCHEMA`.`har_sido` ( -- 광역시도
+    `sido_name` ASC -- 시도명
   );
 
-ALTER TABLE `MY_SCHEMA`.`har_mcityprov`
-  MODIFY COLUMN `mcp_no` INTEGER NOT NULL AUTO_INCREMENT COMMENT '광역시도번호';
+ALTER TABLE `MY_SCHEMA`.`har_sido`
+  MODIFY COLUMN `sido_no` INTEGER NOT NULL AUTO_INCREMENT COMMENT '광역시도번호';
 
 -- 글
 CREATE TABLE `MY_SCHEMA`.`har_post` (
@@ -271,7 +271,8 @@ CREATE TABLE `MY_SCHEMA`.`har_purchase` (
   `opt_no`     INTEGER     NOT NULL COMMENT '상품옵션번호', -- 상품옵션번호
   `prdttm`     DATETIME    NOT NULL DEFAULT now() COMMENT '구매일시', -- 구매일시
   `prsize`     INTEGER     NOT NULL DEFAULT 1 COMMENT '구매수량', -- 구매수량
-  `invoice_no` VARCHAR(30) NOT NULL COMMENT '송장번호' -- 송장번호
+  `invoice_no` VARCHAR(30) NOT NULL COMMENT '송장번호', -- 송장번호
+  `deli_comp`  INTEGER     NOT NULL DEFAULT 0 COMMENT '배송완료' -- 배송완료
 )
 COMMENT '상품구매';
 
@@ -281,6 +282,11 @@ ALTER TABLE `MY_SCHEMA`.`har_purchase`
     PRIMARY KEY (
       `purc_no` -- 상품옵션구매번호
     );
+
+-- 상품구매
+ALTER TABLE `MY_SCHEMA`.`har_purchase`
+  ADD CONSTRAINT `CK_har_purchase` -- 상품구매 체크 제약
+    CHECK (deli_comp = 0 or deli_comp = 1);
 
 -- 상품구매 유니크 인덱스
 CREATE UNIQUE INDEX `UIX_har_purchase`
@@ -335,7 +341,7 @@ CREATE TABLE `MY_SCHEMA`.`har_service` (
   `sname`    VARCHAR(50)  NOT NULL COMMENT '서비스이름', -- 서비스이름
   `sintro`   LONGTEXT     NOT NULL COMMENT '서비스소개', -- 서비스소개
   `cov_img`  VARCHAR(255) NOT NULL COMMENT '커버이미지', -- 커버이미지
-  `avg_rate` DOUBLE       NULL     DEFAULT 1 COMMENT '평균평점', -- 평균평점
+  `avg_rate` DOUBLE       NULL     DEFAULT NULL COMMENT '평균평점', -- 평균평점
   `sstat`    INTEGER      NOT NULL DEFAULT 1 COMMENT '서비스상태', -- 서비스상태
   `rdttm`    DATETIME     NOT NULL DEFAULT now() COMMENT '등록일시', -- 등록일시
   `ncat_no`  INTEGER      NOT NULL COMMENT '소분류번호' -- 소분류번호
@@ -364,8 +370,8 @@ CREATE TABLE `MY_SCHEMA`.`har_sqna` (
   `sno`         INTEGER      NOT NULL COMMENT '서비스번호', -- 서비스번호
   `title`       VARCHAR(255) NOT NULL COMMENT '제목', -- 제목
   `secret`      INTEGER      NOT NULL DEFAULT 1 COMMENT '비밀글여부', -- 비밀글여부
-  `rpl_content` LONGTEXT     NOT NULL COMMENT '답변내용', -- 답변내용
-  `rpl_dttm`    DATETIME     NOT NULL DEFAULT now() COMMENT '답변일시' -- 답변일시
+  `rpl_content` LONGTEXT     NULL     COMMENT '답변내용', -- 답변내용
+  `rpl_dttm`    DATETIME     NULL     DEFAULT now() COMMENT '답변일시' -- 답변일시
 )
 COMMENT '서비스문의글';
 
@@ -385,8 +391,7 @@ ALTER TABLE `MY_SCHEMA`.`har_sqna`
 CREATE TABLE `MY_SCHEMA`.`har_srpl_file` (
   `fno`   INTEGER      NOT NULL COMMENT '파일번호', -- 파일번호
   `fname` VARCHAR(255) NOT NULL COMMENT '파일명', -- 파일명
-  `pno`   INTEGER      NOT NULL COMMENT '글번호', -- 글번호
-  `fstat` INTEGER      NOT NULL DEFAULT 1 COMMENT '파일상태' -- 파일상태
+  `pno`   INTEGER      NOT NULL COMMENT '글번호' -- 글번호
 )
 COMMENT '서비스문의답글파일';
 
@@ -483,7 +488,7 @@ ALTER TABLE `MY_SCHEMA`.`har_feed_like`
 -- 시군구
 CREATE TABLE `MY_SCHEMA`.`har_sigungu` (
   `sgg_no`   INTEGER     NOT NULL COMMENT '시군구번호', -- 시군구번호
-  `mcp_no`   INTEGER     NOT NULL COMMENT '광역시도번호', -- 광역시도번호
+  `sido_no`  INTEGER     NOT NULL COMMENT '광역시도번호', -- 광역시도번호
   `sgg_name` VARCHAR(50) NOT NULL COMMENT '시군구명' -- 시군구명
 )
 COMMENT '시군구';
@@ -627,10 +632,10 @@ ALTER TABLE `MY_SCHEMA`.`har_lrnrv_rcm`
 
 -- 튜터
 CREATE TABLE `MY_SCHEMA`.`har_tutor` (
-  `tno`    INTEGER      NOT NULL COMMENT '튜터번호', -- 튜터번호
-  `tintro` LONGTEXT     NOT NULL COMMENT '튜터소개', -- 튜터소개
-  `tappl`  VARCHAR(255) NOT NULL COMMENT '튜터신청서', -- 튜터신청서
-  `rddtm`  DATETIME     NOT NULL DEFAULT now() COMMENT '등업일시' -- 등업일시
+  `tno`       INTEGER      NOT NULL COMMENT '튜터번호', -- 튜터번호
+  `tintro`    LONGTEXT     NOT NULL COMMENT '튜터소개', -- 튜터소개
+  `tappl`     VARCHAR(255) NOT NULL COMMENT '튜터신청서', -- 튜터신청서
+  `prom_dttm` DATETIME     NOT NULL DEFAULT now() COMMENT '등업일시' -- 등업일시
 )
 COMMENT '튜터';
 
@@ -669,8 +674,7 @@ ALTER TABLE `MY_SCHEMA`.`har_tqna`
 CREATE TABLE `MY_SCHEMA`.`har_trpl_file` (
   `fno`   INTEGER      NOT NULL COMMENT '파일번호', -- 파일번호
   `fname` VARCHAR(255) NOT NULL COMMENT '파일명', -- 파일명
-  `pno`   INTEGER      NOT NULL COMMENT '글번호', -- 글번호
-  `fstat` INTEGER      NOT NULL DEFAULT 1 COMMENT '파일상태' -- 파일상태
+  `pno`   INTEGER      NOT NULL COMMENT '글번호' -- 글번호
 )
 COMMENT '튜터문의답글파일';
 
@@ -700,7 +704,8 @@ COMMENT '튜터지역';
 ALTER TABLE `MY_SCHEMA`.`har_tdist`
   ADD CONSTRAINT `PK_har_tdist` -- 튜터지역 기본키
     PRIMARY KEY (
-      `tno` -- 튜터번호
+      `tno`,    -- 튜터번호
+      `sgg_no`  -- 시군구번호
     );
 
 -- 튜터카테고리
@@ -722,8 +727,7 @@ ALTER TABLE `MY_SCHEMA`.`har_tcat`
 CREATE TABLE `MY_SCHEMA`.`har_file` (
   `fno`   INTEGER      NOT NULL COMMENT '파일번호', -- 파일번호
   `fname` VARCHAR(255) NOT NULL COMMENT '파일명', -- 파일명
-  `pno`   INTEGER      NOT NULL COMMENT '글번호', -- 글번호
-  `fstat` INTEGER      NOT NULL DEFAULT 1 COMMENT '파일상태' -- 파일상태
+  `pno`   INTEGER      NOT NULL COMMENT '글번호' -- 글번호
 )
 COMMENT '파일';
 
@@ -744,7 +748,7 @@ ALTER TABLE `MY_SCHEMA`.`har_file`
 
 -- 판매상품
 CREATE TABLE `MY_SCHEMA`.`har_product` (
-  `sno`       INTEGER  NOT NULL COMMENT '판매상품번호', -- 판매상품번호
+  `prno`      INTEGER  NOT NULL COMMENT '판매상품번호', -- 판매상품번호
   `tno`       INTEGER  NOT NULL COMMENT '튜터번호', -- 튜터번호
   `deli_info` LONGTEXT NOT NULL COMMENT '배송정보', -- 배송정보
   `rfnd_info` LONGTEXT NOT NULL COMMENT '교환환불정보' -- 교환환불정보
@@ -755,15 +759,14 @@ COMMENT '판매상품';
 ALTER TABLE `MY_SCHEMA`.`har_product`
   ADD CONSTRAINT `PK_har_product` -- 판매상품 기본키
     PRIMARY KEY (
-      `sno` -- 판매상품번호
+      `prno` -- 판매상품번호
     );
 
 -- 판매상품사진
 CREATE TABLE `MY_SCHEMA`.`har_prpic` (
   `prpic_no`   INTEGER      NOT NULL COMMENT '판매상품사진번호', -- 판매상품사진번호
   `prpic_name` VARCHAR(255) NOT NULL COMMENT '상품사진명', -- 상품사진명
-  `prpic_stat` INTEGER      NOT NULL DEFAULT 1 COMMENT '사진상태', -- 사진상태
-  `sno`        INTEGER      NOT NULL COMMENT '판매상품번호' -- 판매상품번호
+  `prno`       INTEGER      NOT NULL COMMENT '판매상품번호' -- 판매상품번호
 )
 COMMENT '판매상품사진';
 
@@ -786,10 +789,10 @@ ALTER TABLE `MY_SCHEMA`.`har_prpic`
 CREATE TABLE `MY_SCHEMA`.`har_pr_opt` (
   `opt_no`   INTEGER      NOT NULL COMMENT '상품옵션번호', -- 상품옵션번호
   `opt_name` VARCHAR(255) NOT NULL COMMENT '상품옵션명', -- 상품옵션명
-  `price`    INTEGER      NOT NULL COMMENT '가격', -- 가격
+  `price`    INTEGER      NOT NULL DEFAULT price % 1000 = 0 COMMENT '가격', -- 가격
   `sto_size` INTEGER      NOT NULL DEFAULT 0 COMMENT '재고수량', -- 재고수량
   `sold_cnt` INTEGER      NOT NULL DEFAULT 0 COMMENT '옵션별판매량', -- 옵션별판매량
-  `sno`      INTEGER      NOT NULL COMMENT '판매상품번호' -- 판매상품번호
+  `prno`     INTEGER      NOT NULL COMMENT '판매상품번호' -- 판매상품번호
 )
 COMMENT '판매상품옵션';
 
@@ -1165,12 +1168,12 @@ ALTER TABLE `MY_SCHEMA`.`har_feed_like`
 
 -- 시군구
 ALTER TABLE `MY_SCHEMA`.`har_sigungu`
-  ADD CONSTRAINT `FK_har_mcityprov_TO_har_sigungu` -- 광역시도 -> 시군구
+  ADD CONSTRAINT `FK_har_sido_TO_har_sigungu` -- 광역시도 -> 시군구
     FOREIGN KEY (
-      `mcp_no` -- 광역시도번호
+      `sido_no` -- 광역시도번호
     )
-    REFERENCES `MY_SCHEMA`.`har_mcityprov` ( -- 광역시도
-      `mcp_no` -- 광역시도번호
+    REFERENCES `MY_SCHEMA`.`har_sido` ( -- 광역시도
+      `sido_no` -- 광역시도번호
     );
 
 -- 위시리스트
@@ -1407,7 +1410,7 @@ ALTER TABLE `MY_SCHEMA`.`har_file`
 ALTER TABLE `MY_SCHEMA`.`har_product`
   ADD CONSTRAINT `FK_har_service_TO_har_product` -- 서비스기본정보 -> 판매상품
     FOREIGN KEY (
-      `sno` -- 판매상품번호
+      `prno` -- 판매상품번호
     )
     REFERENCES `MY_SCHEMA`.`har_service` ( -- 서비스기본정보
       `sno` -- 서비스번호
@@ -1427,20 +1430,20 @@ ALTER TABLE `MY_SCHEMA`.`har_product`
 ALTER TABLE `MY_SCHEMA`.`har_prpic`
   ADD CONSTRAINT `FK_har_product_TO_har_prpic` -- 판매상품 -> 판매상품사진
     FOREIGN KEY (
-      `sno` -- 판매상품번호
+      `prno` -- 판매상품번호
     )
     REFERENCES `MY_SCHEMA`.`har_product` ( -- 판매상품
-      `sno` -- 판매상품번호
+      `prno` -- 판매상품번호
     );
 
 -- 판매상품옵션
 ALTER TABLE `MY_SCHEMA`.`har_pr_opt`
   ADD CONSTRAINT `FK_har_product_TO_har_pr_opt` -- 판매상품 -> 판매상품옵션
     FOREIGN KEY (
-      `sno` -- 판매상품번호
+      `prno` -- 판매상품번호
     )
     REFERENCES `MY_SCHEMA`.`har_product` ( -- 판매상품
-      `sno` -- 판매상품번호
+      `prno` -- 판매상품번호
     );
 
 -- 판매상품후기추천수
