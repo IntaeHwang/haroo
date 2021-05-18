@@ -12,7 +12,6 @@ import com.bit189.Mybatis.SqlSessionFactoryProxy;
 import com.bit189.Mybatis.TransactionManager;
 import com.bit189.haroo.dao.CommentDao;
 import com.bit189.haroo.dao.FeedDao;
-import com.bit189.haroo.dao.LearningApplicationDao;
 import com.bit189.haroo.dao.LearningDao;
 import com.bit189.haroo.dao.LearningReviewDao;
 import com.bit189.haroo.dao.LearningReviewRecommendDao;
@@ -22,7 +21,6 @@ import com.bit189.haroo.dao.ReCommentDao;
 import com.bit189.haroo.dao.TutorDao;
 import com.bit189.haroo.service.CommentService;
 import com.bit189.haroo.service.FeedService;
-import com.bit189.haroo.service.LearningApplicationService;
 import com.bit189.haroo.service.LearningReviewService;
 import com.bit189.haroo.service.LearningService;
 import com.bit189.haroo.service.MemberService;
@@ -30,7 +28,6 @@ import com.bit189.haroo.service.PostService;
 import com.bit189.haroo.service.TutorService;
 import com.bit189.haroo.service.impl.DefaultCommentService;
 import com.bit189.haroo.service.impl.DefaultFeedService;
-import com.bit189.haroo.service.impl.DefaultLearningApplicationService;
 import com.bit189.haroo.service.impl.DefaultLearningReviewService;
 import com.bit189.haroo.service.impl.DefaultLearningService;
 import com.bit189.haroo.service.impl.DefaultMemberService;
@@ -65,7 +62,7 @@ public class ContextLoaderListener implements ServletContextListener {
 
       LearningDao learningDao = daoFactory.createDao(LearningDao.class);
 
-      LearningApplicationDao learningApplicationDao = daoFactory.createDao(LearningApplicationDao.class);
+      //   LearningApplicationDao learningApplicationDao = daoFactory.createDao(LearningApplicationDao.class);
 
       LearningReviewDao learningReviewDao = daoFactory.createDao(LearningReviewDao.class);
       LearningReviewRecommendDao learningReviewRecommendDao = daoFactory.createDao(LearningReviewRecommendDao.class);
@@ -82,7 +79,7 @@ public class ContextLoaderListener implements ServletContextListener {
       //      AttachedFileService attachedFileService = new DefaultAttachedFileService(attachedFileDao);
       LearningService learningService = new DefaultLearningService(learningDao);
 
-      LearningApplicationService learningApplicationService = new DefaultLearningApplicationService(learningApplicationDao, null);
+      //    LearningApplicationService learningApplicationService = new DefaultLearningApplicationService(learningApplicationDao, null);
 
       LearningReviewService learningReviewService = new DefaultLearningReviewService(
           txManager, learningReviewDao, learningReviewRecommendDao);
@@ -96,7 +93,7 @@ public class ContextLoaderListener implements ServletContextListener {
       //      servletContext.setAttribute("attachedFileService", attachedFileService);
       servletContext.setAttribute("learningService", learningService);
 
-      servletContext.setAttribute("learningApplicationService", learningApplicationService);
+      //  servletContext.setAttribute("learningApplicationService", learningApplicationService);
 
       servletContext.setAttribute("learningReviewService", learningReviewService);
 
