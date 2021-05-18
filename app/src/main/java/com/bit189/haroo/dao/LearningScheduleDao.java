@@ -6,5 +6,7 @@ import com.bit189.haroo.domain.LearningSchedule;
 
 public interface LearningScheduleDao {
 
+  List<LearningSchedule> findAll() throws Exception;
+
   List<LearningSchedule> findByKeywords(Map<String,Object> params) throws Exception;
 }

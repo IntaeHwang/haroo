@@ -33,4 +33,6 @@ public class LearningSchedule {
   public void setEndTime(Time endTime) {
     this.endTime = endTime;
   }
+
 }
+

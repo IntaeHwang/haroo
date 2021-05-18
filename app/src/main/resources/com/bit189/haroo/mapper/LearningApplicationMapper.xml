@@ -16,15 +16,17 @@
      <association property="memberNo" javaType="member">
       <id column="mno" property="no"/>
     </association>
-    
-    <collection property="schedules" ofType="LearningSchedule">
+      
+       <collection property="schedules" ofType="LearningSchedule">
       <id column="sche_no" property="no"/>
-       <result column="lno" property="no"/>
-       <result column="date" property="LearningDate"/>
-          <result column="stm" property="startTime"/>
-          <result column="etm" property="endTime"/>
+      <result column="lno" property="no"/>
+      <result column="date" property="LearningDate"/>
+      <result column="stm" property="startTime"/>
+      <result column="etm" property="endTime"/>
     </collection>
-    
+
+
+   
   </resultMap>
 
     
@@ -48,6 +50,7 @@
       inner join har_member m on l.mno=m.mno
   </select>
 
+<!--
 <select id="findAllSchedules" resultMap="LearningScheduleMap">
      select
      l.sche_no,
@@ -57,7 +60,9 @@
     from har_lrn_appl l
       inner join har_schedule s on l.sche_no=s.sche_no
   </select>
+-->
   
+   
   <select id="findByNo" resultMap="LearningApplicationMap" parameterType="int">
     select
       l.lrn_appl_no,
@@ -74,6 +79,7 @@
     where no = #{value}
   </select>
   
+ 
   <select id="findByKeywords" resultMap="LearningApplicationMap" parameterType="map">
     <include refid="select1"/>
     <where>
@@ -88,13 +94,12 @@
       </if>
     </where>
   </select>
-  
+
   <delete id="delete" parameterType="int">
     delete from har_lrn_appl
     where no=#{value}
   </delete>
 </mapper>
-
  -->
 
 

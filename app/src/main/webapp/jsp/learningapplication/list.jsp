@@ -1,11 +1,12 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
+<%@page import="com.bit189.haroo.domain.LearningApplication"%>
 <%@page import="java.util.List"%>
-<%@ page 
-    language="java" 
-    contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"
-    trimDirectiveWhitespaces="ture"%>
-    
-    
+<%@ page language="java" 
+  contentType="text/html; charset=UTF-8"
+  pageEncoding="UTF-8"
+  trimDirectiveWhitespaces="true"%>   
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,28 +22,29 @@ for (LearningApplication l : list) {
 <table border='1'>
 <thead>
 <tr>
-<th>번호</th> <th>날짜</th> <th>시작 시간</th> <th>종료 시간</th> <th>인원</th> <th>회차</th>
+<th>번호</th> <th>날짜</th> <th>수업 시간</th> <th>인원</th> <th>등록 시간</th>
 </tr>
 </thead>
 <tbody> 
 
+<c:forEach items= "${list}" var="l">
+
+<tr>
+<td colspan='5'>해당 번호의 체험 학습이 없습니다.</td>
+</tr> 
+
   <tr> 
-  <td><%=b.getNo()%></td>
-  <td><a href='detail?no=<%=b.getNo()%>'></td> 
-  <td><%=b.getWriter().getName()%></td> 
-  <td><%=b.getRegisteredDate()%></td> 
-  <td><%=b.getViewCount()%></td>
+  <td>${l.No}</td>
+  <td><a href='detail?no=${l.no}'></a></td> 
+  <!--  
+  <td>${l.Schedules}</td>
+  -->
+  <td>${l.ApplySize}</td>
+  <td>${l.RegisteredDate}</td> 
+
   </tr>  
-<% 
-}
-%>
+</c:forEach>
 </tbody>
 </table>
-<form action='search' method='get'>
-<input type='text' name='keyword'> 
-<button>검색</button>
-</form>
-</body>
-</html>
 </body>
 </html>
