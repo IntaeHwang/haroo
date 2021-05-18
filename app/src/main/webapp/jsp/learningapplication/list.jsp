@@ -13,6 +13,11 @@
 </head>
 <body>
 <h1>체험 신청 목록</h1>
+<% 
+List<LearningApplication> list = (List<LearningApplication>) request.getAttribute("list");
+for (LearningApplication l : list) {
+  %>
+<h2></h2>
 <table border='1'>
 <thead>
 <tr>
@@ -20,13 +25,10 @@
 </tr>
 </thead>
 <tbody> 
-<% 
-List<LearningApplication> list = (List<LearningApplication>) request.getAttribute("list");
-for (LearningApplication l : list) {
-  %>
+
   <tr> 
   <td><%=b.getNo()%></td>
-  <td>< href='detail?no=<%=b.getNo()%>'></td> 
+  <td><a href='detail?no=<%=b.getNo()%>'></td> 
   <td><%=b.getWriter().getName()%></td> 
   <td><%=b.getRegisteredDate()%></td> 
   <td><%=b.getViewCount()%></td>
