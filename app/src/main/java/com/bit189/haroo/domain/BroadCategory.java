@@ -4,6 +4,12 @@ public class BroadCategory {
   private int no;
   private String name;
 
+  @Override
+  public String toString() {
+    return "BroadCategory [no=" + no + ", name=" + name + ", getNo()=" + getNo() + ", getName()="
+        + getName() + "]";
+  }
+
   public int getNo() {
     return no;
   }

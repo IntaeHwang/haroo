@@ -10,6 +10,7 @@ public class NarrowCategory {
     return "NarrowCategory [no=" + no + ", name=" + name + ", broadCategoryNo=" + broadCategoryNo
         + "]";
   }
+
   public int getNo() {
     return no;
   }
@@ -28,6 +29,5 @@ public class NarrowCategory {
   public void setBroadCategoryNo(int broadCategoryNo) {
     this.broadCategoryNo = broadCategoryNo;
   }
-
 
 }

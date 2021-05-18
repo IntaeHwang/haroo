@@ -14,6 +14,7 @@
 <body>
 <h1>체험 후기</h1>
 <jsp:useBean id="reviews" type="List<Review>" scope="request"/>
+<h2>${learninng.name} }</h2>
 <%
 if (reviews.size() == 0) {
 %>
