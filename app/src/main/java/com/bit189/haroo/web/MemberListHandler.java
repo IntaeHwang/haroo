@@ -4,23 +4,23 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
-import javax.servlet.Servlet;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
-import com.eomcs.pms.domain.Member;
-import com.eomcs.pms.service.MemberService;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import com.bit189.haroo.domain.Member;
+import com.bit189.haroo.service.MemberService;
 
+@SuppressWarnings("serial")
 @WebServlet("/member/list") 
-public class Sample_MemberListHandler implements Servlet {
+public class MemberListHandler extends HttpServlet {
 
   @Override
-  public void service(ServletRequest request, ServletResponse response)
+  public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    Sample_MemberService memberService = (Sample_MemberService) request.getServletContext().getAttribute("memberService");
+    MemberService memberService = (MemberService) request.getServletContext().getAttribute("memberService");
 
     response.setContentType("text/plain;charset=UTF-8");
     PrintWriter out = response.getWriter();
@@ -29,13 +29,19 @@ public class Sample_MemberListHandler implements Servlet {
     try {
       List<Member> list = memberService.list();
 
+      if(list.size() == 0) {
+        out.println("등록된 회원이 없습니다.");
+        return;
+      }
       for (Member m : list) {
-        out.printf("%d, %s, %s, %s, %s\n", 
+        out.printf("%d, %s, %s, %s, %s, %s, %s\n", 
             m.getNo(), 
             m.getName(), 
             m.getEmail(),
-            m.getPhoto(),
-            m.getTel());
+            m.getProfilePicture(),
+            m.getTel(),
+            m.getNickname(),
+            m.getSex());
       }
     } catch (Exception e) {
       StringWriter strWriter = new StringWriter();
@@ -45,27 +51,4 @@ public class Sample_MemberListHandler implements Servlet {
     }
   }
 
-  @Override
-  public void init(ServletConfig config) throws ServletException {
-  }
-
-  @Override
-  public void destroy() {
-  }
-
-  @Override
-  public ServletConfig getServletConfig() {
-    return null;
-  }
-
-  @Override
-  public String getServletInfo() {
-    return null;
-  }
 }
-
-
-
-
-
-
