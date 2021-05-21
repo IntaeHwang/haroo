@@ -7,6 +7,7 @@ import com.bit189.haroo.service.ServiceInfoService;
 
 public class DefaultServiceInfoService implements ServiceInfoService {
 
+
   ServiceInfoDao serviceInfoDao;
 
   public DefaultServiceInfoService(ServiceInfoDao serviceInfoDao) {

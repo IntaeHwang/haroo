@@ -18,6 +18,7 @@ import com.bit189.haroo.dao.LearningReviewRecommendDao;
 import com.bit189.haroo.dao.MemberDao;
 import com.bit189.haroo.dao.PostDao;
 import com.bit189.haroo.dao.ReCommentDao;
+import com.bit189.haroo.dao.ServiceQuestionDao;
 import com.bit189.haroo.dao.TutorDao;
 import com.bit189.haroo.service.CommentService;
 import com.bit189.haroo.service.FeedService;
@@ -25,6 +26,7 @@ import com.bit189.haroo.service.LearningReviewService;
 import com.bit189.haroo.service.LearningService;
 import com.bit189.haroo.service.MemberService;
 import com.bit189.haroo.service.PostService;
+import com.bit189.haroo.service.ServiceQuestionService;
 import com.bit189.haroo.service.TutorService;
 import com.bit189.haroo.service.impl.DefaultCommentService;
 import com.bit189.haroo.service.impl.DefaultFeedService;
@@ -32,6 +34,7 @@ import com.bit189.haroo.service.impl.DefaultLearningReviewService;
 import com.bit189.haroo.service.impl.DefaultLearningService;
 import com.bit189.haroo.service.impl.DefaultMemberService;
 import com.bit189.haroo.service.impl.DefaultPostService;
+import com.bit189.haroo.service.impl.DefaultServiceQuestionService;
 import com.bit189.haroo.service.impl.DefaultTutorService;
 
 
@@ -44,6 +47,7 @@ public class ContextLoaderListener implements ServletContextListener {
     try {
       ServletContext servletContext = sce.getServletContext();
 
+
       // 1) Mybatis 관련 객체 준비
       InputStream mybatisConfigStream = Resources.getResourceAsStream(
           servletContext.getInitParameter("mybatis-config"));
@@ -51,6 +55,7 @@ public class ContextLoaderListener implements ServletContextListener {
       SqlSessionFactoryProxy sqlSessionFactoryProxy = new SqlSessionFactoryProxy(sqlSessionFactory);
 
       // 2) DAO 관련 객체 준비
+
       MybatisDaoFactory daoFactory = new MybatisDaoFactory(sqlSessionFactoryProxy);
       MemberDao memberDao = daoFactory.createDao(MemberDao.class);
       FeedDao feedDao = daoFactory.createDao(FeedDao.class);
@@ -62,13 +67,14 @@ public class ContextLoaderListener implements ServletContextListener {
 
       LearningDao learningDao = daoFactory.createDao(LearningDao.class);
 
-      //   LearningApplicationDao learningApplicationDao = daoFactory.createDao(LearningApplicationDao.class);
-
+      //LearningApplicationDao learningApplicationDao = daoFactory.createDao(LearningApplicationDao.class);
+      ServiceQuestionDao serviceQuestionDao = daoFactory.createDao(ServiceQuestionDao.class);
       LearningReviewDao learningReviewDao = daoFactory.createDao(LearningReviewDao.class);
       LearningReviewRecommendDao learningReviewRecommendDao = daoFactory.createDao(LearningReviewRecommendDao.class);
 
 
       // 3) 서비스 관련 객체 준비
+
       TransactionManager txManager = new TransactionManager(sqlSessionFactoryProxy);
 
       MemberService memberService = new DefaultMemberService(memberDao);
@@ -79,10 +85,11 @@ public class ContextLoaderListener implements ServletContextListener {
       //      AttachedFileService attachedFileService = new DefaultAttachedFileService(attachedFileDao);
       LearningService learningService = new DefaultLearningService(learningDao);
 
-      //    LearningApplicationService learningApplicationService = new DefaultLearningApplicationService(learningApplicationDao, null);
-
+      // LearningApplicationService learningApplicationService = new DefaultLearningApplicationService(learningApplicationDao, null);
+      ServiceQuestionService serviceQuestionService = new DefaultServiceQuestionService(serviceQuestionDao);
       LearningReviewService learningReviewService = new DefaultLearningReviewService(
           txManager, learningReviewDao, learningReviewRecommendDao);
+
 
 
       // 4) 서비스 객체를 ServletContext 보관소에 저장한다.
@@ -93,7 +100,8 @@ public class ContextLoaderListener implements ServletContextListener {
       //      servletContext.setAttribute("attachedFileService", attachedFileService);
       servletContext.setAttribute("learningService", learningService);
 
-      //  servletContext.setAttribute("learningApplicationService", learningApplicationService);
+      //servletContext.setAttribute("learningApplicationService", learningApplicationService);
+      servletContext.setAttribute("serviceQuestionService", serviceQuestionService);
 
       servletContext.setAttribute("learningReviewService", learningReviewService);
 

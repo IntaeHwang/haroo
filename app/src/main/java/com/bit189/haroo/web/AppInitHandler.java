@@ -11,12 +11,14 @@ import com.bit189.Mybatis.MybatisDaoFactory;
 import com.bit189.Mybatis.SqlSessionFactoryProxy;
 import com.bit189.Mybatis.TransactionManager;
 import com.bit189.haroo.dao.FeedDao;
-import com.bit189.haroo.dao.LearningApplicationDao;
 import com.bit189.haroo.dao.MemberDao;
+import com.bit189.haroo.dao.ServiceQuestionDao;
 import com.bit189.haroo.service.FeedService;
 import com.bit189.haroo.service.MemberService;
+import com.bit189.haroo.service.ServiceQuestionService;
 import com.bit189.haroo.service.impl.DefaultFeedService;
 import com.bit189.haroo.service.impl.DefaultMemberService;
+import com.bit189.haroo.service.impl.DefaultServiceQuestionService;
 
 // --------------------사용하지 않는 클래스입니다.--------------------
 // web.xml에 배치정보 설정
@@ -40,8 +42,8 @@ public class AppInitHandler extends HttpServlet {
       MybatisDaoFactory daoFactory = new MybatisDaoFactory(sqlSessionFactoryProxy);
       MemberDao memberDao = daoFactory.createDao(MemberDao.class);
       FeedDao feedDao = daoFactory.createDao(FeedDao.class);
-      LearningApplicationDao learningApplicationDao = daoFactory.createDao(LearningApplicationDao.class);
-
+      // LearningApplicationDao learningApplicationDao = daoFactory.createDao(LearningApplicationDao.class);
+      ServiceQuestionDao serviceQuestionDao = daoFactory.createDao(ServiceQuestionDao.class);
       // 3) 서비스 관련 객체 준비
       TransactionManager txManager = new TransactionManager(sqlSessionFactoryProxy);
 
@@ -49,7 +51,7 @@ public class AppInitHandler extends HttpServlet {
 
       FeedService feedService = new DefaultFeedService(feedDao);
       //  LearningApplicationService learningApplicationService = new DefaultLearningApplicationService(learningApplicationDao, null);
-
+      ServiceQuestionService serviceQuestionService = new DefaultServiceQuestionService(serviceQuestionDao);
       //      FeedService feedService = new DefaultFeedService(feedDao);
 
 
@@ -58,7 +60,8 @@ public class AppInitHandler extends HttpServlet {
 
       servletContext.setAttribute("memberService", memberService);
       servletContext.setAttribute("feedService", feedService);
-      //  servletContext.setAttribute("learningApplicationService", learningApplicationService);
+      // servletContext.setAttribute("learningApplicationService", learningApplicationService);
+      servletContext.setAttribute("serviceQuestionService", serviceQuestionService);
       //      servletContext.setAttribute("feedService", feedService);
 
 
