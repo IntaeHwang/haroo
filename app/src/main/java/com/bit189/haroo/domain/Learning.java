@@ -3,7 +3,9 @@ package com.bit189.haroo.domain;
 import java.util.List;
 
 public class Learning extends ServiceInfo {
-  private String metropolitanCity;
+  private int sidoNo;
+  private String sido;
+  private int sigunguNo;
   private String sigungu;
   private Tutor owner;
   private int minPeople;
@@ -16,11 +18,39 @@ public class Learning extends ServiceInfo {
   private String refundInformation;
   private List<LearningSchedule> schedules;
 
-  public String getMetropolitanCity() {
-    return metropolitanCity;
+  @Override
+  public String toString() {
+    return "Learning [sidoNo=" + sidoNo + ", sido=" + sido + ", sigunguNo=" + sigunguNo
+        + ", sigungu=" + sigungu + ", owner=" + owner + ", minPeople=" + minPeople + ", maxPeople="
+        + maxPeople + ", progressOrder=" + progressOrder + ", price=" + price + ", zipCode="
+        + zipCode + ", address=" + address + ", detailAddress=" + detailAddress
+        + ", refundInformation=" + refundInformation + ", schedules=" + schedules + ", getNo()="
+        + getNo() + ", getBroadCategoryNo()=" + getBroadCategoryNo() + ", getBroadCategory()="
+        + getBroadCategory() + ", getNarrowCategoryNo()=" + getNarrowCategoryNo()
+        + ", getNarrowCategory()=" + getNarrowCategory() + ", getName()=" + getName()
+        + ", getIntro()=" + getIntro() + ", getCoverImage()=" + getCoverImage()
+        + ", getAverageRate()=" + getAverageRate() + ", isState()=" + isState()
+        + ", getRegisteredDate()=" + getRegisteredDate() + ", getQuestions()=" + getQuestions()
+        + ", getReviews()=" + getReviews() + ", getTutor()=" + getTutor() + "]";
   }
-  public void setMetropolitanCity(String metropolitanCity) {
-    this.metropolitanCity = metropolitanCity;
+
+  public int getSidoNo() {
+    return sidoNo;
+  }
+  public void setSidoNo(int sidoNo) {
+    this.sidoNo = sidoNo;
+  }
+  public String getSido() {
+    return sido;
+  }
+  public void setSido(String sido) {
+    this.sido = sido;
+  }
+  public int getSigunguNo() {
+    return sigunguNo;
+  }
+  public void setSigunguNo(int sigunguNo) {
+    this.sigunguNo = sigunguNo;
   }
   public String getSigungu() {
     return sigungu;

@@ -10,6 +10,7 @@ public class ReComment {
   private Date registeredDate;
   private Member taggedMember;
   private boolean state;
+
   public int getNo() {
     return no;
   }

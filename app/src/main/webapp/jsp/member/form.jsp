@@ -17,7 +17,7 @@
 사진: <input type="file" name="profile_pic"><br>
 생일:  <input type="date" name="bdate"><br>
 전화번호: <input type="tel" name="tel"><input type="button" value="문자인증"><br>
-성별: <input type="radio" name="sex" value="1" checked>남
+성별: <input type="radio" name="sex" value="1">남
       <input type="radio" name="sex" value="2">여<br>
 우편번호: <input type="text" name="zipcode"> <input type="button" value="우편번호찾기"><br>
 기본주소: <input type="text" name="addr"> <input type="button" value="주소찾기"><br>

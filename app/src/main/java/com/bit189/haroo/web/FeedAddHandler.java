@@ -58,7 +58,7 @@ public class FeedAddHandler extends HttpServlet{
 
       Feed feed = new Feed();
       Tutor tutor = new Tutor();
-      tutor.setNo(2);
+      tutor.setNo(3);
       feed.setWriter(tutor);
       feedService.add(post.getNo(), feed);
 

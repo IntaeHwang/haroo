@@ -57,10 +57,4 @@ public class LearningApplication {
   public void setApplySize(int applySize) {
     this.applySize = applySize;
   }
-
-
-
-
-
-
 }

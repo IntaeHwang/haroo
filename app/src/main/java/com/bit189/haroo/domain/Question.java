@@ -1,7 +1,6 @@
 package com.bit189.haroo.domain;
 
 import java.sql.Date;
-import java.sql.Time;
 import java.util.List;
 
 public class Question extends Post {
@@ -11,18 +10,17 @@ public class Question extends Post {
   private boolean secret;
   private String replyContent;
   private Date replyDate;
-  private Time replyTime;
   private List<String> replyAttachedFile;
 
   @Override
   public String toString() {
     return "Question [writer=" + writer + ", serviceNo=" + serviceNo + ", title=" + title
         + ", secret=" + secret + ", replyContent=" + replyContent + ", replyDate=" + replyDate
-        + ", replyTime=" + replyTime + ", replyAttachedFile=" + replyAttachedFile + ", toString()="
-        + super.toString() + ", getNo()=" + getNo() + ", getContent()=" + getContent()
-        + ", getWritingDate()=" + getWritingDate() + ", getViewCount()=" + getViewCount()
-        + ", isState()=" + isState() + ", getAttachedFiles()=" + getAttachedFiles()
-        + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + "]";
+        + ", replyAttachedFile=" + replyAttachedFile + ", toString()=" + super.toString()
+        + ", getNo()=" + getNo() + ", getContent()=" + getContent() + ", getWritingDate()="
+        + getWritingDate() + ", getViewCount()=" + getViewCount() + ", isState()=" + isState()
+        + ", getAttachedFiles()=" + getAttachedFiles() + ", getClass()=" + getClass()
+        + ", hashCode()=" + hashCode() + "]";
   }
 
   public Member getWriter() {
@@ -73,14 +71,6 @@ public class Question extends Post {
     this.replyDate = replyDate;
   }
 
-  public Time getReplyTime() {
-    return replyTime;
-  }
-
-  public void setReplyTime(Time replyTime) {
-    this.replyTime = replyTime;
-  }
-
   public List<String> getReplyAttachedFile() {
     return replyAttachedFile;
   }
@@ -88,6 +78,8 @@ public class Question extends Post {
   public void setReplyAttachedFile(List<String> replyAttachedFile) {
     this.replyAttachedFile = replyAttachedFile;
   }
+
+
 
 
 

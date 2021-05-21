@@ -50,7 +50,7 @@
       inner join har_member m on l.mno=m.mno
   </select>
 
-
+-->
 <select id="findAllSchedules" resultMap="LearningScheduleMap">
      select
      l.sche_no,
@@ -60,6 +60,7 @@
     from har_lrn_appl l
       inner join har_schedule s on l.sche_no=s.sche_no
   </select>
+<!--
   
    
   <select id="findByNo" resultMap="learningApplicationMap" parameterType="int">
@@ -101,7 +102,6 @@
 </mapper>
 
 -->
-
 
 
 

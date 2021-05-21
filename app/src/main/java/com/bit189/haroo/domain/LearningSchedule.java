@@ -7,6 +7,7 @@ public class LearningSchedule {
   private int no;
   private int learningNo;
   private Date LearningDate;
+  private Date learningDate;
   private Time startTime;
   private Time endTime;
 
@@ -25,6 +26,7 @@ public class LearningSchedule {
     this.no = no;
   }
 
+
   public int getLearningNo() {
     return learningNo;
   }
@@ -34,11 +36,11 @@ public class LearningSchedule {
   }
 
   public Date getLearningDate() {
-    return LearningDate;
+    return learningDate;
   }
 
   public void setLearningDate(Date learningDate) {
-    LearningDate = learningDate;
+    this.learningDate = learningDate;
   }
 
   public Time getStartTime() {

@@ -17,7 +17,7 @@ public class DefaultServiceInfoService implements ServiceInfoService {
   @Override
   public int add(Learning learning) throws Exception {
     return 0;
-    // 튜터번호 add
+    // 미완성
   }
 
   @Override
@@ -49,5 +49,4 @@ public class DefaultServiceInfoService implements ServiceInfoService {
     // TODO Auto-generated method stub
     return null;
   }
-
 }

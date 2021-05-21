@@ -1,16 +1,17 @@
 package com.bit189.haroo.dao;
 
 import java.util.List;
-import com.bit189.haroo.domain.MetropolitanCity;
+import com.bit189.haroo.domain.Sido;
 
 public interface SidoDao {
-  int insert(int no) throws Exception;
 
-  List<MetropolitanCity> findAll() throws Exception;
+  int insert(Sido sido) throws Exception;
 
-  MetropolitanCity findByNo(int no) throws Exception;
+  List<Sido> findAll() throws Exception;
 
-  MetropolitanCity findByname(String name) throws Exception;
+  Sido findByNo(int no) throws Exception;
+
+  Sido findByname(String name) throws Exception;
 
   int update(int no) throws Exception;
 

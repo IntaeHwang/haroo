@@ -6,8 +6,7 @@ public class BroadCategory {
 
   @Override
   public String toString() {
-    return "BroadCategory [no=" + no + ", name=" + name + ", getNo()=" + getNo() + ", getName()="
-        + getName() + "]";
+    return "BroadCategory [no=" + no + ", name=" + name + "]";
   }
 
   public int getNo() {
