@@ -23,18 +23,21 @@
   </environments>
   
   <mappers>
-
-  
-
     <mapper resource="com/bit189/haroo/mapper/PostMapper.xml"/>
+    <mapper resource="com/bit189/haroo/mapper/ServiceInfoMapper.xml"/>
     <mapper resource="com/bit189/haroo/mapper/LearningMapper.xml"/>
     <mapper resource="com/bit189/haroo/mapper/FeedMapper.xml"/>
     <mapper resource="com/bit189/haroo/mapper/CommentMapper.xml"/>
     <mapper resource="com/bit189/haroo/mapper/ReCommentMapper.xml"/>
     <mapper resource="com/bit189/haroo/mapper/MemberMapper.xml"/>
     <mapper resource="com/bit189/haroo/mapper/LearningReviewMapper.xml"/>
-  
+    <mapper resource="com/bit189/haroo/mapper/ServiceQuestionMapper.xml"/>
+    <!--  
+   <mapper resource="com/bit189/haroo/mapper/LearningApplicationMapper.xml"/>
+   -->
+
   </mappers>
+  
 </configuration>
 
 

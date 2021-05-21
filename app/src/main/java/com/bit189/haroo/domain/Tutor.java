@@ -3,11 +3,11 @@ package com.bit189.haroo.domain;
 import java.sql.Date;
 import java.util.List;
 
-public class Tutor extends Member{
+public class Tutor extends Member {
   private String intro;
   private String application;
   private Date promotedDate;
-  private List<Sigungu> tutorDistricts;
+  private List<TutorDistrict> tutorDistricts;
   private List<TutorCategory> tutorCategories;
 
   @Override
@@ -35,10 +35,10 @@ public class Tutor extends Member{
   public void setPromotedDate(Date promotedDate) {
     this.promotedDate = promotedDate;
   }
-  public List<Sigungu> getTutorDistricts() {
+  public List<TutorDistrict> getTutorDistricts() {
     return tutorDistricts;
   }
-  public void setTutorDistricts(List<Sigungu> tutorDistricts) {
+  public void setTutorDistricts(List<TutorDistrict> tutorDistricts) {
     this.tutorDistricts = tutorDistricts;
   }
   public List<TutorCategory> getTutorCategories() {
@@ -47,8 +47,4 @@ public class Tutor extends Member{
   public void setTutorCategories(List<TutorCategory> tutorCategories) {
     this.tutorCategories = tutorCategories;
   }
-
-
-
 }
-

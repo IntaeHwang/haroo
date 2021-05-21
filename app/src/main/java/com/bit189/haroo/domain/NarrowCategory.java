@@ -29,5 +29,4 @@ public class NarrowCategory {
   public void setBroadCategoryNo(int broadCategoryNo) {
     this.broadCategoryNo = broadCategoryNo;
   }
-
 }

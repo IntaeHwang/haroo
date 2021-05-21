@@ -16,4 +16,6 @@ public interface LearningReviewDao {
   int update(LearningReview review) throws Exception;
 
   List<LearningReview> findByKeyword(String keyword) throws Exception;
+  
+  int delete(int no) throws Exception;
 }

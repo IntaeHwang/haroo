@@ -15,8 +15,4 @@ public interface LearningApplicationService {
   int delete(int no) throws Exception;
 
   List<LearningSchedule> listSchedules() throws Exception;
-
-
 }
-
-
