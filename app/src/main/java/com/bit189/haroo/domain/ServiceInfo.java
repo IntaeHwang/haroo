@@ -97,20 +97,4 @@ public class ServiceInfo {
   public void setRegisteredDate(Date registeredDate) {
     this.registeredDate = registeredDate;
   }
-<<<<<<< HEAD
-
-=======
-  public List<Question> getQuestions() {
-    return questions;
-  }
-  public void setQuestions(List<Question> questions) {
-    this.questions = questions;
-  }
-  public List<Review> getReviews() {
-    return reviews;
-  }
-  public void setReviews(List<Review> reviews) {
-    this.reviews = reviews;
-  }
->>>>>>> branch 'main' of https://github.com/IntaeHwang/haroo.git
 }
