@@ -6,15 +6,14 @@ import java.sql.Time;
 public class LearningSchedule {
   private int no;
   private int learningNo;
-  private Date LearningDate;
   private Date learningDate;
   private Time startTime;
   private Time endTime;
 
   @Override
   public String toString() {
-    return "LearningSchedule [no=" + no + ", learningNo=" + learningNo + ", LearningDate="
-        + LearningDate + ", startTime=" + startTime + ", endTime=" + endTime + ", getClass()="
+    return "LearningSchedule [no=" + no + ", learningNo=" + learningNo + ", learningDate="
+        + learningDate + ", startTime=" + startTime + ", endTime=" + endTime + ", getClass()="
         + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
   }
 
@@ -25,7 +24,6 @@ public class LearningSchedule {
   public void setNo(int no) {
     this.no = no;
   }
-
 
   public int getLearningNo() {
     return learningNo;
@@ -58,6 +56,8 @@ public class LearningSchedule {
   public void setEndTime(Time endTime) {
     this.endTime = endTime;
   }
+
+
 
 
 

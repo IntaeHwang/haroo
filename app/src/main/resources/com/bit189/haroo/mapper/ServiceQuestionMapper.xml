@@ -23,19 +23,23 @@
       <result column="nickname" property="nickname"/>
     </association> 
     
+    <association property="serviceInfo" javaType="ServiceInfo">
+      <id column="sno" property="no"/>
+    </association> 
+    
     <collection property="attachedFiles" ofType="AttachedFile">
       <id column="fno" property="no"/>
        <result column="pno" property="postNo"/>
       <result column="fname" property="name"/>
     </collection>
     
-    <collection property="serviceNo" ofType="ServiceInfo">
-      <id column="sno" property="no"/>
-    </collection>
     
   </resultMap>
   
-  
+  <insert id="insert" parameterType="Map">
+    insert into har_sqna (pno, mno, sno, title, secret)
+    values (#{no}, #{question.writer.no}, #{question.serviceInfo.no}, #{title}, #{secret})
+  </insert>
   
   <select id="findAll" resultMap="serviceQuestionMap">
     select
@@ -63,30 +67,32 @@
     p.pstat=1
   </select>
   
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+   <select id="findByNo" parameterType="int" resultMap="serviceQuestionMap">
+   select
+      q.pno,
+      p.content,
+      p.wdttm,
+      p.view_cnt,
+      p.pstat,
+      q.mno,
+      q.sno,
+      q.title,
+      q.secret,
+      q.rpl_content,
+      q.rpl_dttm,
+      m.profile_pic,
+      m.name,
+      m.nickname
+    from
+      har_sqna q
+      inner join har_member m on m.mno=q.mno
+      inner join har_post p on p.pno=q.pno
+      inner join har_srpl_file f on f.fno=q.pno
+      inner join har_service s on s.sno=q.sno
+      where
+      q.pno = #{no}
+    p.pstat=1
+  </select>
 
 
 
