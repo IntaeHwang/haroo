@@ -1,7 +1,6 @@
 package com.bit189.haroo.domain;
 
 import java.sql.Date;
-import java.util.List;
 
 public class ServiceInfo {
   private int no;
@@ -16,8 +15,6 @@ public class ServiceInfo {
   private boolean state;
   private Tutor tutor;
   private Date registeredDate;
-  private List<Question> questions;
-  private List<Review> reviews;
 
   @Override
   public String toString() {
@@ -25,8 +22,7 @@ public class ServiceInfo {
         + broadCategory + ", narrowCategoryNo=" + narrowCategoryNo + ", narrowCategory="
         + narrowCategory + ", name=" + name + ", intro=" + intro + ", coverImage=" + coverImage
         + ", averageRate=" + averageRate + ", state=" + state + ", tutor=" + tutor
-        + ", registeredDate=" + registeredDate + ", questions=" + questions + ", reviews=" + reviews
-        + "]";
+        + ", registeredDate=" + registeredDate + "]";
   }
 
   public int getNo() {
@@ -101,6 +97,9 @@ public class ServiceInfo {
   public void setRegisteredDate(Date registeredDate) {
     this.registeredDate = registeredDate;
   }
+<<<<<<< HEAD
+
+=======
   public List<Question> getQuestions() {
     return questions;
   }
@@ -113,4 +112,5 @@ public class ServiceInfo {
   public void setReviews(List<Review> reviews) {
     this.reviews = reviews;
   }
+>>>>>>> branch 'main' of https://github.com/IntaeHwang/haroo.git
 }
