@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import com.bit189.haroo.dao.CommentDao;
 import com.bit189.haroo.dao.FeedDao;
-import com.bit189.haroo.dao.ReCommentDao;
-import com.bit189.haroo.domain.Comment;
+import com.bit189.haroo.dao.LikeDao;
+import com.bit189.haroo.dao.PostDao;
 import com.bit189.haroo.domain.Feed;
 import com.bit189.haroo.service.FeedService;
 
@@ -13,12 +13,14 @@ public class DefaultFeedService implements FeedService{
 
   FeedDao feedDao;
   CommentDao commentDao;
-  ReCommentDao reCommentDao;
+  LikeDao likeDao;
+  PostDao postDao;
 
-  public DefaultFeedService(FeedDao feedDao, CommentDao commentDao, ReCommentDao reCommentDao) {
+  public DefaultFeedService(FeedDao feedDao, CommentDao commentDao, LikeDao likeDao, PostDao postDao) {
     this.feedDao = feedDao;
     this.commentDao = commentDao;
-    this.reCommentDao = reCommentDao;
+    this.likeDao = likeDao;
+    this.postDao = postDao;
   }
 
   @Override
@@ -34,19 +36,10 @@ public class DefaultFeedService implements FeedService{
   public List<Feed> list() throws Exception {
     List<Feed> feeds = feedDao.findAll();
 
-
-    for (Feed f : feeds) {
-      int commentCount = 0;
-
-      List<Comment> comments = commentDao.findByComments(f.getNo());
-
-      for (Comment c : comments) {
-        commentCount += (Integer.parseInt(reCommentDao.reCommentCount(c.getNo())) + 1);
-      }
-
-      f.setCommentCount(commentCount);
-      f.setLikeCount(Integer.parseInt(feedDao.likeCount(f.getNo())));
-    }
+    //    for (Feed f : feeds) {
+    //      f.setCommentCount(Integer.parseInt(commentDao.commentCount(f.getNo())));
+    //      f.setLikeCount(Integer.parseInt(likeDao.likeCount(f.getNo())));
+    //    }
 
     return feeds;
   }
@@ -55,16 +48,12 @@ public class DefaultFeedService implements FeedService{
   public Feed get(int no) throws Exception {
     Feed feed = feedDao.findByNo(no);
 
-    int commentCount = 0;
+    feed.setCommentCount(Integer.parseInt(commentDao.commentCount(no)));
+    feed.setLikeCount(Integer.parseInt(likeDao.likeCount(no)));
 
-    List<Comment> comments = commentDao.findByComments(feed.getNo());
-
-    for (Comment c : comments) {
-      commentCount += (Integer.parseInt(reCommentDao.reCommentCount(c.getNo())) + 1);
+    if (feed != null) {
+      postDao.updateViewCount(no);
     }
-
-    feed.setCommentCount(commentCount);
-    feed.setLikeCount(Integer.parseInt(feedDao.likeCount(feed.getNo())));
 
     return feed;
   }

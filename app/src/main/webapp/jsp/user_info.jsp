@@ -10,7 +10,7 @@
 </head>
 <body>
 <h1>사용자 정보</h1>
-<jsp:useBean id="loginUser" type="com.bit189.haroo.domain.Member" scope="session"></jsp:useBean>
+<jsp:useBean id="loginUser" type="com.bit189.haroo.domain.Member" scope="session"/>
 <%
 if (loginUser == null) {
 %>

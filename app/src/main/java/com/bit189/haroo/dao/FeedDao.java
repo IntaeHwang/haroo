@@ -11,5 +11,4 @@ public interface FeedDao {
 
   Feed findByNo(int no) throws Exception;
 
-  String likeCount(int feedNo) throws Exception;
 }

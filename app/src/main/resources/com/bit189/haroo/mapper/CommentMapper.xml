@@ -12,69 +12,82 @@
     <result column="feed_no" property="feedNo"/>
     <result column="comment" property="content"/>
     <result column="com_dttm" property="registeredDate"/>
+    <result column="com_stat" property="state"/>
     
     <association property="writer" javaType="Member"> <!-- 댓글작성자 -->
-      <id column="wmno" property="no"/>
-      <result column="wprofile_pic" property="profilePicture"/>
-      <result column="wname" property="name"/>
-      <result column="wnickname" property="nickname"/>
+      <id column="mno" property="no"/>
+      <result column="profile_pic" property="profilePicture"/>
+      <result column="name" property="name"/>
+      <result column="nickname" property="nickname"/>
+      <result column="mstat" property="state"/>
+      <result column="mrno" property="rank"/>
     </association> 
     
-    <collection property="reComments" ofType="ReComment"> <!-- 대댓글 -->
+    <!-- <collection property="reComments" ofType="ReComment"> 대댓글
       <id column="recom_no" property="no"/>
       <result column="content" property="content"/>
       <result column="rdttm" property="registeredDate"/>
+      <result column="recom_stat" property="state"/>
       
-      <association property="reWriter" javaType="Member"> <!-- 대댓글작성자 -->
+      <association property="reWriter" javaType="Member"> 대댓글작성자
         <id column="rmmno" property="no"/>
 	      <result column="rmprofile_pic" property="profilePicture"/>
 	      <result column="rmname" property="name"/>
 	      <result column="rmnickname" property="nickname"/>
       </association>
       
-      <association property="taggedMember" javaType="Member"> <!-- 대댓글에서 태그된 멤버 -->
+      <association property="taggedMember" javaType="Member"> 대댓글에서 태그된 멤버
         <id column="tmmno" property="no"/>
         <result column="tmname" property="name"/>
         <result column="tmnickname" property="nickname"/>
       </association>
-    </collection>
+    </collection> -->
   </resultMap>
   
   
   <select id="findByComments" resultMap="commentMap" parameterType="int">
 		select
-	    c.com_no,
-	    c.feed_no,
-	    c.comment,
-	    c.com_dttm,
-	    m.mno as wmno,
-	    m.name as wname,
-	    m.nickname as wnickname,
-	    m.profile_pic as wprofile_pic,
-	    r.recom_no,
-	    r.content,
-	    r.rdttm,
-	    rm.mno as rmmno,
-	    rm.name as rmname,
-	    rm.nickname as rmnickname,
-	    rm.profile_pic as rmprofile_pic,
-	    tm.mno as tmmno,
-	    tm.name as tmname,
-	    tm.nickname as tmnickname
-		from 
-	    har_comment c
-	    inner join har_member m on c.mno=m.mno
-	    left join har_recomment r on c.com_no=r.com_no
-	    left join har_member rm on r.mno=rm.mno
-	    left join har_member tm on r.tagged_mem=tm.mno
+			c.com_no,
+			c.feed_no,
+			c.comment,
+			c.com_dttm,
+			c.com_stat,
+			m.mno,
+			m.name,
+			m.nickname,
+			m.profile_pic,
+			m.mstat,
+			m.mrno
+		from
+			har_comment c
+			inner join har_member m on c.mno=m.mno
 		where
-      c.feed_no=#{no}
-      and c.com_stat=1
-			or 
 			c.feed_no=#{no}
 			and c.com_stat=1
-			and r.recom_stat=1
-		order by c.com_no, r.recom_no
+		order by
+		  com_dttm desc, com_no desc
+  </select>
+  
+  
+  <select id="findByComment" parameterType="int" resultMap="commentMap">
+    select
+      c.com_no,
+      c.feed_no,
+      c.comment,
+      c.com_dttm,
+      c.com_stat,
+      m.mno,
+      m.name,
+      m.nickname,
+      m.profile_pic,
+      m.mstat,
+      m.mrno
+    from
+      har_comment c
+      inner join har_member m on c.mno=m.mno
+    where
+      c.feed_no=#{no}
+      and c.com_stat=1
   </select>
   
   
@@ -82,6 +95,19 @@
     insert into har_comment (feed_no, mno, comment)
     value (#{feedNo}, #{writer.no}, #{content})
   </insert>
+  
+  <delete id="delete" parameterType="int">
+    update har_comment set
+        com_stat=0
+    where com_no = #{no}
+  </delete>
+  
+  
+  <select id="commentCount" parameterType="int" resultType="String">
+    select 
+    (select count(*) from har_comment where feed_no=#{no} and com_stat=1) +
+    (select count(*) from har_recomment r inner join har_comment c on r.com_no=c.com_no where c.feed_no=#{no} and r.recom_stat=1) com_cnt
+  </select>
   
   
   

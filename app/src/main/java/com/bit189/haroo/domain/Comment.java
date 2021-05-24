@@ -1,7 +1,6 @@
 package com.bit189.haroo.domain;
 
-import java.sql.Date;
-import java.util.List;
+import java.util.Date;
 
 public class Comment {
   private int no;
@@ -10,7 +9,7 @@ public class Comment {
   private boolean state;
   private Date registeredDate;
   private Member writer;
-  private List<ReComment> reComments;
+  //  private List<ReComment> reComments;
 
   public int getNo() {
     return no;
@@ -23,12 +22,6 @@ public class Comment {
   }
   public void setFeedNo(int feedNo) {
     this.feedNo = feedNo;
-  }
-  public Member getWriter() {
-    return writer;
-  }
-  public void setWriter(Member writer) {
-    this.writer = writer;
   }
   public String getContent() {
     return content;
@@ -48,12 +41,20 @@ public class Comment {
   public void setRegisteredDate(Date registeredDate) {
     this.registeredDate = registeredDate;
   }
-  public List<ReComment> getReComments() {
-    return reComments;
+  public Member getWriter() {
+    return writer;
   }
-  public void setReComments(List<ReComment> reComments) {
-    this.reComments = reComments;
+  public void setWriter(Member writer) {
+    this.writer = writer;
   }
+  //  public List<ReComment> getReComments() {
+  //    return reComments;
+  //  }
+  //  public void setReComments(List<ReComment> reComments) {
+  //    this.reComments = reComments;
+  //  }
+
+
 
 
 }
