@@ -12,9 +12,8 @@ public class LearningSchedule {
 
   @Override
   public String toString() {
-    return "LearningSchedule [no=" + no + ", learningNo=" + learningNo + ", learningDate="
-        + learningDate + ", startTime=" + startTime + ", endTime=" + endTime + ", getClass()="
-        + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+    return "LearningSchedule [no=" + no + ", learningNo=" + learningNo + ", LearningDate="
+        + learningDate + ", startTime=" + startTime + ", endTime=" + endTime + "]";
   }
 
   public int getNo() {
