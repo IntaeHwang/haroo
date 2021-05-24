@@ -19,7 +19,7 @@
 		<tr><th>제목</th> <td><input name='title' type='text' value='${question.title}'></td></tr>
 		<tr><th>내용</th> <td><textarea name='content' rows='10' cols='60'>${question.content}</textarea></td></tr>
 		<tr><th>작성자</th> <td>${question.writer.name}</td></tr>
-		<tr><th>등록일</th> <td>${question.registeredDate2}</td></tr>
+		<tr><th>등록일</th> <td>${question.writingDate}</td></tr>
 		<tr><th>조회수</th> <td>${question.viewCount}</td></tr>
 	</tbody>
 

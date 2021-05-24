@@ -53,11 +53,11 @@ public class QuestionAddHandler extends HttpServlet{
 
     try {
       Question question = new Question();
-      Post p = new Post();
+      Post post = new Post();
 
       question.setTitle(request.getParameter("title"));
       question.setSecret(true);
-      p.setContent(request.getParameter("content"));
+      post.setContent(request.getParameter("content"));
 
 
       Member m = new Member();
@@ -75,7 +75,7 @@ public class QuestionAddHandler extends HttpServlet{
         photoPart.write(this.uploadDir + "/" + filename);
         AttachedFile f = new AttachedFile();
         f.setName(filename);
-        f.setPostNo(p.getNo());
+        f.setPostNo(post.getNo());
         postService.addFile(f);
 
 
@@ -101,8 +101,8 @@ public class QuestionAddHandler extends HttpServlet{
           }
         });
       }
-      postService.add(p);
-      serviceQuestionService.add(p.getNo(), question);
+      postService.add(post);
+      serviceQuestionService.add(post.getNo(), question);
 
       response.sendRedirect("list");
     } catch (Exception e) {

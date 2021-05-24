@@ -29,11 +29,11 @@ public class QuestionDetailHandler extends HttpServlet {
     int no = Integer.parseInt(request.getParameter("no"));
 
     try { 
-      Question q = serviceQuestionService.get(no);
-      request.setAttribute("q", q);
+      Question question = serviceQuestionService.get(no);
+      request.setAttribute("question", question);
 
       response.setContentType("text/html;charset=UTF-8");
-      request.getRequestDispatcher("/jsp/board/detail.jsp").include(request, response);
+      request.getRequestDispatcher("/jsp/serviceQuestion/detail.jsp").include(request, response);
 
     } catch (Exception e) {
       throw new ServletException(e);
