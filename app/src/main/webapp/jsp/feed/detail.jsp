@@ -45,7 +45,7 @@
 		</form>
 	
 	
-		<%-- <c:forEach items="${comments}" var="comment">
+		<c:forEach items="${comments}" var="comment">
 		  <form action="reComment/add" method="post">
 		    <input type="hidden" name="commentNo" value="${comment.no}"/>
 		    <input type="hidden" name="taggedNo" value="${comment.writer.no}"/>
@@ -53,31 +53,33 @@
 				<pre><b>${comment.writer.name}</b> ${comment.content}</pre>
 				<input type="text" name="content" placeholder="답글을 달아주세요."/>
         <input type='submit' value='등록'>
-	     	<a href="reComment/add?no=${comment.no}">답글달기</a>
+	     	<%-- <a href="reComment/add?no=${comment.no}">답글달기</a> --%>
 	     	
 	     	<c:if test="${not empty loginUser and loginUser.no == comment.writer.no}">
 	     	  <!-- <input type="submit" value="수정"/> -->
-	     	  <a href="comment/update?no=${comment.no}">수정</a>
+	     	  <%-- <a href="comment/update?no=${comment.no}">수정</a> --%>
 	     	  <a href="comment/delete?no=${comment.no}&feedNo=${feed.no}">댓글삭제</a>
 	     	</c:if>
 	    </form>
      	
 		  <c:forEach items="${comment.reComments}" var="reComment">
+		  <c:if test="${reComment.state == true}">
 		    <form action="" method="post">
 		    <input type="hidden" name="no" value="${comment.no}"/>
 				<pre>     <b>${reComment.reWriter.name}</b> @${reComment.taggedMember.name} ${reComment.content}</pre>
 				<pre>     <input type="text" name="content" placeholder="답글의 답글을 달아주세요."/><input type='submit' value='등록'></pre>
         
-        <a href="reComment/add?no=${comment.no}">답글달기</a>
+        <%-- <a href="reComment/add?no=${comment.no}">답글달기</a> --%>
         
         <c:if test="${not empty loginUser and loginUser.no == reComment.reWriter.no}">
           <!-- <input type="submit" value="수정"/> -->
-          <a href="comment/update?no=${comment.no}">수정</a>
+          <%-- <a href="comment/update?no=${comment.no}">수정</a> --%>
           <a href="reComment/delete?no=${reComment.no}&feedNo=${feed.no}">대댓글삭제</a>
         </c:if>
 				</form>
+			</c:if>
 		  </c:forEach>
-		</c:forEach> --%>
+		</c:forEach>
 		
 		<form action='comment/add' method='post'>
 			<input type="hidden" name="no" value="${feed.no}" />

@@ -12,7 +12,6 @@ import com.bit189.haroo.domain.Comment;
 import com.bit189.haroo.domain.Feed;
 import com.bit189.haroo.service.CommentService;
 import com.bit189.haroo.service.FeedService;
-import com.bit189.haroo.service.ReCommentService;
 
 @SuppressWarnings("serial")
 @WebServlet("/feed/detail")
@@ -26,14 +25,12 @@ public class FeedDetailHandler extends HttpServlet {
 
     FeedService feedService = (FeedService) request.getServletContext().getAttribute("feedService");
     CommentService commentService = (CommentService) request.getServletContext().getAttribute("commentService");
-    ReCommentService reCommentService = (ReCommentService) request.getServletContext().getAttribute("reCommentService");
 
     int no = Integer.parseInt(request.getParameter("no"));
 
     try {
       Feed feed = feedService.get(no);
       List<Comment> comments = commentService.list(no);
-      //      List<ReComment> reComment = reCommentService.list();
 
       //      HttpSession session = request.getSession();
       request.setAttribute("feed", feed);
