@@ -5,9 +5,11 @@ import com.bit189.haroo.domain.Question;
 
 public interface ServiceQuestionService {
 
-  int add(Question Question) throws Exception;
+  int add(int postNo, Question question) throws Exception;
 
   List<Question> list() throws Exception;
+
+  List<Question> listByMember(int mno) throws Exception;
 
   Question get(int no) throws Exception;
 
@@ -15,5 +17,5 @@ public interface ServiceQuestionService {
 
   int delete(int no) throws Exception;
 
-  List<Question> Search(int no) throws Exception;
+  List<Question> Search(String keyword) throws Exception;
 }

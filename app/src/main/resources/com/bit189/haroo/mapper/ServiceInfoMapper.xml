@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bit189.haroo.dao.ServiceInfoDao">
+  
+  <resultMap id="serviceInfoMap" type="serviceInfo">
+    <id column="sno" property="no"/>
+    <result column="sname" property="name"/>
+    <result column="sintro" property="intro"/>
+    <result column="cov_img" property="coverImage"/>
+    <result column="avg_rate" property="averageRate"/>
+    <result column="sstat" property="state"/>
+    <result column="rdttm" property="registeredDate"/>
+    
+    <!--
+    <collection property="questions" ofType="Question">
+       미완 
+    </collection>
+    -->
+    
+    <!--
+    <collection property="reviews" ofType="Review">
+       미완 
+    </collection>
+    -->
+  </resultMap>
+  
+  <insert id="insert" parameterType="serviceInfo">
+    insert into
+      har_service(sname,sintro,cov_img)
+      values(#{sname},#{sintro},#{cov_img})
+  </insert>
+  
+  <update id="delete" parameterType="int">
+    update har_service set
+      sstat=0
+    where sno=#{no}
+  </update>
+  
+</mapper>
+
+
+
+
+
+

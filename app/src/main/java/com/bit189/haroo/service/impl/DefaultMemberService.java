@@ -23,6 +23,7 @@ public class DefaultMemberService implements MemberService {
 
   @Override
   public List<Member> list(String keyword) throws Exception {
+    System.out.println("여기2");
     return memberDao.findByKeyword(keyword);
   }
 

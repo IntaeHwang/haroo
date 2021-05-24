@@ -1,6 +1,7 @@
 package com.bit189.haroo.domain;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class LearningApplication {
@@ -10,10 +11,15 @@ public class LearningApplication {
   private Date registeredDate;
   private int applySize;
 
+  public String getRegisteredDate2() {
+    return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(registeredDate);
+  }
+
   @Override
   public String toString() {
     return "LearningApplication [no=" + no + ", memberNo=" + memberNo + ", schedules=" + schedules
-        + ", registeredDate=" + registeredDate + ", applySize=" + applySize + "]";
+        + ", registeredDate=" + registeredDate + ", applySize=" + applySize + ", getClass()="
+        + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
   }
 
   public int getNo() {
@@ -40,10 +46,6 @@ public class LearningApplication {
     this.schedules = schedules;
   }
 
-  public Date getRegisteredDate() {
-    return registeredDate;
-  }
-
   public void setRegisteredDate(Date registeredDate) {
     this.registeredDate = registeredDate;
   }
@@ -55,10 +57,4 @@ public class LearningApplication {
   public void setApplySize(int applySize) {
     this.applySize = applySize;
   }
-
-
-
-
-
-
 }

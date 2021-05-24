@@ -1,5 +1,4 @@
 package com.bit189.haroo.web;
-
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -21,21 +20,18 @@ public class LearningApplicationListHandler extends HttpServlet{
 
     LearningApplicationService learningApplicationService = (LearningApplicationService)
         request.getServletContext().getAttribute("learningApplicationService");
+    //    LearningScheduleService learningScheduleService = (LearningScheduleService)
+    //        request.getServletContext().getAttribute("learningScheduleService");
 
     try {
-      String keyword = request.getParameter("keyword");
-      List<LearningApplication> learningApplication = null;
+      List<LearningApplication> learningApplications = null;
 
-      if (keyword != null && keyword.length() > 0) {
-        learningApplication = learningApplicationService.search(keyword);
-      } else {
-        learningApplication = learningApplicationService.list();
-      }
 
-      request.setAttribute("list", learningApplication);
+      request.setAttribute("learningApplications", learningApplications);
+      //request.setAttribute("", learningApplications);
 
       response.setContentType("text/html;charset=UTF-8");
-      request.getRequestDispatcher("/jsp/board/list.jsp").include(request, response);
+      request.getRequestDispatcher("/jsp/learningapplication/list.jsp").include(request, response);
 
     } catch (Exception e) {
       throw new ServletException(e);

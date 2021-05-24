@@ -95,7 +95,8 @@
       mno,
       name,
       email,
-      profile_pic
+      profile_pic,
+      mrno
     from har_member 
     where email = #{email} and password = password(#{password})
   </select>
@@ -115,21 +116,6 @@
       mstat=#{state}
     where mno=#{no}
   </update>
-   <!--  <set> 
-      <if test="name != ''">name=#{name},</if>
-      <if test="email != ''">email=#{email},</if>
-      <if test="password != ''">password=password(#{password}),</if>
-      <if test="profilePicture != ''">profile_pic=#{profilePicture},</if>
-      <if test="tel != ''">tel=#{tel},</if> 
-      <if test="zipcode != ''">zipcode=#{zipcode},</if> 
-      <if test="address != ''">addr=#{address},</if> 
-      <if test="detailAddress != ''">det_addr=#{detailAddress},</if> 
-     <if test="mrno != ''">mrno=#{rank}</if>
-      <if test="state != ''">mstate=#{state}</if> 
-    </set>
-    -->
-  
-    
   
   <delete id="delete" parameterType="int">
   delete from har_member 

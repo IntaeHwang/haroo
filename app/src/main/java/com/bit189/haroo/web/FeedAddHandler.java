@@ -57,7 +57,7 @@ public class FeedAddHandler extends HttpServlet{
       Feed feed = new Feed();
       // 로그인유저가 튜터인지 확인하는 코드 작성 필요
       Tutor tutor = new Tutor();
-      tutor.setNo(2);
+      tutor.setNo(3);
       feed.setWriter(tutor);
       feedService.add(post.getNo(), feed);
 

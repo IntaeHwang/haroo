@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.bit189.haroo.domain.Learning;
-import com.bit189.haroo.domain.Review;
+import com.bit189.haroo.domain.LearningReview;
 import com.bit189.haroo.service.LearningReviewService;
 import com.bit189.haroo.service.LearningService;
 
@@ -31,20 +31,22 @@ public class LearningReviewListHandler extends HttpServlet {
       String lno = request.getParameter("lno");
       if(lno == null) {
         throw new ServletException("파라미터가 없습니다.");
-      }
-
+      } 
       Learning learning = learningService.get(Integer.parseInt(lno));
       if(learning == null) {
         throw new ServletException("해당 번호의 체험 학습이 없습니다.");
       }
 
-      List<Review> reviews = learningReviewService.listByLearning(
-          Integer.parseInt(lno));
+      request.setAttribute("learning", learning);
+
+      List<LearningReview> reviews = learningReviewService.listByLearning(
+          Integer.parseInt(lno), LearningReviewService.WRITED_DATE, false);
+
 
       request.setAttribute("reviews", reviews);
-
       response.setContentType("text/html;charset=UTF-8");
       request.getRequestDispatcher("/jsp/learningReview/list.jsp").include(request, response);
+
 
     } catch (Exception e) {
       throw new ServletException(e);
