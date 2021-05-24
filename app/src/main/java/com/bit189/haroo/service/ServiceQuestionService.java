@@ -5,7 +5,7 @@ import com.bit189.haroo.domain.Question;
 
 public interface ServiceQuestionService {
 
-  int add(Question Question) throws Exception;
+  int add(int postNo, Question question) throws Exception;
 
   List<Question> list() throws Exception;
 

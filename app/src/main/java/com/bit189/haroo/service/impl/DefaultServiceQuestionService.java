@@ -1,5 +1,6 @@
 package com.bit189.haroo.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import com.bit189.haroo.dao.ServiceQuestionDao;
 import com.bit189.haroo.domain.Question;
@@ -10,14 +11,16 @@ public class DefaultServiceQuestionService implements ServiceQuestionService{
   ServiceQuestionDao serviceQuestionDao;
 
 
-
   public DefaultServiceQuestionService(ServiceQuestionDao serviceQuestionDao) {
     this.serviceQuestionDao = serviceQuestionDao;
   }
 
   @Override
-  public int add(Question Question) throws Exception {
-    return serviceQuestionDao.insert(Question);
+  public int add(int postNo, Question question) throws Exception {
+    HashMap<String,Object> param = new HashMap<>();
+    param.put("no", postNo);
+    param.put("question", question);
+    return serviceQuestionDao.insert(param);
   }
 
   @Override
@@ -40,8 +43,8 @@ public class DefaultServiceQuestionService implements ServiceQuestionService{
   }
 
   @Override
-  public int update(Question Question) throws Exception {
-    return serviceQuestionDao.update(Question);
+  public int update(Question question) throws Exception {
+    return serviceQuestionDao.update(question);
   }
 
   @Override

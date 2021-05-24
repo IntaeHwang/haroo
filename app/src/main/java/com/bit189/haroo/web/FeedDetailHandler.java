@@ -1,8 +1,6 @@
 package com.bit189.haroo.web;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -14,6 +12,7 @@ import com.bit189.haroo.domain.Comment;
 import com.bit189.haroo.domain.Feed;
 import com.bit189.haroo.service.CommentService;
 import com.bit189.haroo.service.FeedService;
+import com.bit189.haroo.service.ReCommentService;
 
 @SuppressWarnings("serial")
 @WebServlet("/feed/detail")
@@ -27,24 +26,24 @@ public class FeedDetailHandler extends HttpServlet {
 
     FeedService feedService = (FeedService) request.getServletContext().getAttribute("feedService");
     CommentService commentService = (CommentService) request.getServletContext().getAttribute("commentService");
+    ReCommentService reCommentService = (ReCommentService) request.getServletContext().getAttribute("reCommentService");
 
     int no = Integer.parseInt(request.getParameter("no"));
 
     try {
       Feed feed = feedService.get(no);
-      List<Comment> comments = commentService.get(no);
+      List<Comment> comments = commentService.list(no);
+      //      List<ReComment> reComment = reCommentService.list();
 
+      //      HttpSession session = request.getSession();
       request.setAttribute("feed", feed);
       request.setAttribute("comments", comments);
 
       response.setContentType("text/html;charset=UTF-8");
-
       request.getRequestDispatcher("/jsp/feed/detail.jsp").include(request, response);
 
     } catch (Exception e) {
-      StringWriter strWriter = new StringWriter();
-      PrintWriter printWriter = new PrintWriter(strWriter);
-      e.printStackTrace(printWriter);
+      throw new ServletException(e);
     }
   }
 }

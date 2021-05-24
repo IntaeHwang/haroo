@@ -6,34 +6,36 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.bit189.haroo.domain.Learning;
 import com.bit189.haroo.domain.Member;
-import com.bit189.haroo.service.LearningService;
+import com.bit189.haroo.domain.Question;
+import com.bit189.haroo.service.ServiceQuestionService;
+
 
 @SuppressWarnings("serial")
-@WebServlet("/learning/delete")
-public class LearningDeleteHandler extends HttpServlet {
+@WebServlet("/question/delete")
+public class QuestionDeleteHandler extends HttpServlet {
 
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    LearningService learningService = (LearningService) request.getServletContext().getAttribute("learningService");
+    ServiceQuestionService serviceQuestionService =
+        (ServiceQuestionService) request.getServletContext().getAttribute("serviceQuestionService");
 
     try {
       int no = Integer.parseInt(request.getParameter("no"));
 
-      Learning learning = learningService.get(no);
-      if (learning == null) {
-        throw new Exception("해당 번호의 체험학습이 없습니다.");
+      Question oldQuestion = serviceQuestionService.get(no);
+      if (oldQuestion == null) {
+        throw new Exception("해당 번호의 게시글이 없습니다.");
       }
 
       Member loginUser = (Member) request.getSession().getAttribute("loginUser");
-      if (learning.getOwner().getNo() != loginUser.getNo()) {
+      if (oldQuestion.getWriter().getNo() != loginUser.getNo()) {
         throw new Exception("삭제 권한이 없습니다!");
       }
 
-      learningService.delete(no);
+      serviceQuestionService.delete(no);
 
       response.sendRedirect("list");
 
@@ -42,3 +44,9 @@ public class LearningDeleteHandler extends HttpServlet {
     }
   }
 }
+
+
+
+
+
+

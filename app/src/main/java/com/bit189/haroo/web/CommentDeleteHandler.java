@@ -6,39 +6,39 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.bit189.haroo.domain.Learning;
+import com.bit189.haroo.domain.Comment;
 import com.bit189.haroo.domain.Member;
-import com.bit189.haroo.service.LearningService;
+import com.bit189.haroo.service.CommentService;
 
 @SuppressWarnings("serial")
-@WebServlet("/learning/delete")
-public class LearningDeleteHandler extends HttpServlet {
+@WebServlet("/feed/comment/delete")
+public class CommentDeleteHandler extends HttpServlet {
 
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    LearningService learningService = (LearningService) request.getServletContext().getAttribute("learningService");
+    CommentService commentService = (CommentService) request.getServletContext().getAttribute("commentService");
 
     try {
+
       int no = Integer.parseInt(request.getParameter("no"));
 
-      Learning learning = learningService.get(no);
-      if (learning == null) {
-        throw new Exception("해당 번호의 체험학습이 없습니다.");
-      }
+      Comment comment = commentService.get(no);
 
       Member loginUser = (Member) request.getSession().getAttribute("loginUser");
-      if (learning.getOwner().getNo() != loginUser.getNo()) {
+      if (loginUser.getNo() != comment.getWriter().getNo()) {
         throw new Exception("삭제 권한이 없습니다!");
       }
 
-      learningService.delete(no);
+      commentService.delete(no);
 
-      response.sendRedirect("list");
+      response.sendRedirect("../detail?no=" + Integer.parseInt(request.getParameter("feedNo")));
 
     } catch (Exception e) {
       throw new ServletException(e);
     }
+
   }
+
 }

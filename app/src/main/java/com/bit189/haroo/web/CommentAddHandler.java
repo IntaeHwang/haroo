@@ -11,7 +11,7 @@ import com.bit189.haroo.domain.Member;
 import com.bit189.haroo.service.CommentService;
 
 @SuppressWarnings("serial")
-@WebServlet("/comment/add")
+@WebServlet("/feed/comment/add")
 public class CommentAddHandler extends HttpServlet {
 
   @Override
@@ -24,15 +24,13 @@ public class CommentAddHandler extends HttpServlet {
       Comment comment = new Comment();
       comment.setFeedNo(Integer.parseInt(request.getParameter("no")));
       comment.setContent(request.getParameter("content"));
-      Member m = new Member();
-      m.setNo(3);
-      comment.setWriter(m);
+
+      Member loginUser = (Member) request.getSession().getAttribute("loginUser");
+      comment.setWriter(loginUser);
 
       commentService.add(comment);
 
-      response.sendRedirect("../feed/detail?no=" + comment.getFeedNo());
-
-
+      response.sendRedirect("../detail?no=" + comment.getFeedNo());
 
     } catch (Exception e) {
 
