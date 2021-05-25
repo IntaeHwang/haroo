@@ -1,12 +1,21 @@
 package com.bit189.haroo.dao;
 
 import java.util.List;
-import com.bit189.haroo.domain.Review;
+import java.util.Map;
+import com.bit189.haroo.domain.LearningReview;
 
 public interface LearningReviewDao {
-  int insert(Review review) throws Exception;
+  int insert(LearningReview review) throws Exception;
 
-  List<Review> findAll() throws Exception;
+  List<LearningReview> findListByLearningNo(Map<String,Object> params) throws Exception;
 
-  Review findByNo(int no) throws Exception;
+  List<LearningReview> findListByMemberNo(Map<String,Object> params) throws Exception;
+
+  LearningReview findByNo(int pno) throws Exception;
+
+  int update(LearningReview review) throws Exception;
+
+  List<LearningReview> findByKeyword(String keyword) throws Exception;
+  
+  int delete(int no) throws Exception;
 }

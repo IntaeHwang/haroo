@@ -1,13 +1,15 @@
 package com.bit189.haroo.domain;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class Product {
-  private int no;
+public class Product extends ServiceInfo {
+  private int price;
   private String deliveryInfo;
   private String refundInfo;
-  private ArrayList<String> productPicture;
-  private ArrayList<String> productOption;
+  private int totalSoldCount;
+  private List<AttachedFile> productPicture;
+  private List<ProductOption> productOption;
+
 
 
 }

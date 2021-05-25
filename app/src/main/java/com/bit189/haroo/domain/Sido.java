@@ -1,8 +1,13 @@
 package com.bit189.haroo.domain;
 
 public class Sido {
-  int no;
-  String name;
+  private int no;
+  private String name;
+
+  @Override
+  public String toString() {
+    return "Sido [no=" + no + ", name=" + name + "]";
+  }
 
   public int getNo() {
     return no;
