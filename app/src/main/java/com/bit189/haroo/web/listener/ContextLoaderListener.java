@@ -101,7 +101,7 @@ public class ContextLoaderListener implements ServletContextListener {
 
 
       // LearningApplicationService learningApplicationService = new DefaultLearningApplicationService(learningApplicationDao, null);
-      ServiceQuestionService serviceQuestionService = new DefaultServiceQuestionService(serviceQuestionDao);
+      ServiceQuestionService serviceQuestionService = new DefaultServiceQuestionService(txManager, serviceQuestionDao, postDao);
 
       //    LearningApplicationService learningApplicationService = new DefaultLearningApplicationService(learningApplicationDao, null);
 
