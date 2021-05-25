@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.bit189.haroo.domain.Learning;
-import com.bit189.haroo.domain.Review;
+import com.bit189.haroo.domain.LearningReview;
 import com.bit189.haroo.service.LearningReviewService;
 import com.bit189.haroo.service.LearningService;
 
@@ -39,19 +39,33 @@ public class LearningReviewListHandler extends HttpServlet {
 
       request.setAttribute("learning", learning);
 
-      List<Review> reviews = learningReviewService.listByLearning(
-          Integer.parseInt(lno));
+      String sortingItem = request.getParameter("sortingItem");
+      String sortingType = request.getParameter("sortingType");
 
+      sortingType = (sortingType == null ? "d" : sortingType); 
+
+      switch (sortingType) {
+        case "a":
+          sortingType = "asc";
+          break;
+        default:
+          sortingType = "desc";
+      }
+
+
+
+      List<LearningReview> reviews = 
+          learningReviewService.listByLearning(
+              Integer.parseInt(lno), sortingItem, sortingType);
 
       request.setAttribute("reviews", reviews);
+      System.out.println(reviews);
       response.setContentType("text/html;charset=UTF-8");
       request.getRequestDispatcher("/jsp/learningReview/list.jsp").include(request, response);
-
 
     } catch (Exception e) {
       throw new ServletException(e);
     }
   }
-
 
 }

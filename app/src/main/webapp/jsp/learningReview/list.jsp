@@ -1,56 +1,75 @@
-<%@page import="com.bit189.haroo.service.MemberService"%>
-<%@page import="java.util.List"%>
-<%@page import="com.bit189.haroo.domain.Review"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ page  %>
+<%@ page 
+    language="java" 
+    contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"
+    trimDirectiveWhitespaces="true"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>체험 후기</title>
+<title>체험 후기 목록</title>
 </head>
 <body>
-<h1>체험 후기</h1>
-<jsp:useBean id="reviews" type="List<Review>" scope="request"/>
-<h2>${learninng.name} }</h2>
-<%
-if (reviews.size() == 0) {
-%>
-<p>아직 작성된 후기가 없습니다.</p> 
-<%
-} else {
-%>
-<table border='1'>
-<thead>
-<tr>
-<th>번호</th> <th>제목</th> <th>작성자</th> <th>등록일</th> 
-<th>평점</th> <th>조회수</th> <th>추천수</th>
-</tr>
+<h1>체험 후기 목록</h1>
+<h2>${learning.name}</h2>
+<p><a href='add'>후기 작성</a></p>
+
+<c:if test="${empty reviews}">
+  <p>아직 작성된 후기가 없습니다.</p> 
+</c:if>
+
+  <c:if test="${not empty reviews}">
+    <c:if test="${param.sortingItem != 'rate' and param.sortingItem != 'rcm_cnt'}">
+      <c:set var="pnoSortingType" value="${param.sortingType == 'a' ? 'd' : 'a'}"/>
+    </c:if>
+    <c:if test="${param.sortingItem == 'rate'}">
+      <c:set var="rateSortingType" value="${param.sortingType == 'a' ? 'd' : 'a'}"/>
+    </c:if>
+    <c:if test="${param.sortingItem == 'rcm_cnt'}">
+      <c:set var="rcm_cntSortingType" value="${param.sortingType == 'a' ? 'd' : 'a'}"/> 
+    </c:if>
+ <table border='1'>
+ <thead>
+ <tr>
+   <th>
+     <a href="list?lno=${learning.no}&sortingItem=pno&sortingType=${pnoSortingType}">번호
+     ${pnoSortingType == 'a' ? '▼' : '▲'}</a>
+   </th>
+   <th>제목</th> 
+   <th>작성자</th> 
+   <th>작성일</th> 
+   <th>
+     <a href="list?lno=${learning.no}&sortingItem=rate&sortingType=${rateSortingType}">평점
+     ${rateSortingType == 'a' ? '▼' : '▲'}</a>
+   </th>
+   <th>조회수</th> 
+   <th>
+   <a href="list?lno=${learning.no}&sortingItem=rcm_cnt&sortingType=${rcm_cntSortingType}">추천수
+     ${rcm_cntSortingType == 'a' ? '▼' : '▲'}</a>
+   </th>
+ </tr>
 </thead>
 <tbody>
-<%
-  for (Review r : reviews) {
-%>
-<tr>
+ <c:forEach items="${reviews}" var="r">
+   <tr>
   <td>${r.no}</td>
-  <td><a href='detail?rno=${r.no}'>${r.title}</a></td>
-  <td>${r.writer.nickName}</td>
-  <td>${r.registeredDate}</td>
+  <td><a href='detail?lno=${learning.no}&rno=${r.no}'>${r.title}</a></td>
+  <td>${r.writer.nickname}</td>
+  <td>${r.writingDate}</td>
   <td>${r.rate}</td>
   <td>${r.viewCount}</td>
   <td>${r.recommendCount}</td>
-</tr>
-<%
-  }
-}
-%>
-</tbody>
-</table>
+  </tr>
+ </c:forEach>
+ </tbody>
+ </table>
+
 <form action='search' method='get'>
 <input type='text' name='keyword' value='${param.keyword}'>
 <button>검색</button>
 </form>
+</c:if>
 </body>
 </html>

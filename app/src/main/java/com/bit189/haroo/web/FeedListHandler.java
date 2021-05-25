@@ -1,8 +1,6 @@
 package com.bit189.haroo.web;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,16 +29,12 @@ public class FeedListHandler extends HttpServlet {
       request.getRequestDispatcher("/jsp/feed/list.jsp").include(request, response);
 
     } catch (Exception e) {
-      // 상세 오류 내용을 StringWriter로 출력한다.
-      StringWriter strWriter = new StringWriter();
-      PrintWriter printWriter = new PrintWriter(strWriter);
-      e.printStackTrace(printWriter);
+      throw new ServletException(e);
 
     }
   }
 
 }
-
 
 
 

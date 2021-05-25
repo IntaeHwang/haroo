@@ -16,8 +16,8 @@
 <h1>체험 신청 목록</h1>
 <% 
 List<LearningApplication> list = (List<LearningApplication>) request.getAttribute("list");
-for (LearningApplication l : list) {
-  %>
+for (LearningApplication l : list) { }
+%>
 <h2></h2>
 <table border='1'>
 <thead>

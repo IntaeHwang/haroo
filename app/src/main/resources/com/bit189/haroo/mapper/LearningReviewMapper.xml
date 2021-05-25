@@ -5,16 +5,15 @@
 
 <mapper namespace="com.bit189.haroo.dao.LearningReviewDao">
 
-  <resultMap id="LearningReviewMap" type="Review">
+  <resultMap id="LearningReviewMap" type="LearningReview">
     <id column="pno" property="no"/>
     <result column="content" property="content"/>
     <result column="wdttm" property="writingDate"/>
     <result column="view_cnt" property="viewCount"/>
-    <result column="state" property="state"/>
+    <result column="pstat" property="state"/>
     <result column="title" property="title"/>
+    <result column="lrn_appl_no" property="learningApplyNo"/>
     <result column="rate" property="rate"/>
-    <result column="mno" property="writerNo"/>
-    <result column="sche_no" property="scheduleNo"/>
     <result column="rcm_cnt" property="recommendCount"/>
     
     <association property="writer" javaType="Member">
@@ -22,64 +21,101 @@
       <result column="profile_pic" property="profilePicture"/>
       <result column="name" property="name"/>
       <result column="nickname" property="nickname"/>
-    </association> 
+      <result column="mstat" property="state"/>
+    </association>
+    
+    <association property="serviceInfo" javaType="ServiceInfo"> 
+      <id column="lno" property="no"/>
+      <result column="sname" property="name"/>
+      <result column="avg_rate" property="averageRate"/>
+      <result column="sstat" property="state"/>
+    </association>
+    
+    <association property="schedule" javaType="LearningSchedule">
+      <id column="sno" property="no"/>
+      <result column="lno" property="learningNo"/>
+      <result column="date" property="learningDate"/>
+      <result column="etm" property="endTime"/>
+    </association>
     
     <collection property="attachedFiles" ofType="AttachedFile">
       <id column="fno" property="no"/>
       <result column="fname" property="name"/>
     </collection>
-    
   </resultMap>
   
-  <select id="findListByLearningNo" resultMap="LearningReviewMap" parameterType="int">
-    select
+  <sql id="selectList">
+	  select
       pno,
       wdttm,
       view_cnt,
       title,
+      sname,
+      avg_rate,
       rate,
-      mno,
-      sche_no,
-      rcm_cnt,
-      lno,
       name,
-      nickname
+      nickname,
+      mstat,
+      rcm_cnt
     from
       har_vi_lrnrv
+  </sql>
+  
+  <sql id="sortingOrderBy">
+    <trim prefix="order by">
+    <choose>
+    <when test="sortingItem == 'rate'">
+      rate ${sortingType}
+    </when>
+    <when test="sortingItem == 'rcm_cnt'">
+      rcm_cnt ${sortingType}
+    </when>
+    <otherwise>
+      pno ${sortingType}
+    </otherwise>
+    </choose>
+    </trim>
+  </sql>
+  
+  <select id="findListByLearningNo" resultMap="LearningReviewMap" parameterType="map">
+    <include refid="selectList"/>
     where
-      lno = #{lno}
-      and state = 1
+      lno = #{learningNo}
+      and pstat = 1
+    <include refid="sortingOrderBy"/>
   </select>
   
+  <select id="findListByMemberNo" resultMap="LearningReviewMap" parameterType="map">
+    <include refid="selectList"/>
+    where
+      mno = #{memberNo}
+      and pstat = 1
+    <include refid="sortingOrderBy"/>
+  </select>
   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  <select id="findByNo" resultMap="LearningReviewMap" parameterType="int">
+    select
+		  pno,
+		  content,
+		  wdttm,
+		  view_cnt,
+		  pstat,
+		  title,
+		  rate,
+		  rcm_cnt,
+		  mno,
+		  profile_pic,
+		  name,
+		  nickname,
+		  mstat,
+		  lno,
+		  sname,
+		  sstat
+		from
+		  har_vi_lrnrv
+		where
+		  pno = #{reviewNo}
+  </select>
 </mapper>
   
   

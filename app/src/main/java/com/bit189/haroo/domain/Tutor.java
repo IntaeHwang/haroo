@@ -3,7 +3,7 @@ package com.bit189.haroo.domain;
 import java.sql.Date;
 import java.util.List;
 
-public class Tutor extends Member{
+public class Tutor extends Member {
   private String intro;
   private String application;
   private Date promotedDate;
@@ -16,6 +16,7 @@ public class Tutor extends Member{
         + promotedDate + ", tutorDistricts=" + tutorDistricts + ", tutorCategories="
         + tutorCategories + "]";
   }
+
   public String getIntro() {
     return intro;
   }
@@ -46,8 +47,4 @@ public class Tutor extends Member{
   public void setTutorCategories(List<TutorCategory> tutorCategories) {
     this.tutorCategories = tutorCategories;
   }
-
-
-
 }
-

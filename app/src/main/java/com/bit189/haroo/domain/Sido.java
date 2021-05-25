@@ -4,6 +4,11 @@ public class Sido {
   private int no;
   private String name;
 
+  @Override
+  public String toString() {
+    return "Sido [no=" + no + ", name=" + name + "]";
+  }
+
   public int getNo() {
     return no;
   }
@@ -16,10 +21,4 @@ public class Sido {
   public void setName(String name) {
     this.name = name;
   }
-  @Override
-  public String toString() {
-    return "MetropolitanCity [no=" + no + ", name=" + name + "]";
-  }
-
-
 }

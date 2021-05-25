@@ -3,24 +3,53 @@ package com.bit189.haroo.domain;
 import java.util.List;
 
 public class Learning extends ServiceInfo {
-  private String metropolitanCity;
+  private int sidoNo;
+  private String sido;
+  private int sigunguNo;
   private String sigungu;
   private Tutor owner;
   private int minPeople;
   private int maxPeople;
   private String progressOrder;
   private int price;
-  private String zipCode;
+  private String zipcode;
   private String address;
   private String detailAddress;
   private String refundInformation;
   private List<LearningSchedule> schedules;
 
-  public String getMetropolitanCity() {
-    return metropolitanCity;
+  @Override
+  public String toString() {
+    return "Learning [sidoNo=" + sidoNo + ", sido=" + sido + ", sigunguNo=" + sigunguNo
+        + ", sigungu=" + sigungu + ", owner=" + owner + ", minPeople=" + minPeople + ", maxPeople="
+        + maxPeople + ", progressOrder=" + progressOrder + ", price=" + price + ", zipcode="
+        + zipcode + ", address=" + address + ", detailAddress=" + detailAddress
+        + ", refundInformation=" + refundInformation + ", schedules=" + schedules + ", getNo()="
+        + getNo() + ", getBroadCategoryNo()=" + getBroadCategoryNo() + ", getBroadCategory()="
+        + getBroadCategory() + ", getNarrowCategoryNo()=" + getNarrowCategoryNo()
+        + ", getNarrowCategory()=" + getNarrowCategory() + ", getName()=" + getName()
+        + ", getIntro()=" + getIntro() + ", getCoverImage()=" + getCoverImage()
+        + ", getAverageRate()=" + getAverageRate() + ", isState()=" + isState() + ", getTutor()="
+        + getTutor() + ", getRegisteredDate()=" + getRegisteredDate() + "]";
   }
-  public void setMetropolitanCity(String metropolitanCity) {
-    this.metropolitanCity = metropolitanCity;
+
+  public int getSidoNo() {
+    return sidoNo;
+  }
+  public void setSidoNo(int sidoNo) {
+    this.sidoNo = sidoNo;
+  }
+  public String getSido() {
+    return sido;
+  }
+  public void setSido(String sido) {
+    this.sido = sido;
+  }
+  public int getSigunguNo() {
+    return sigunguNo;
+  }
+  public void setSigunguNo(int sigunguNo) {
+    this.sigunguNo = sigunguNo;
   }
   public String getSigungu() {
     return sigungu;
@@ -58,11 +87,11 @@ public class Learning extends ServiceInfo {
   public void setPrice(int price) {
     this.price = price;
   }
-  public String getZipCode() {
-    return zipCode;
+  public String getZipcode() {
+    return zipcode;
   }
-  public void setZipCode(String zipCode) {
-    this.zipCode = zipCode;
+  public void setZipcode(String zipcode) {
+    this.zipcode = zipcode;
   }
   public String getAddress() {
     return address;
