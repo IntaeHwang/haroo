@@ -63,6 +63,8 @@
       or mno like concat('%', #{keyword}, '%')
       </if>
     </where>
+    where
+     mstat=1
     order by mno asc 
   </select>
   
@@ -88,6 +90,7 @@
     har_member m
     inner join har_mrank mr on m.mrno=mr.mrno
     where mno = #{value}
+    and m.mstat=1
   </select>
   
   <select id="findByEmailPassword" resultMap="memberMap" parameterType="map">
@@ -95,7 +98,8 @@
       mno,
       name,
       email,
-      profile_pic
+      profile_pic,
+      mrno
     from har_member 
     where email = #{email} and password = password(#{password})
   </select>
@@ -104,21 +108,19 @@
   update har_member set
     name=#{name},
      email=#{email},
-      password=password(#{password}),
       nickname=#{nickname},
       profile_pic=#{profilePicture},
       tel=#{tel},
       zipcode=#{zipcode},
       addr=#{address},
-      det_addr=#{detailAddress},
-      <!-- rank=#{rank} --> 
-      mstat=#{state}
+      det_addr=#{detailAddress}
     where mno=#{no}
   </update>
   
   <delete id="delete" parameterType="int">
-  delete from har_member 
-    where mno=#{value}
+  update har_member set
+  mstat=0 
+    where mno=#{no}
   </delete>
   
   <select id="findByName" resultMap="memberMap" parameterType="string">

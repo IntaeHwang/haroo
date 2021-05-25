@@ -10,8 +10,8 @@ import com.bit189.haroo.domain.Member;
 import com.bit189.haroo.service.MemberService;
 
 @SuppressWarnings("serial")
-@WebServlet("/member/delete")
-public class MemberDeleteHandler extends HttpServlet {
+@WebServlet("/member/upgrade")
+public class MemberUpgradeHandler extends HttpServlet {
 
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -22,19 +22,10 @@ public class MemberDeleteHandler extends HttpServlet {
     try {
       int no = Integer.parseInt(request.getParameter("no"));
 
-      Member member = memberService.get(no);
-      if (member == null) {
-        throw new Exception("해당 번호의 회원이 없습니다.");
-      }
-
-      //      Member loginUser = (Member) request.getSession().getAttribute("loginUser");
-      //      if (oldBoard.getWriter().getNo() != loginUser.getNo()) {
-      //        throw new Exception("삭제 권한이 없습니다!");
-      //      }
-
-      memberService.delete(no);
-
-      response.sendRedirect("list");
+      Member m = memberService.get(no);
+      request.setAttribute("member", m);
+      response.setContentType("text/html;charset=UTF-8");
+      request.getRequestDispatcher("/jsp/tutor/change2.jsp").include(request, response);
 
     } catch (Exception e) {
       throw new ServletException(e);

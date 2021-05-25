@@ -74,7 +74,7 @@ public class ContextLoaderListener implements ServletContextListener {
       MemberService memberService = new DefaultMemberService(memberDao);
       FeedService feedService = new DefaultFeedService(feedDao, commentDao, reCommentDao);
       CommentService commentService = new DefaultCommentService(commentDao);
-      TutorService tutorService = new DefaultTutorService(tutorDao);
+      TutorService tutorService = new DefaultTutorService(tutorDao, memberDao);
       PostService postService = new DefaultPostService(postDao);
       //      AttachedFileService attachedFileService = new DefaultAttachedFileService(attachedFileDao);
       LearningService learningService = new DefaultLearningService(learningDao);
@@ -90,6 +90,7 @@ public class ContextLoaderListener implements ServletContextListener {
       servletContext.setAttribute("feedService", feedService);
       servletContext.setAttribute("commentService", commentService);
       servletContext.setAttribute("postService", postService);
+      servletContext.setAttribute("tutorService", tutorService);
       //      servletContext.setAttribute("attachedFileService", attachedFileService);
       servletContext.setAttribute("learningService", learningService);
 
