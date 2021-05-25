@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import com.bit189.haroo.domain.AttachedFile;
 import com.bit189.haroo.domain.Feed;
+import com.bit189.haroo.domain.Member;
 import com.bit189.haroo.domain.Post;
 import com.bit189.haroo.domain.Tutor;
 import com.bit189.haroo.service.FeedService;
@@ -52,14 +53,16 @@ public class FeedAddHandler extends HttpServlet{
     try {
       Post post = new Post();
       post.setContent(request.getParameter("content"));
-      postService.add(post);
+      //      postService.add(post);
 
-      Feed feed = new Feed();
+      Member loginUser = (Member) request.getSession().getAttribute("loginUser");
       // 로그인유저가 튜터인지 확인하는 코드 작성 필요
       Tutor tutor = new Tutor();
-      tutor.setNo(3);
+      tutor.setNo(loginUser.getNo());
+
+      Feed feed = new Feed();
       feed.setWriter(tutor);
-      feedService.add(post.getNo(), feed);
+      feedService.add(post, feed);
 
       Collection<Part> files = request.getParts();
       for (Part file : files) {
