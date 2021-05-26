@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import com.bit189.haroo.domain.Member;
+import com.bit189.haroo.domain.Tutor;
 import com.bit189.haroo.service.MemberService;
+import com.bit189.haroo.service.TutorService;
 import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.geometry.Positions;
@@ -18,8 +20,8 @@ import net.coobird.thumbnailator.name.Rename;
 
 @SuppressWarnings("serial")
 @MultipartConfig(maxFileSize = 1024 * 1024 * 10)
-@WebServlet("/member/update")
-public class MemberUpdateHandler extends HttpServlet {
+@WebServlet("/tutor/update")
+public class TutorUpdateHandler extends HttpServlet {
 
   private String uploadDir;
 
@@ -32,6 +34,7 @@ public class MemberUpdateHandler extends HttpServlet {
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
+    TutorService tutorService = (TutorService) request.getServletContext().getAttribute("tutorService");
     MemberService memberService = (MemberService) request.getServletContext().getAttribute("memberService");
 
     try {
@@ -39,26 +42,32 @@ public class MemberUpdateHandler extends HttpServlet {
 
       Member oldMember = memberService.get(no);
       if (oldMember == null) {
-        throw new Exception("해당 번호의 회원이 없습니다.");
+        throw new Exception("해당 번호의 멤버가 없습니다.");
+      }
+
+      Tutor oldTutor = tutorService.get(no);
+      if (oldTutor == null) {
+        throw new Exception("튜터가 아닙니다.");
       }
 
       //      Member loginUser = (Member) request.getSession().getAttribute("loginUser");
-      //      if (oldMember.getWriter().getNo() != loginUser.getNo()) {
+      //      if (oldTutor.getWriter().getNo() != loginUser.getNo()) {
       //        throw new Exception("변경 권한이 없습니다!");
       //      }
 
-      Member member = new Member();
-      member.setNo(oldMember.getNo());
-      member.setName(request.getParameter("name"));
-      member.setEmail(request.getParameter("email"));
-      member.setPassword(request.getParameter("password"));
-      member.setNickname(request.getParameter("nickname"));
+      Member m = new Member();
+      Tutor t = new Tutor();
+      m.setNo(no);
+      m.setName(request.getParameter("name"));
+      m.setEmail(request.getParameter("email"));
+      m.setPassword(request.getParameter("password"));
+      m.setNickname(request.getParameter("nickname"));
 
       Part profilePart = request.getPart("profilepicture");
       if (profilePart.getSize() > 0) {
         String filename = UUID.randomUUID().toString();
         profilePart.write(this.uploadDir + "/" + filename);
-        member.setProfilePicture(filename);
+        m.setProfilePicture(filename);
 
         Thumbnails.of(this.uploadDir + "/" + filename)
         .size(30, 30)
@@ -83,14 +92,31 @@ public class MemberUpdateHandler extends HttpServlet {
         });
       }
 
-      member.setTel(request.getParameter("tel"));
-      member.setZipcode(request.getParameter("zipcode"));
-      member.setAddress(request.getParameter("address"));
-      member.setDetailAddress(request.getParameter("detailaddress"));
+      m.setTel(request.getParameter("tel"));
+      m.setZipcode(request.getParameter("zipcode"));
+      m.setAddress(request.getParameter("address"));
+      m.setDetailAddress(request.getParameter("detailaddress"));
+
+      t.setNo(no);
+      t.setIntro(request.getParameter("intro"));
+      t.setApplication(request.getParameter("application"));
+
+      //      String[] values = request.getParameterValues("tutorDistrict");
+      //      ArrayList<TutorDistrict> tutorDistrictList = new ArrayList<>();
+      //      if (values != null) {
+      //        for (String value : values) {
+      //          TutorDistrict tutorDistrict = new TutorDistrict();
+      //          tutorDistrict.setNo(Integer.parseInt(value));
+      //          tutorDistrictList.add(tutorDistrict);
+      //        }
+      //      }
+      //      tutor.setTutorDistricts(tutorDistrictList);
+      // ㅅㅂ?
+
       //      member.setRank(request.getParameter("rank"));
       //      member.setState(Boolean.parseBoolean(request.getParameter("mstate")));
 
-      memberService.update(member);
+      tutorService.update(t,m);
 
       response.sendRedirect("list");
 

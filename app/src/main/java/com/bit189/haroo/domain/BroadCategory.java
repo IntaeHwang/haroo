@@ -24,5 +24,4 @@ public class BroadCategory {
   public void setName(String name) {
     this.name = name;
   }
-
 }

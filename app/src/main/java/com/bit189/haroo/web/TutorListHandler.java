@@ -7,25 +7,25 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.bit189.haroo.domain.Member;
-import com.bit189.haroo.service.MemberService;
+import com.bit189.haroo.domain.Tutor;
+import com.bit189.haroo.service.TutorService;
 
 @SuppressWarnings("serial")
-@WebServlet("/member/list") 
-public class MemberListHandler extends HttpServlet {
+@WebServlet("/tutor/list") 
+public class TutorListHandler extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    MemberService memberService = (MemberService) request.getServletContext().getAttribute("memberService");
+    TutorService tutorService = (TutorService) request.getServletContext().getAttribute("tutorService");
 
     try {
-      List<Member> list = memberService.list(request.getParameter("keyword"));
+      List<Tutor> list = tutorService.list(request.getParameter("keyword"));
 
       request.setAttribute("list", list);
       response.setContentType("text/html;charset=UTF-8");
-      request.getRequestDispatcher("/jsp/member/list.jsp").include(request, response);
+      request.getRequestDispatcher("/jsp/tutor/list.jsp").include(request, response);
 
     } catch (Exception e) {
       throw new ServletException(e);

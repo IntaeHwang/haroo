@@ -1,6 +1,7 @@
 package com.bit189.haroo.web;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.UUID;
 import javax.servlet.ServletException;
@@ -53,7 +54,6 @@ public class FeedAddHandler extends HttpServlet{
     try {
       Post post = new Post();
       post.setContent(request.getParameter("content"));
-      //      postService.add(post);
 
       Member loginUser = (Member) request.getSession().getAttribute("loginUser");
       // 로그인유저가 튜터인지 확인하는 코드 작성 필요
@@ -62,47 +62,68 @@ public class FeedAddHandler extends HttpServlet{
 
       Feed feed = new Feed();
       feed.setWriter(tutor);
-      feedService.add(post, feed);
+
+      ArrayList<AttachedFile> attachedFiles = new ArrayList<>();
+
 
       Collection<Part> files = request.getParts();
       for (Part file : files) {
         if (file.getName().equals("file") && file.getSize() > 0) {
           System.out.println(">" + file.getSubmittedFileName());
+
+          System.out.println("uploadDir1 : " + uploadDir);
+
+          //          Part photoPart = request.getPart("file");
+          if (file.getSize() > 0) {
+            // 파일을 선택해서 업로드 했다면,
+            String filename = UUID.randomUUID().toString();
+
+            System.out.println("uploadDir2 : " + uploadDir);
+
+            file.write(this.uploadDir + "/" + filename);
+            System.out.println("uploadDir3 : " + uploadDir);
+            System.out.println(this.uploadDir + "/");
+
+            AttachedFile f = new AttachedFile();
+            f.setName(filename);
+
+            attachedFiles.add(f);
+            //          f.setPostNo(post.getNo());
+            //          postService.addFile(f);
+
+            // 썸네일 이미지 생성
+            Thumbnails.of(this.uploadDir + "/" + filename)
+            .size(330, 220)
+            .outputFormat("jpg")
+            .crop(Positions.CENTER)
+            .toFiles(new Rename() {
+              @Override
+              public String apply(String name, ThumbnailParameter param) {
+                return name + "_330x220";
+              }
+            });
+
+            System.out.println("uploadDir4 : " + uploadDir);
+
+            Thumbnails.of(this.uploadDir + "/" + filename)
+            .size(500, 500)
+            .outputFormat("jpg")
+            .crop(Positions.CENTER)
+            .toFiles(new Rename() {
+              @Override
+              public String apply(String name, ThumbnailParameter param) {
+                return name + "_500x500";
+              }
+            });
+          }
         }
-      }
-      Part photoPart = request.getPart("file");
-      if (photoPart.getSize() > 0) {
-        // 파일을 선택해서 업로드 했다면,
-        String filename = UUID.randomUUID().toString();
-        photoPart.write(this.uploadDir + "/" + filename);
-        AttachedFile f = new AttachedFile();
-        f.setName(filename);
-        f.setPostNo(post.getNo());
-        postService.addFile(f);
 
-        // 썸네일 이미지 생성
-        Thumbnails.of(this.uploadDir + "/" + filename)
-        .size(330, 220)
-        .outputFormat("jpg")
-        .crop(Positions.CENTER)
-        .toFiles(new Rename() {
-          @Override
-          public String apply(String name, ThumbnailParameter param) {
-            return name + "_330x220";
-          }
-        });
 
-        Thumbnails.of(this.uploadDir + "/" + filename)
-        .size(500, 500)
-        .outputFormat("jpg")
-        .crop(Positions.CENTER)
-        .toFiles(new Rename() {
-          @Override
-          public String apply(String name, ThumbnailParameter param) {
-            return name + "_500x500";
-          }
-        });
+        System.out.println("uploadDir5 : " + uploadDir);
       }
+
+      feedService.add(post, attachedFiles, feed);
+
 
       response.sendRedirect("list");
 
