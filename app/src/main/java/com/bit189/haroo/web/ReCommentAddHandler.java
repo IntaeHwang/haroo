@@ -36,7 +36,7 @@ public class ReCommentAddHandler extends HttpServlet {
 
       reCommentService.add(reComment);
 
-      response.sendRedirect("../detail?no=" + Integer.parseInt(request.getParameter("feedNo")));
+      response.sendRedirect("../detail?no=" + Integer.parseInt(request.getParameter("no")));
 
     } catch (Exception e) {
       throw new ServletException(e);
