@@ -4,6 +4,8 @@
     pageEncoding="UTF-8"
     trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:formatDate value="${question.writingDate}" pattern="yyyy-MM-dd" var="writingDate"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,27 +18,32 @@
 <table border='1'>
 <thead>
 <tr>
-<th>번호</th> <th>제목</th> <th>작성자</th> <th>등록일</th> <th>조회수</th>
+<th>번호</th>
+<th>제목</th>
+<th>작성자</th>
+<th>등록일</th>
+<th>조회수</th>
 </tr>
 </thead>
 <tbody>
-<c:forEach items="${list}" var="q">
-    <tr>
-    <c:choose>
-    <c:when test="${q.secret eq 'N'}">
-    <c:out value="${q.title}"/>
-    </c:when>
-    <c:otherwise>비밀글입니다.</c:otherwise>
-    </c:choose>
-    <c:when test="${q.secret eq 'Y'}">
-    <c:out value="${q.title}"/>
-    </c:when>
-    
-      <td>${q.no}</td>
-  <td><a href='detail?rno=${q.no}'>${q.title}</a></td>
-  <td>${q.writer.Name}</td>
-  <td>${q.registeredDate}</td>
-  <td>${q.viewCount}</td>        
+<c:forEach items="${questions}" var="question">
+<tr> 
+        <c:if test="${question.secret eq 'N'}" >
+            <c:choose>
+                <c:when test="${loginUser eq loginUser.no}">
+                    <c:out value="${question.title}"/>
+                </c:when>
+                <c:otherwise>비밀글은 작성자와 튜터만 볼 수 있습니다.</c:otherwise>
+            </c:choose>
+        </c:if>
+        <c:if test="${question.secret eq 'Y'}" >
+            <c:out value="${question.title}"/>
+        </c:if>
+      <td>${question.no}</td>
+  <td><a href='detail?no=${question.no}'>${question.title}</a></td>
+  <td>${question.writer.nickname}</td>
+  <td>${question.writingDate}</td>
+  <td>${question.viewCount}</td>        
     </tr>
 </c:forEach>
 

@@ -1,5 +1,6 @@
 package com.bit189.haroo.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import com.bit189.Mybatis.TransactionCallback;
 import com.bit189.Mybatis.TransactionManager;
@@ -34,18 +35,22 @@ public class DefaultServiceQuestionService implements ServiceQuestionService{
       @Override
       public Object doInTransaction() throws Exception {
 
-        int count = postDao.insert(post);
+        postDao.insert(post);
 
-        serviceQuestionDao.insert(question);
+        HashMap<String,Object> param = new HashMap<>();
+        param.put("no", post.getNo());
+        param.put("question", question);
 
-        return count;
+        return  serviceQuestionDao.insert(param);
       }
     });
   }
 
   @Override
   public List<Question> list() throws Exception {
-    return serviceQuestionDao.findAll(null);
+    List<Question> questions = serviceQuestionDao.findAll();
+
+    return questions;
   }
 
 
@@ -58,6 +63,7 @@ public class DefaultServiceQuestionService implements ServiceQuestionService{
   public Question get(int no) throws Exception {
     Question question = serviceQuestionDao.findByNo(no);
     if (question != null) {
+      postDao.updateViewCount(no);
     }
     return question;
   }

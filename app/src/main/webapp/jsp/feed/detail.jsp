@@ -26,7 +26,7 @@
 			<tr><th>프로필사진</th> <td><div class="profile-photo">${feed.writer.profilePicture}</div></td></tr>
 			<tr><th>튜터이름</th> <td>${feed.writer.name}</td></tr>
 			<tr><th>등록일</th> <td>${feed.writingDate}</td></tr>
-			<tr>
+			
 				<th>사진</th>
 				<td>
 					<c:forEach items="${feed.attachedFiles}" var="file">
