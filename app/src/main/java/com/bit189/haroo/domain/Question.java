@@ -3,7 +3,6 @@ package com.bit189.haroo.domain;
 import java.sql.Date;
 
 public class Question extends Post {
-  private int no;
   private Member writer;
   private ServiceInfo serviceInfo;
   private String title;
@@ -13,23 +12,11 @@ public class Question extends Post {
 
   @Override
   public String toString() {
-    return "Question [no=" + no + ", writer=" + writer + ", serviceInfo=" + serviceInfo + ", title="
-        + title + ", secret=" + secret + ", replyContent=" + replyContent + ", replyDate="
-        + replyDate + ", toString()=" + super.toString() + ", getNo()=" + getNo()
-        + ", getContent()=" + getContent() + ", getWritingDate()=" + getWritingDate()
-        + ", getViewCount()=" + getViewCount() + ", isState()=" + isState()
-        + ", getAttachedFiles()=" + getAttachedFiles() + ", getClass()=" + getClass()
-        + ", hashCode()=" + hashCode() + "]";
-  }
-
-  @Override
-  public int getNo() {
-    return no;
-  }
-
-  @Override
-  public void setNo(int no) {
-    this.no = no;
+    return "Question [writer=" + writer + ", serviceInfo=" + serviceInfo + ", title=" + title
+        + ", secret=" + secret + ", replyContent=" + replyContent + ", replyDate=" + replyDate
+        + ", getNo()=" + getNo() + ", getContent()=" + getContent() + ", getWritingDate()="
+        + getWritingDate() + ", getViewCount()=" + getViewCount() + ", isState()=" + isState()
+        + ", getAttachedFiles()=" + getAttachedFiles() + "]";
   }
 
   public Member getWriter() {
@@ -79,7 +66,6 @@ public class Question extends Post {
   public void setReplyDate(Date replyDate) {
     this.replyDate = replyDate;
   }
-
 
 
 

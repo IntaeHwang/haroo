@@ -23,11 +23,12 @@
 		<tr><th>조회수</th> <td>${question.viewCount}</td></tr>
 	</tbody>
 
-  <c:if test="${not empty loginUser and loginUser.no == board.writer.no}">
+  <c:if test="${not empty loginUser and loginUser.no == question.writer.no}">
 	<tfoot>
 	<tr>
 	  <td colspan='2'>
-	    <input type='submit' value='변경'><a href='delete?no=${board.no}'>삭제</a>
+	    <input type='submit' value='수정'><a href='delete?no=${board.no}'>삭제</a>
+	     <input type="submit" value="답글" onclick=>
 	  </td>
 	</tr>
 	</tfoot>    

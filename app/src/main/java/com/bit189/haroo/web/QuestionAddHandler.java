@@ -21,8 +21,6 @@ import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.geometry.Positions;
 import net.coobird.thumbnailator.name.Rename;
 
-
-
 @SuppressWarnings("serial")
 @MultipartConfig(maxFileSize = 1024 * 1024 * 10)
 @WebServlet("/question/add")
@@ -101,8 +99,8 @@ public class QuestionAddHandler extends HttpServlet{
           }
         });
       }
-      postService.add(post);
-      serviceQuestionService.add(post.getNo(), question);
+
+      serviceQuestionService.add(question, post);
 
       response.sendRedirect("list");
     } catch (Exception e) {

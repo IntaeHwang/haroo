@@ -1,7 +1,6 @@
 package com.bit189.haroo.web;
 
 import java.io.IOException;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,25 +10,31 @@ import com.bit189.haroo.domain.Member;
 import com.bit189.haroo.service.MemberService;
 
 @SuppressWarnings("serial")
-@WebServlet("/member/list") 
-public class MemberListHandler extends HttpServlet {
+@WebServlet("/member/upgrade")
+public class MemberUpgradeHandler extends HttpServlet {
 
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response)
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
     MemberService memberService = (MemberService) request.getServletContext().getAttribute("memberService");
 
     try {
-      List<Member> list = memberService.list(request.getParameter("keyword"));
+      int no = Integer.parseInt(request.getParameter("no"));
 
-      request.setAttribute("list", list);
+      Member m = memberService.get(no);
+      request.setAttribute("member", m);
       response.setContentType("text/html;charset=UTF-8");
-      request.getRequestDispatcher("/jsp/member/list.jsp").include(request, response);
+      request.getRequestDispatcher("/jsp/tutor/change2.jsp").include(request, response);
 
     } catch (Exception e) {
       throw new ServletException(e);
     }
   }
-
 }
+
+
+
+
+
+
