@@ -38,67 +38,87 @@
     
   </resultMap>
   
-  <insert id="insert" parameterType="Question">
+  <insert id="insert" parameterType="Map">
     insert into har_sqna (pno, mno, sno, title, secret)
-    values (#{no}, #{writer.no}, #{serviceInfo.no}, #{title}, #{secret})
+    values (#{no}, #{question.writer.no}, #{question.serviceInfo.no}, #{question.title}, #{question.secret})
   </insert>
   
   <select id="findAll" resultMap="serviceQuestionMap">
     select
       q.pno,
-      p.content,
-      p.wdttm,
-      p.view_cnt,
-      p.pstat,
       q.mno,
       q.sno,
       q.title,
       q.secret,
       q.rpl_content,
       q.rpl_dttm,
+      p.content,
+      p.wdttm,
+      p.view_cnt,
+      p.pstat,
       m.profile_pic,
       m.name,
       m.nickname,
+      f.fno,
+      f.fname,
       s.sname 
     from
       har_sqna q
       inner join har_member m on m.mno=q.mno
       inner join har_post p on p.pno=q.pno
-      inner join har_srpl_file f on f.fno=q.pno
+      left join har_file f on f.pno=p.pno
       inner join har_service s on s.sno=q.sno
       where
     p.pstat=1
   </select>
   
    <select id="findByNo" parameterType="int" resultMap="serviceQuestionMap">
- select
+   select
       q.pno,
-      p.content,
-      p.wdttm,
-      p.view_cnt,
-      p.pstat,
       q.mno,
       q.sno,
       q.title,
       q.secret,
       q.rpl_content,
       q.rpl_dttm,
+      p.content,
+      p.wdttm,
+      p.view_cnt,
+      p.pstat,
       m.profile_pic,
       m.name,
       m.nickname,
+      f.fno,
+      f.fname,
       s.sname 
     from
       har_sqna q
       inner join har_member m on m.mno=q.mno
       inner join har_post p on p.pno=q.pno
-      inner join har_srpl_file f on f.fno=q.pno
+      left join har_file f on f.pno=p.pno
       inner join har_service s on s.sno=q.sno
-      where
+      where 
       q.pno = #{no}
-    p.pstat=1
+      and p.pstat=1
   </select>
 
-
+ <update id="update" parameterType="question">
+    update har_sqna set
+        title = #{title}, 
+        content = #{content}
+    where no = #{no}
+  </update>
+  
+  <update id="updateViewCount" parameterType="int">
+    update har_sqna set 
+      vw_cnt = vw_cnt + 1 
+    where no = #{value}
+  </update>
+  
+  <delete id="delete" parameterType="int">
+    delete from har_sqna
+    where no = #{value}
+  </delete>
 
 
 

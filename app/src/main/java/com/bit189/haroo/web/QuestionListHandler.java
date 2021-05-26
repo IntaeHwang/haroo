@@ -25,16 +25,9 @@ public class QuestionListHandler extends HttpServlet{
 
 
     try {
-      String keyword = request.getParameter("keyword");
-      List<Question> questions = null;
-      if (keyword != null && keyword.length() > 0) {
-        questions = serviceQuestionService.Search(keyword);
-      } else {
-        questions = serviceQuestionService.list();
-      }
+      List<Question> questions = serviceQuestionService.list();
 
-
-      request.setAttribute("list", questions);
+      request.setAttribute("questions", questions);
       response.setContentType("text/html;charset=UTF-8");
       request.getRequestDispatcher("/jsp/serviceQuestion/list.jsp").include(request, response);
 

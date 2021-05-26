@@ -50,8 +50,8 @@ public class QuestionAddHandler extends HttpServlet{
     PostService postService = (PostService) request.getServletContext().getAttribute("postService");
 
     try {
-      Question question = new Question();
       Post post = new Post();
+      Question question = new Question();
 
       question.setTitle(request.getParameter("title"));
       question.setSecret(true);

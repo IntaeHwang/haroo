@@ -1,12 +1,13 @@
 package com.bit189.haroo.dao;
 
 import java.util.List;
+import java.util.Map;
 import com.bit189.haroo.domain.Question;
 
 public interface ServiceQuestionDao {
-  int insert(Question question) throws Exception;
+  int insert(Map<String,Object> param) throws Exception;
 
-  List<Question> findAll(String keyword) throws Exception;
+  List<Question> findAll() throws Exception;
 
   List<Question> findByMember(int mno) throws Exception;
 
