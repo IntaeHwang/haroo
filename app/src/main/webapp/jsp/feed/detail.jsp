@@ -6,6 +6,7 @@
 <html>
 <head>
 <title>피드 상세</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <style type="text/css">
   .profile-photo {
     width : 35px;
@@ -26,7 +27,7 @@
 			<tr><th>프로필사진</th> <td><div class="profile-photo">${feed.writer.profilePicture}</div></td></tr>
 			<tr><th>튜터이름</th> <td>${feed.writer.name}</td></tr>
 			<tr><th>등록일</th> <td>${feed.writingDate}</td></tr>
-			
+			<tr>
 				<th>사진</th>
 				<td>
 					<c:forEach items="${feed.attachedFiles}" var="file">
@@ -46,30 +47,42 @@
 			</table>
 			
 			<c:if test="${not empty loginUser and loginUser.no == feed.writer.no}">
-			<input type="submit" value="수정">
-			
+			 <input type="submit" value="수정">
 			 <a href="delete?no=${feed.no}">삭제</a>
 			</c:if>
 		</form>
+		
+		<button type="button" id="har-feed-like">좋아요</button>
 	
 	
 		<c:forEach items="${comments}" var="comment">
-				<pre><b>${comment.writer.name}</b> ${comment.content}</pre>
+		  <div har-cmt-no="${comment.no}" har-feed-no="${feed.no}" har-cmt-type="1">
+				<b>${comment.writer.name}</b> 
+				<span class="har-cmt-content">${comment.content}</span>
+				<input type="text" class="har-cmt-input" value="${comment.content}">
 				<button type="button" onclick="reCommentAdd(${comment.no},${comment.writer.no},${feed.no})">답글달기</button>
 	     	
 	     	<c:if test="${not empty loginUser and loginUser.no == comment.writer.no}">
+	     	  <button type="button" onclick="cmtUpdate(event)" class="har-cmt-update">수정</button>
+          <button type="button" onclick="cmtConfirm(event)" class="har-cmt-confirm">확인</button>
 	     	  <a href="comment/delete?no=${comment.no}&feedNo=${feed.no}">댓글삭제</a>
 	     	</c:if>
+	    </div>
      	
 		  <c:forEach items="${comment.reComments}" var="reComment">
 			  <c:if test="${reComment.state == true}">
-					<pre>     <b>${reComment.reWriter.name}</b> @${reComment.taggedMember.name} ${reComment.content}</pre>
-	        <button type="button" onclick="reCommentAdd(${comment.no},${reComment.reWriter.no},${feed.no})">답글달기</button>
-	        
-	        <c:if test="${not empty loginUser and loginUser.no == reComment.reWriter.no}">
-	          <button type="button" onclick="reCommetnUpdate()">수정</button>
-	          <a href="reComment/delete?no=${reComment.no}&feedNo=${feed.no}">대댓글삭제</a>
-	        </c:if>
+			    <div har-cmt-no="${reComment.no}" har-feed-no="${feed.no}" har-cmt-type="2">
+						<b>${reComment.reWriter.name}</b> @${reComment.taggedMember.name} 
+						<span class="har-cmt-content">${reComment.content}</span>
+						<input type="text" class="har-cmt-input" value="${reComment.content}">
+		        <button type="button" onclick="reCommentAdd(${comment.no},${reComment.reWriter.no},${feed.no})">답글달기</button>
+		        
+		        <c:if test="${not empty loginUser and loginUser.no == reComment.reWriter.no}">
+		          <button type="button" onclick="cmtUpdate(event)" class="har-cmt-update">수정</button>
+		          <button type="button" onclick="cmtConfirm(event)" class="har-cmt-confirm">확인</button>
+		          <a href="reComment/delete?no=${reComment.no}&feedNo=${feed.no}">대댓글삭제</a>
+		        </c:if>
+	        </div>
 				</c:if>
 		  </c:forEach>
 		</c:forEach>
@@ -89,23 +102,73 @@
 	<p><a href='list'>목록</a></p>
 	
 	<script>
-	function reCommentAdd(cmtNo, tgNo, fdNo) {
-		var cmtForm = document.getElementById("har-comment-add");
-		var originForm = cmtForm.innerHTML;
-		
-		cmtForm["action"] = "reComment/add";
-		
-		cmtForm.innerHTML = "<input type='hidden' name='commentNo' value='" + cmtNo + "'/>" 
-			   + "<input type='hidden' name='taggedNo' value='" + tgNo + "'/>"
-			   + "<input type='hidden' name='no' value='" + fdNo + "' />"
-			   + "<input type='text' name='content' placeholder='댓글을 달아주세요.'/>"
-			   + "<input type='submit' value='등록'>";
-	}
+	"use strict"
 	
+		function reCommentAdd(cmtNo, tgNo, fdNo) {
+		    var cmtForm = document.getElementById("har-comment-add");
+		    var originForm = cmtForm.innerHTML;
+		    
+		    cmtForm["action"] = "reComment/add";
+		    
+		    cmtForm.innerHTML = "<input type='hidden' name='commentNo' value='" + cmtNo + "'/>" 
+		         + "<input type='hidden' name='taggedNo' value='" + tgNo + "'/>"
+		         + "<input type='hidden' name='no' value='" + fdNo + "' />"
+		         + "<input type='text' name='content' placeholder='댓글을 달아주세요.'/>"
+		         + "<input type='submit' value='등록'>";
+		  }
+		
+		
+		var reCmtInputList = document.querySelectorAll(".har-cmt-input");
+		var reCmtConfirm = document.querySelectorAll(".har-cmt-confirm");
+		
+		for (var e of reCmtInputList) {
+			e.style.display = "none";
+		}
+		
+		for (var e of reCmtConfirm) {
+      e.style.display = "none";
+    }
 	
-	 function reCommetnUpdate() {
-		 colsole.log("대댓글 수정 코드를 달아봅시다!");
+	 function cmtUpdate(e) {
+		 /* console.log("e.target", e.target); */
+		 var recommentDiv = e.target.parentElement;
+		 recommentDiv.querySelector(".har-cmt-input").style.display = "";
+		 recommentDiv.querySelector(".har-cmt-confirm").style.display = "";
+		 recommentDiv.querySelector(".har-cmt-content").style.display = "none";
+		 recommentDiv.querySelector(".har-cmt-update").style.display = "none";
 	 }
+	 
+	 function cmtConfirm(e) {
+     var recommentDiv = e.target.parentElement;
+     var content = recommentDiv.querySelector(".har-cmt-input").value;
+     var no = recommentDiv.getAttribute("har-cmt-no");
+     var feedNo = recommentDiv.getAttribute("har-feed-no");
+     /* console.log(feedNo, no, content); */
+     recommentDiv.querySelector(".har-cmt-input").style.display = "none";
+     recommentDiv.querySelector(".har-cmt-content").style.display = "";
+     
+     var url = '';
+     
+     if (recommentDiv.getAttribute("har-cmt-type") == 1) {
+    	 url = "comment/update";
+     } else {
+    	 url = "reComment/update";
+     }
+     
+      $.ajax(url, {
+	     	 type : "POST",
+	     	 data : "no=" + no + "&content=" + content + "&feedNo=" + feedNo,
+	     	 success : function() {
+	     		 alert("성공했습니다.");
+	     	 },
+	     	 error : function() {
+	     		 alert("실패했습니다.");
+	     	 }
+      });
+      
+      location.reload();
+   }
+	 
 	</script>
 </body>
 </html>

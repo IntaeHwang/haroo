@@ -10,5 +10,7 @@ public interface ReCommentService {
 
   ReComment get(int reCommentNo) throws Exception;
 
+  int update(ReComment reComment) throws Exception;
+
   int delete(int reCommentNo) throws Exception;
 }
