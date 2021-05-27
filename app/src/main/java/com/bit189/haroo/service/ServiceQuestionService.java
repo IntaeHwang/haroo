@@ -1,12 +1,13 @@
 package com.bit189.haroo.service;
 
 import java.util.List;
+import com.bit189.haroo.domain.AttachedFile;
 import com.bit189.haroo.domain.Post;
 import com.bit189.haroo.domain.Question;
 
 public interface ServiceQuestionService {
 
-  int add(Question question, Post post) throws Exception;
+  int add(Question question, Post post, List<AttachedFile> files) throws Exception;
 
   List<Question> list() throws Exception;
 
@@ -19,4 +20,6 @@ public interface ServiceQuestionService {
   int delete(int no) throws Exception;
 
   List<Question> Search(String keyword) throws Exception;
+
+  int addreply(Question question, Post post, AttachedFile attachedFile) throws Exception;
 }

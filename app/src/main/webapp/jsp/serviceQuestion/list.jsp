@@ -5,7 +5,7 @@
     trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:formatDate value="${question.writingDate}" pattern="yyyy-MM-dd" var="writingDate"/>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,22 +27,13 @@
 </thead>
 <tbody>
 <c:forEach items="${questions}" var="question">
+<fmt:formatDate value="${question.writingDate}" pattern="yyyy-MM-dd" var="writingDate"/>
 <tr> 
-        <c:if test="${question.secret eq 'N'}" >
-            <c:choose>
-                <c:when test="${loginUser eq loginUser.no}">
-                    <c:out value="${question.title}"/>
-                </c:when>
-                <c:otherwise>비밀글은 작성자와 튜터만 볼 수 있습니다.</c:otherwise>
-            </c:choose>
-        </c:if>
-        <c:if test="${question.secret eq 'Y'}" >
-            <c:out value="${question.title}"/>
-        </c:if>
+    <c:set var="title" value="${question.secret eq 'Y' || question.writer.no eq loginUser.no ? question.title : '비밀글은 작성자와 튜터만 볼 수 있습니다.'}"/>
       <td>${question.no}</td>
-  <td><a href='detail?no=${question.no}'>${question.title}</a></td>
+  <td><a href='detail?no=${question.no}'>${title}</a></td>
   <td>${question.writer.nickname}</td>
-  <td>${question.writingDate}</td>
+  <td>${writingDate}</td>
   <td>${question.viewCount}</td>        
     </tr>
 </c:forEach>

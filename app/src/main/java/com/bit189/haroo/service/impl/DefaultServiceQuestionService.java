@@ -5,8 +5,10 @@ import java.util.List;
 import com.bit189.Mybatis.TransactionCallback;
 import com.bit189.Mybatis.TransactionManager;
 import com.bit189.Mybatis.TransactionTemplate;
+import com.bit189.haroo.dao.AttachedFileDao;
 import com.bit189.haroo.dao.PostDao;
 import com.bit189.haroo.dao.ServiceQuestionDao;
+import com.bit189.haroo.domain.AttachedFile;
 import com.bit189.haroo.domain.Post;
 import com.bit189.haroo.domain.Question;
 import com.bit189.haroo.service.ServiceQuestionService;
@@ -19,17 +21,19 @@ public class DefaultServiceQuestionService implements ServiceQuestionService{
 
   ServiceQuestionDao serviceQuestionDao;
   PostDao postDao;
+  AttachedFileDao attachedFileDao;
 
-
-  public DefaultServiceQuestionService(TransactionManager txManager, ServiceQuestionDao serviceQuestionDao, PostDao postDao) {
+  public DefaultServiceQuestionService(TransactionManager txManager, ServiceQuestionDao serviceQuestionDao, PostDao postDao, 
+      AttachedFileDao attachedFileDao) {
     this.transactionTemplate = new TransactionTemplate(txManager);
     this.serviceQuestionDao = serviceQuestionDao;
     this.postDao = postDao;
+    this.attachedFileDao = attachedFileDao;
 
   }
 
   @Override
-  public int add(Question question, Post post) throws Exception {
+  public int add(Question question, Post post, List<AttachedFile> files) throws Exception {
     return (int) transactionTemplate.execute(new TransactionCallback() {
 
       @Override
@@ -40,6 +44,12 @@ public class DefaultServiceQuestionService implements ServiceQuestionService{
         HashMap<String,Object> param = new HashMap<>();
         param.put("no", post.getNo());
         param.put("question", question);
+
+        for (AttachedFile file : files) {
+          file.setPostNo(post.getNo());
+
+          postDao.insertFile(file);
+        }
 
         return  serviceQuestionDao.insert(param);
       }
@@ -82,6 +92,19 @@ public class DefaultServiceQuestionService implements ServiceQuestionService{
   @Override
   public List<Question> Search(String keyword) throws Exception {
     return serviceQuestionDao.findByKeyword(keyword);
+  }
+
+  @Override
+  public int addreply(Question question, Post post, AttachedFile attachedFile) throws Exception {
+    postDao.insert(post);
+    attachedFileDao.insert(attachedFile);
+
+    HashMap<String,Object> params = new HashMap<>();
+    params.put("no", post.getNo());
+    params.put("question", question);
+    params.put("no", attachedFile.getNo());
+
+    return serviceQuestionDao.insert(params);
   }
 
 
