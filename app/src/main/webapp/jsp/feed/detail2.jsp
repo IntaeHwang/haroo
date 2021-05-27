@@ -11,12 +11,12 @@
     width : 35px;
     height : 35px;
     border-radius: 10px;
+    
   }
-  
 </style>
 </head>
 <body>
-	<h1>피드 상세보기js</h1>
+	<h1>피드 상세보기</h1>
 	
 	<c:if test="${not empty feed}">
 		<form action='update' method='post'>
@@ -26,7 +26,7 @@
 			<tr><th>프로필사진</th> <td><div class="profile-photo">${feed.writer.profilePicture}</div></td></tr>
 			<tr><th>튜터이름</th> <td>${feed.writer.name}</td></tr>
 			<tr><th>등록일</th> <td>${feed.writingDate}</td></tr>
-			
+			<tr>
 				<th>사진</th>
 				<td>
 					<c:forEach items="${feed.attachedFiles}" var="file">
@@ -54,27 +54,43 @@
 	
 	
 		<c:forEach items="${comments}" var="comment">
+		  <form action="reComment/add" method="post">
+		    <input type="hidden" name="commentNo" value="${comment.no}"/>
+		    <input type="hidden" name="taggedNo" value="${comment.writer.no}"/>
+		    <input type="hidden" name="feedNo" value="${feed.no}" />
 				<pre><b>${comment.writer.name}</b> ${comment.content}</pre>
-				<button type="button" onclick="reCommentAdd(${comment.no},${comment.writer.no},${feed.no})">답글달기</button>
+				<input type="text" name="content" placeholder="답글을 달아주세요."/>
+        <input type='submit' value='등록'>
+	     	<%-- <a href="reComment/add?no=${comment.no}">답글달기</a> --%>
 	     	
 	     	<c:if test="${not empty loginUser and loginUser.no == comment.writer.no}">
+	     	  <!-- <input type="submit" value="수정"/> -->
+	     	  <%-- <a href="comment/update?no=${comment.no}">수정</a> --%>
 	     	  <a href="comment/delete?no=${comment.no}&feedNo=${feed.no}">댓글삭제</a>
 	     	</c:if>
+	    </form>
      	
 		  <c:forEach items="${comment.reComments}" var="reComment">
 			  <c:if test="${reComment.state == true}">
+			    <form action="" method="post">
+			    <input type="hidden" name="no" value="${comment.no}"/>
 					<pre>     <b>${reComment.reWriter.name}</b> @${reComment.taggedMember.name} ${reComment.content}</pre>
-	        <button type="button" onclick="reCommentAdd(${comment.no},${reComment.reWriter.no},${feed.no})">답글달기</button>
+					<pre>     <input type="text" name="content" placeholder="답글의 답글을 달아주세요."/><input type='submit' value='등록'></pre>
+	        
+	        <%-- <a href="reComment/add?no=${comment.no}">답글달기</a> --%>
 	        
 	        <c:if test="${not empty loginUser and loginUser.no == reComment.reWriter.no}">
-	          <button type="button" onclick="reCommetnUpdate()">수정</button>
+	          <!-- <input type="submit" value="수정"/> -->
+	          <%-- <a href="comment/update?no=${comment.no}">수정</a> --%>
+	          <a href="reComment/update?no=${reComment.no}&feedNo=${feed.no}" onclick="reCommetnUpdate()">수정</a>
 	          <a href="reComment/delete?no=${reComment.no}&feedNo=${feed.no}">대댓글삭제</a>
 	        </c:if>
+					</form>
 				</c:if>
 		  </c:forEach>
 		</c:forEach>
 		
-		<form action='comment/add' method='post' id="har-comment-add">
+		<form action='comment/add' method='post'>
 			<input type="hidden" name="no" value="${feed.no}" />
 			<input type="text" name="content" placeholder="댓글을 달아주세요."/>
 			<input type='submit' value='등록'>
@@ -88,23 +104,9 @@
 	
 	<p><a href='list'>목록</a></p>
 	
-	<script>
-	function reCommentAdd(cmtNo, tgNo, fdNo) {
-		var cmtForm = document.getElementById("har-comment-add");
-		var originForm = cmtForm.innerHTML;
-		
-		cmtForm["action"] = "reComment/add";
-		
-		cmtForm.innerHTML = "<input type='hidden' name='commentNo' value='" + cmtNo + "'/>" 
-			   + "<input type='hidden' name='taggedNo' value='" + tgNo + "'/>"
-			   + "<input type='hidden' name='no' value='" + fdNo + "' />"
-			   + "<input type='text' name='content' placeholder='댓글을 달아주세요.'/>"
-			   + "<input type='submit' value='등록'>";
-	}
-	
-	
+	<script type="text/javascript">
 	 function reCommetnUpdate() {
-		 colsole.log("대댓글 수정 코드를 달아봅시다!");
+		 
 	 }
 	</script>
 </body>
