@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -20,13 +21,15 @@
 	<h1>피드 상세보기js</h1>
 	
 	<c:if test="${not empty feed}">
+	<fmt:formatDate value="${feed.writingDate}" pattern="yyyy-MM-dd" var="writingDate2"/>
 		<form action='update' method='post'>
 			<table border='1'>
 			<tbody>
 			<tr><th>번호</th> <td><input type='text' name='no' value='${feed.no}' readonly></td></tr>
 			<tr><th>프로필사진</th> <td><div class="profile-photo">${feed.writer.profilePicture}</div></td></tr>
 			<tr><th>튜터이름</th> <td>${feed.writer.name}</td></tr>
-			<tr><th>등록일</th> <td>${feed.writingDate}</td></tr>
+			
+			<tr><th>등록일</th> <td>${writingDate2}</td></tr>
 			<tr>
 				<th>사진</th>
 				<td>
@@ -52,7 +55,7 @@
 			</c:if>
 		</form>
 		
-		<button type="button" id="har-feed-like">좋아요</button>
+		<button type="button" har-like-no="${feed.no}" har-like-type="1" onclick="likeCheck(event)">좋아요</button>
 	
 	
 		<c:forEach items="${comments}" var="comment">
@@ -60,6 +63,8 @@
 				<b>${comment.writer.name}</b> 
 				<span class="har-cmt-content">${comment.content}</span>
 				<input type="text" class="har-cmt-input" value="${comment.content}">
+				<span>좋아요 ${comment.likeCount}개</span>
+				<button type="button" har-like-no="${comment.no}" har-like-type="2" onclick="likeCheck(event)">댓글좋아요</button>
 				<button type="button" onclick="reCommentAdd(${comment.no},${comment.writer.no},${feed.no})">답글달기</button>
 	     	
 	     	<c:if test="${not empty loginUser and loginUser.no == comment.writer.no}">
@@ -75,6 +80,8 @@
 						<b>${reComment.reWriter.name}</b> @${reComment.taggedMember.name} 
 						<span class="har-cmt-content">${reComment.content}</span>
 						<input type="text" class="har-cmt-input" value="${reComment.content}">
+						<span>좋아요 ${reComment.likeCount}개</span>
+		        <button type="button" har-like-no="${reComment.no}" har-like-type="3" onclick="likeCheck(event)">대댓글좋아요</button>
 		        <button type="button" onclick="reCommentAdd(${comment.no},${reComment.reWriter.no},${feed.no})">답글달기</button>
 		        
 		        <c:if test="${not empty loginUser and loginUser.no == reComment.reWriter.no}">
@@ -103,6 +110,43 @@
 	
 	<script>
 	"use strict"
+	
+		
+		
+		function likeCheck(e) {
+			var likeBtn = e.target
+			var no = likeBtn.getAttribute("har-like-no");
+			var queryString = "no=" + no;
+			var url = '';
+			
+			if (likeBtn.getAttribute("har-like-type") == 1) {
+				url = "like";
+			} else if (likeBtn.getAttribute("har-like-type") == 2) {
+				url = "comment/like";
+			} else if (likeBtn.getAttribute("har-like-type") == 3) {
+				url = "reComment/like";
+			}
+			
+		  var xhr = new XMLHttpRequest();
+		      
+		  xhr.open("POST", url, false);
+		      
+		  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		      
+		  xhr.send(queryString);
+		      
+		  if (xhr.responseText == "login") {
+		    alert("로그인 후 이용해주세요!");
+		  } else if (xhr.responseText == "no") {
+		    alert("좋아요를 취소했습니다.");
+		    likeBtn.style.color = "red";
+		  } else if (xhr.responseText == "yes") {
+		    alert("좋아요(ㅇㅠㅇ)b");
+		    likeBtn.style.color = "blue";
+		  }
+		}
+			
+	
 	
 		function reCommentAdd(cmtNo, tgNo, fdNo) {
 		    var cmtForm = document.getElementById("har-comment-add");
@@ -156,7 +200,7 @@
      }
      
       $.ajax(url, {
-	     	 type : "POST",
+	     	 method : "POST",
 	     	 data : "no=" + no + "&content=" + content + "&feedNo=" + feedNo,
 	     	 success : function() {
 	     		 alert("성공했습니다.");

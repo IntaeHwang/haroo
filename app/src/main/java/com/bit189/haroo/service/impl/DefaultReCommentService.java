@@ -1,10 +1,13 @@
 package com.bit189.haroo.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import org.springframework.stereotype.Service;
 import com.bit189.haroo.dao.ReCommentDao;
 import com.bit189.haroo.domain.ReComment;
 import com.bit189.haroo.service.ReCommentService;
 
+@Service
 public class DefaultReCommentService implements ReCommentService{
 
   ReCommentDao reCommentDao;
@@ -36,6 +39,33 @@ public class DefaultReCommentService implements ReCommentService{
   @Override
   public int update(ReComment reComment) throws Exception {
     return reCommentDao.update(reComment);
+  }
+
+  @Override
+  public int getLike(int reCommentNo, int memberNo) throws Exception {
+    HashMap<String, Object> params = new HashMap<>();
+    params.put("reCommentNo", reCommentNo);
+    params.put("memberNo", memberNo);
+
+    return Integer.parseInt(reCommentDao.findLike(params));
+  }
+
+  @Override
+  public int deleteLike(int reCommentNo, int memberNo) throws Exception {
+    HashMap<String, Object> params = new HashMap<>();
+    params.put("reCommentNo", reCommentNo);
+    params.put("memberNo", memberNo);
+
+    return reCommentDao.deketeLike(params);
+  }
+
+  @Override
+  public int addLike(int reCommentNo, int memberNo) throws Exception {
+    HashMap<String, Object> params = new HashMap<>();
+    params.put("reCommentNo", reCommentNo);
+    params.put("memberNo", memberNo);
+
+    return reCommentDao.addLike(params);
   }
 
 

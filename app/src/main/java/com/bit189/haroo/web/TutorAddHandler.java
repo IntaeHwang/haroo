@@ -1,12 +1,9 @@
 package com.bit189.haroo.web;
 
-import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 import com.bit189.haroo.domain.Member;
 import com.bit189.haroo.domain.Tutor;
 import com.bit189.haroo.domain.TutorCategory;
@@ -14,52 +11,50 @@ import com.bit189.haroo.domain.TutorDistrict;
 import com.bit189.haroo.service.MemberService;
 import com.bit189.haroo.service.TutorService;
 
-@SuppressWarnings("serial")
-@MultipartConfig(maxFileSize = 1024 * 1024 * 10)
-@WebServlet("/tutor/add")
-public class TutorAddHandler extends HttpServlet {
+@Controller
+public class TutorAddHandler {
 
-  @Override
-  protected void doGet(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
+  TutorService tutorService;
+  MemberService memberService;
 
-    response.setContentType("text/html;charset=UTF-8");
-    request.getRequestDispatcher("/jsp/tutor/form.jsp").include(request, response);
+  public TutorAddHandler(TutorService tutorService) {
+    this.tutorService = tutorService;
+    this.memberService = memberService;
   }
 
-  @Override
-  public void doPost(HttpServletRequest request, HttpServletResponse response) 
-      throws ServletException, IOException {
+  @RequestMapping("/tutor/add")
+  public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-    TutorService tutorService = (TutorService) request.getServletContext().getAttribute("tutorService");
-    MemberService memberService = (MemberService) request.getServletContext().getAttribute("memberService");
-    try {
-      TutorCategory tc = new TutorCategory();
-      TutorDistrict td = new TutorDistrict();
-      Tutor t = new Tutor();
-      Member m = new Member();
-      t.setNo(Integer.parseInt(request.getParameter("tno")));
+    String uploadDir = request.getServletContext().getRealPath("/upload");
 
-      //      if (  == null) {
-      //        throw new Exception("해당번호의 멤버가 없습니다.");
-      //      }
-
-      t.setIntro(request.getParameter("tintro"));
-      t.setApplication(request.getParameter("tappl"));
-
-      m.setNo(Integer.parseInt(request.getParameter("tno")));
-
-      td.setTno(Integer.parseInt(request.getParameter("tno")));
-      td.setSigunguNo(Integer.parseInt(request.getParameter("sgg_no")));
-
-      tc.setTno(Integer.parseInt(request.getParameter("tno")));
-      tc.setNarrowCategoryNo(Integer.parseInt(request.getParameter("ncat_no")));
-      tutorService.add(t, m, td, tc);
-
-      response.sendRedirect("list");
-    }catch (Exception e) {
-      throw new ServletException(e);
+    if (request.getMethod().equals("GET")) {
+      return "/jsp/tutor/form.jsp";
     }
+
+
+    TutorCategory tc = new TutorCategory();
+    TutorDistrict td = new TutorDistrict();
+    Tutor t = new Tutor();
+    Member m = new Member();
+    t.setNo(Integer.parseInt(request.getParameter("tno")));
+
+    //      if (  == null) {
+    //        throw new Exception("해당번호의 멤버가 없습니다.");
+    //      }
+
+    t.setIntro(request.getParameter("tintro"));
+    t.setApplication(request.getParameter("tappl"));
+
+    m.setNo(Integer.parseInt(request.getParameter("tno")));
+
+    td.setTno(Integer.parseInt(request.getParameter("tno")));
+    td.setSigunguNo(Integer.parseInt(request.getParameter("sgg_no")));
+
+    tc.setTno(Integer.parseInt(request.getParameter("tno")));
+    tc.setNarrowCategoryNo(Integer.parseInt(request.getParameter("ncat_no")));
+    tutorService.add(t, m, td, tc);
+
+    return "redirect:list";
 
   }
 }
