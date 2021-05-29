@@ -12,11 +12,11 @@
 <h1>튜터 상세보기</h1>
 <c:if test="${not empty tutor}">
   <c:if test="${not empty tutor.profilePicture}">
-    <c:set var="profilePicture80x80Url">../upload/${tutor.profilePicture}_80x80.jpg</c:set>
-    <c:set var="profilePictureUrl">../upload/${tutor.profilePicture}</c:set>
+    <c:set var="profilePicture80x80Url">../../upload/${tutor.profilePicture}_80x80.jpg</c:set>
+    <c:set var="profilePictureUrl">../../upload/${tutor.profilePicture}</c:set>
   </c:if>
   <c:if test="${empty tutor.profilePicture}">
-    <c:set var="profilePicture80x80Url">../images/person_80x80.jpg</c:set>
+    <c:set var="profilePicture80x80Url">../../images/person_80x80.jpg</c:set>
     <c:set var="profilePictureUrl"></c:set>
   </c:if>
 		<form action='update' method='post' enctype='multipart/form-data'>
