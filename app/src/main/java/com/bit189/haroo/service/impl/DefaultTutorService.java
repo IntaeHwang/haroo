@@ -1,9 +1,11 @@
 package com.bit189.haroo.service.impl;
 
 import java.util.List;
-import com.bit189.Mybatis.TransactionCallback;
-import com.bit189.Mybatis.TransactionManager;
-import com.bit189.Mybatis.TransactionTemplate;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
 import com.bit189.haroo.dao.MemberDao;
 import com.bit189.haroo.dao.TutorCategoryDao;
 import com.bit189.haroo.dao.TutorDao;
@@ -14,6 +16,7 @@ import com.bit189.haroo.domain.TutorCategory;
 import com.bit189.haroo.domain.TutorDistrict;
 import com.bit189.haroo.service.TutorService;
 
+@Service
 public class DefaultTutorService implements TutorService {
 
   TransactionTemplate transactionTemplate;
@@ -23,7 +26,7 @@ public class DefaultTutorService implements TutorService {
   TutorDistrictDao tutorDistrictDao;
   TutorCategoryDao tutorCategoryDao;
 
-  public DefaultTutorService(TransactionManager txManager, TutorDao tutorDao, MemberDao memberDao, TutorDistrictDao tutorDistrictDao, TutorCategoryDao tutorCategoryDao) {
+  public DefaultTutorService(PlatformTransactionManager txManager, TutorDao tutorDao, MemberDao memberDao, TutorDistrictDao tutorDistrictDao, TutorCategoryDao tutorCategoryDao) {
     this.transactionTemplate = new TransactionTemplate(txManager);
     this.tutorDao = tutorDao;
     this.memberDao = memberDao;
@@ -42,14 +45,18 @@ public class DefaultTutorService implements TutorService {
 
   @Override
   public int add(Tutor tutor, Member member, TutorDistrict tutorDistrict, TutorCategory tutorCategory) throws Exception {
-    return (int) transactionTemplate.execute(new TransactionCallback() {
+    return transactionTemplate.execute(new TransactionCallback<Integer>() {
       @Override
-      public Object doInTransaction() throws Exception {
-        tutorDao.insert(tutor);
-        memberDao.update1(member);
-        tutorDistrictDao.insert(tutorDistrict);
-        tutorCategoryDao.insert(tutorCategory);
-        return 1;
+      public Integer doInTransaction(TransactionStatus status) {
+        try {
+          tutorDao.insert(tutor);
+          memberDao.update1(member);
+          tutorDistrictDao.insert(tutorDistrict);
+          tutorCategoryDao.insert(tutorCategory);
+          return 1;
+        } catch (Exception e) {
+          throw new RuntimeException(e);
+        }
       }
     });
   }

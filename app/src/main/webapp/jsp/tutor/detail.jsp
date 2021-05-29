@@ -12,11 +12,11 @@
 <h1>튜터 상세보기</h1>
 <c:if test="${not empty tutor}">
   <c:if test="${not empty tutor.profilePicture}">
-    <c:set var="profilePicture80x80Url">../upload/${tutor.profilePicture}_80x80.jpg</c:set>
-    <c:set var="profilePictureUrl">../upload/${tutor.profilePicture}</c:set>
+    <c:set var="profilePicture80x80Url">../../upload/${tutor.profilePicture}_80x80.jpg</c:set>
+    <c:set var="profilePictureUrl">../../upload/${tutor.profilePicture}</c:set>
   </c:if>
   <c:if test="${empty tutor.profilePicture}">
-    <c:set var="profilePicture80x80Url">../images/person_80x80.jpg</c:set>
+    <c:set var="profilePicture80x80Url">../../images/person_80x80.jpg</c:set>
     <c:set var="profilePictureUrl"></c:set>
   </c:if>
 		<form action='update' method='post' enctype='multipart/form-data'>
@@ -204,7 +204,7 @@ var t3 = document.querySelector("#broadCategory");
 var t4 = document.querySelector("#narrowCategory");
 t3.onchange = function() {
   var xhr = new XMLHttpRequest();
-  xhr.open("GET", "../jsp/tutor/category2.jsp?broadCategory=" + t3.value, false);
+  xhr.open("GET", "../../jsp/tutor/category2.jsp?broadCategory=" + t3.value, false);
   xhr.send();
   
   t4.innerHTML = xhr.responseText;  
@@ -214,7 +214,7 @@ var t1 = document.querySelector("#sido");
 var t2 = document.querySelector("#sigungu");
 t1.onchange = function() {
   var xhr = new XMLHttpRequest();
-  xhr.open("GET", "../jsp/tutor/district2.jsp?sido=" + t1.value, false);
+  xhr.open("GET", "../../jsp/tutor/district2.jsp?sido=" + t1.value, false);
   xhr.send();
   
   t2.innerHTML = xhr.responseText;  
@@ -223,13 +223,13 @@ t1.onchange = function() {
 //
 
 var xhr = new XMLHttpRequest();
-xhr.open("GET", "../jsp/tutor/category2.jsp?broadCategory=" + t3.value, false);
+xhr.open("GET", "../../jsp/tutor/category2.jsp?broadCategory=" + t3.value, false);
 xhr.send();
 
 t4.innerHTML = xhr.responseText; 
 
 var xhr = new XMLHttpRequest();
-xhr.open("GET", "../jsp/tutor/district2.jsp?sido=" + t1.value, false);
+xhr.open("GET", "../../jsp/tutor/district2.jsp?sido=" + t1.value, false);
 xhr.send();
 
 t2.innerHTML = xhr.responseText; 
