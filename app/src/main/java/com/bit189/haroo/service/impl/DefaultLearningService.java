@@ -1,9 +1,11 @@
 package com.bit189.haroo.service.impl;
 
 import java.util.List;
-import com.bit189.Mybatis.TransactionCallback;
-import com.bit189.Mybatis.TransactionManager;
-import com.bit189.Mybatis.TransactionTemplate;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
 import com.bit189.haroo.dao.BroadCategoryDao;
 import com.bit189.haroo.dao.LearningDao;
 import com.bit189.haroo.dao.LearningScheduleDao;
@@ -15,6 +17,7 @@ import com.bit189.haroo.domain.Learning;
 import com.bit189.haroo.domain.ServiceInfo;
 import com.bit189.haroo.service.LearningService;
 
+@Service
 public class DefaultLearningService implements LearningService {
 
   TransactionTemplate transactionTemplate;
@@ -26,7 +29,7 @@ public class DefaultLearningService implements LearningService {
   SidoDao sidoDao;
   SigunguDao sigunguDao;
 
-  public DefaultLearningService(TransactionManager txManager, ServiceInfoDao serviceInfoDao,
+  public DefaultLearningService(PlatformTransactionManager txManager, ServiceInfoDao serviceInfoDao,
       LearningDao learningDao, LearningScheduleDao learningScheduleDao, BroadCategoryDao broadCategoryDao,
       NarrowCategoryDao narrowCategoryDao, SidoDao sidoDao, SigunguDao sigunguDao) {
 
@@ -43,11 +46,16 @@ public class DefaultLearningService implements LearningService {
   @Override
   public int add(ServiceInfo serviceInfo, Learning learning) throws Exception {
 
-    return (int) transactionTemplate.execute(new TransactionCallback() {
+    return transactionTemplate.execute(new TransactionCallback<Integer>() {
       @Override
-      public Object doInTransaction() throws Exception {
-        int count = serviceInfoDao.insert(serviceInfo);
-        learningDao.insert(learning);
+      public Integer doInTransaction(TransactionStatus status) {
+        int count;
+        try {
+          count = serviceInfoDao.insert(serviceInfo);
+          learningDao.insert(learning);
+        } catch (Exception e) {
+          throw new RuntimeException(e);
+        }
 
         return count;
       }
