@@ -12,4 +12,10 @@ public interface FeedService {
   List<Feed> list() throws Exception;
 
   Feed get(int no) throws Exception;
+
+  int getLike(int feedNo, int memberNo) throws Exception;
+
+  int addLike(int feedNo, int memberNo) throws Exception;
+
+  int deleteLike(int feedNo, int memberNo) throws Exception;
 }
