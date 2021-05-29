@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import com.bit189.Mybatis.MybatisDaoFactory;
 import com.bit189.Mybatis.SqlSessionFactoryProxy;
 import com.bit189.Mybatis.TransactionManager;
+import com.bit189.haroo.dao.AttachedFileDao;
 import com.bit189.haroo.dao.BroadCategoryDao;
 import com.bit189.haroo.dao.CommentDao;
 import com.bit189.haroo.dao.FeedDao;
@@ -29,6 +30,7 @@ import com.bit189.haroo.dao.SigunguDao;
 import com.bit189.haroo.dao.TutorCategoryDao;
 import com.bit189.haroo.dao.TutorDao;
 import com.bit189.haroo.dao.TutorDistrictDao;
+import com.bit189.haroo.service.AttachedFileService;
 import com.bit189.haroo.service.BroadCategoryService;
 import com.bit189.haroo.service.CommentService;
 import com.bit189.haroo.service.FeedService;
@@ -43,6 +45,7 @@ import com.bit189.haroo.service.ServiceQuestionService;
 import com.bit189.haroo.service.SidoService;
 import com.bit189.haroo.service.SigunguService;
 import com.bit189.haroo.service.TutorService;
+import com.bit189.haroo.service.impl.DefaultAttachedFileService;
 import com.bit189.haroo.service.impl.DefaultBroadCategoryService;
 import com.bit189.haroo.service.impl.DefaultCommentService;
 import com.bit189.haroo.service.impl.DefaultFeedService;
@@ -95,6 +98,8 @@ public class ContextLoaderListener implements ServletContextListener {
       SigunguDao sigunguDao = daoFactory.createDao(SigunguDao.class);
       LearningScheduleDao learningScheduleDao = daoFactory.createDao(LearningScheduleDao.class);
 
+      AttachedFileDao attachedFileDao = daoFactory.createDao(AttachedFileDao.class);
+
       //LearningApplicationDao learningApplicationDao = daoFactory.createDao(LearningApplicationDao.class);
       ServiceQuestionDao serviceQuestionDao = daoFactory.createDao(ServiceQuestionDao.class);
 
@@ -120,14 +125,14 @@ public class ContextLoaderListener implements ServletContextListener {
       SigunguService sigunguService = new DefaultSigunguService(sigunguDao);
 
       // LearningApplicationService learningApplicationService = new DefaultLearningApplicationService(learningApplicationDao, null);
-      ServiceQuestionService serviceQuestionService = new DefaultServiceQuestionService(txManager, serviceQuestionDao, postDao);
+      ServiceQuestionService serviceQuestionService = new DefaultServiceQuestionService(txManager, serviceQuestionDao, postDao, attachedFileDao);
 
       //    LearningApplicationService learningApplicationService = new DefaultLearningApplicationService(learningApplicationDao, null);
 
       LearningReviewService learningReviewService = new DefaultLearningReviewService(
           txManager, learningReviewDao, learningReviewRecommendDao);
       LikeService likeService = new DefaultLikeService(likeDao);
-
+      AttachedFileService attachedFileService = new DefaultAttachedFileService(attachedFileDao);
 
       // 4) 서비스 객체를 ServletContext 보관소에 저장한다.
       servletContext.setAttribute("memberService", memberService);
@@ -149,6 +154,7 @@ public class ContextLoaderListener implements ServletContextListener {
       servletContext.setAttribute("learningReviewService", learningReviewService);
       servletContext.setAttribute("likeService", likeService);
       servletContext.setAttribute("reCommentService", reCommentService);
+      servletContext.setAttribute("attachedFileService", attachedFileService);
 
       System.out.println("ContextLoaderListener: 의존 객체를 모두 준비하였습니다.");
 

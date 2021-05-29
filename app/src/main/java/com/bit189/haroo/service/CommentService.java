@@ -10,6 +10,8 @@ public interface CommentService {
 
   Comment get(int commentNo) throws Exception;
 
+  int update(Comment comment) throws Exception;
+
   int delete(int commentNo) throws Exception;
 
 }

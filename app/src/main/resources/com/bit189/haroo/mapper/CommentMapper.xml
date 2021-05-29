@@ -115,6 +115,12 @@
     (select count(*) from har_recomment r inner join har_comment c on r.com_no=c.com_no where c.feed_no=#{no} and r.recom_stat=1 and c.com_stat=1) com_cnt
   </select>
   
+  <update id="update" parameterType="Comment">
+    update har_comment set
+        comment=#{content}
+    where com_no = #{no}
+  </update>
+  
   
   
   

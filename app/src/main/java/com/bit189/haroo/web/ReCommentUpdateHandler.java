@@ -8,40 +8,45 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.bit189.haroo.domain.Member;
 import com.bit189.haroo.domain.ReComment;
-import com.bit189.haroo.service.CommentService;
 import com.bit189.haroo.service.ReCommentService;
 
 @SuppressWarnings("serial")
-@WebServlet("/feed/reComment/add")
-public class ReCommentAddHandler extends HttpServlet {
-
+@WebServlet("/feed/reComment/update")
+public class ReCommentUpdateHandler extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-
     ReCommentService reCommentService = (ReCommentService) request.getServletContext().getAttribute("reCommentService");
-    CommentService commentSerivce = (CommentService) request.getServletContext().getAttribute("commentService");
 
     try {
-      ReComment reComment = new ReComment();
+      int no = Integer.parseInt(request.getParameter("no"));
+      String content = request.getParameter("content");
+      int feedNo = Integer.parseInt(request.getParameter("feedNo"));
 
+      ReComment oldReComment = reCommentService.get(no);
 
-      reComment.setCommentNo(Integer.parseInt(request.getParameter("commentNo")));
-      reComment.setContent(request.getParameter("content"));
-      Member taggedMember = new Member();
-      taggedMember.setNo(Integer.parseInt(request.getParameter("taggedNo")));
-      reComment.setTaggedMember(taggedMember);
+      if (oldReComment == null) {
+        throw new Exception("해당 번호의 대댓글이 없습니다.");
+      }
+
       Member loginUser = (Member) request.getSession().getAttribute("loginUser");
-      reComment.setReWriter(loginUser);
+      if (loginUser.getNo() != oldReComment.getReWriter().getNo()) {
+        throw new Exception("수정할 권한이 없습니다.");
+      }
 
-      reCommentService.add(reComment);
+      ReComment reComment = new ReComment();
+      reComment.setNo(no);
+      reComment.setContent(content);
 
-      response.sendRedirect("../detail?no=" + Integer.parseInt(request.getParameter("no")));
+      reCommentService.update(reComment);
 
+      //      System.out.println("여기 오니?");
+      //      response.sendRedirect("../detail?no=" + feedNo);
     } catch (Exception e) {
       throw new ServletException(e);
     }
-
   }
+
+
 
 }

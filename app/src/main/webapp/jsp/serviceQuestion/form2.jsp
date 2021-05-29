@@ -6,16 +6,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>새 문의글</title>
+<title>문의 답변</title>
 </head>
 <body>
-<h1>새 문의글</h1>
+<h1>문의 답변</h1>
 <form action="add" method="post" enctype="multipart/form-data">
-제목: <input type="text" name="title" ><br>
+
 내용: <textarea name="content" rows="20" cols="60"></textarea><br>
 첨부 파일: <input type="file" name="file" multiple><br>
-      <input type="radio" name="secret" value="Y">공개
-      <input type="radio" name="secret" value="N">비공개<br>
 
 <input type="submit" value="등록">
 </form>

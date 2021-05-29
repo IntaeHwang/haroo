@@ -17,7 +17,7 @@ public class DefaultCommentService implements CommentService{
   public int add(Comment comment) throws Exception {
     return commentDao.insert(comment);
   }
- 
+
   @Override
   public List<Comment> list(int feedNo) throws Exception {
     return commentDao.findByComments(feedNo);
@@ -31,6 +31,11 @@ public class DefaultCommentService implements CommentService{
   @Override
   public int delete(int commentNo) throws Exception {
     return commentDao.delete(commentNo);
+  }
+
+  @Override
+  public int update(Comment comment) throws Exception {
+    return commentDao.update(comment);
   }
 
 
