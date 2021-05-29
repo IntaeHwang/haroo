@@ -204,7 +204,7 @@ var t3 = document.querySelector("#broadCategory");
 var t4 = document.querySelector("#narrowCategory");
 t3.onchange = function() {
   var xhr = new XMLHttpRequest();
-  xhr.open("GET", "../jsp/tutor/category2.jsp?broadCategory=" + t3.value, false);
+  xhr.open("GET", "../../jsp/tutor/category2.jsp?broadCategory=" + t3.value, false);
   xhr.send();
   
   t4.innerHTML = xhr.responseText;  
@@ -214,7 +214,7 @@ var t1 = document.querySelector("#sido");
 var t2 = document.querySelector("#sigungu");
 t1.onchange = function() {
   var xhr = new XMLHttpRequest();
-  xhr.open("GET", "../jsp/tutor/district2.jsp?sido=" + t1.value, false);
+  xhr.open("GET", "../../jsp/tutor/district2.jsp?sido=" + t1.value, false);
   xhr.send();
   
   t2.innerHTML = xhr.responseText;  
@@ -223,13 +223,13 @@ t1.onchange = function() {
 //
 
 var xhr = new XMLHttpRequest();
-xhr.open("GET", "../jsp/tutor/category2.jsp?broadCategory=" + t3.value, false);
+xhr.open("GET", "../../jsp/tutor/category2.jsp?broadCategory=" + t3.value, false);
 xhr.send();
 
 t4.innerHTML = xhr.responseText; 
 
 var xhr = new XMLHttpRequest();
-xhr.open("GET", "../jsp/tutor/district2.jsp?sido=" + t1.value, false);
+xhr.open("GET", "../../jsp/tutor/district2.jsp?sido=" + t1.value, false);
 xhr.send();
 
 t2.innerHTML = xhr.responseText; 
