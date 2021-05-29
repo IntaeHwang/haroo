@@ -59,7 +59,7 @@
 			</c:if>
 		</form>
 		
-		<button type="button" har-like-no="${feed.no}" har-like-type="1" onclick="likeCheck(event)">좋아요</button>
+		<button type="button" class="har-like" har-like-no="${feed.no}" har-like-type="1" onclick="likeCheck(event)">좋아요</button>
 	
 	
 		<c:forEach items="${comments}" var="comment">
@@ -69,7 +69,7 @@
 					<span class="har-cmt-content">${comment.content}</span>
 					<input type="text" class="har-cmt-input" value="${comment.content}">
 					<span>좋아요 ${comment.likeCount}개</span>
-					<button type="button" har-like-no="${comment.no}" har-like-type="2" onclick="likeCheck(event)">댓글좋아요</button>
+					<button type="button" class="har-like" har-like-no="${comment.no}" har-like-type="2" onclick="likeCheck(event)">댓글좋아요</button>
 					<button type="button" onclick="reCommentAdd(${comment.no},${comment.writer.no},${feed.no})">답글달기</button>
 		     	
 		     	<c:if test="${not empty loginUser and loginUser.no == comment.writer.no}">
@@ -91,7 +91,7 @@
 						<span class="har-cmt-content">${reComment.content}</span>
 						<input type="text" class="har-cmt-input" value="${reComment.content}">
 						<span>좋아요 ${reComment.likeCount}개</span>
-		        <button type="button" har-like-no="${reComment.no}" har-like-type="3" onclick="likeCheck(event)">대댓글좋아요</button>
+		        <button type="button" class="har-like" har-like-no="${reComment.no}" har-like-type="3" onclick="likeCheck(event)">대댓글좋아요</button>
 		        <button type="button" onclick="reCommentAdd(${comment.no},${reComment.reWriter.no},${feed.no})">답글달기</button>
 		        
 		        <c:if test="${not empty loginUser and loginUser.no == reComment.reWriter.no}">
@@ -121,41 +121,68 @@
 	<script>
 	"use strict"
 	
-		
-		
+	 var likeBtns = document.querySelectorAll(".har-like");
+	
+	 for (var l of likeBtns)  {
+		 var no = l.getAttribute("har-like-no");
+		 var lType = l.getAttribute("har-like-type");
+		 
+		 $.ajax("likeCheck", {
+			 method: "POST",
+			 data:"no=" + no + "&lType=" + lType,
+			 success: function(data) {
+				 console.log(no, data);
+				 if (data == "yes") {
+					  l.style.color = "blue";
+				 } 
+				 
+				 if (data == "no") {
+					  l.style.color = "red";
+				 }
+			 },
+			 error : function(data) {
+				  console.log(data);
+			 }
+		 });
+	 }
+	
+	
+	
+	
+	
 		function likeCheck(e) {
-			var likeBtn = e.target
-			var no = likeBtn.getAttribute("har-like-no");
-			var queryString = "no=" + no;
-			var url = '';
-			
-			if (likeBtn.getAttribute("har-like-type") == 1) {
-				url = "like";
-			} else if (likeBtn.getAttribute("har-like-type") == 2) {
-				url = "comment/like";
-			} else if (likeBtn.getAttribute("har-like-type") == 3) {
-				url = "reComment/like";
-			}
-			
-		  var xhr = new XMLHttpRequest();
+			var likeBtn = e.target;
+		  var no = likeBtn.getAttribute("har-like-no");
+		  var url = '';
 		      
-		  xhr.open("POST", url, false);
-		      
-		  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		      
-		  xhr.send(queryString);
-		      
-		  if (xhr.responseText == "login") {
-		    alert("로그인 후 이용해주세요!");
-		  } else if (xhr.responseText == "no") {
-		    alert("좋아요를 취소했습니다.");
-		    likeBtn.style.color = "red";
-		  } else if (xhr.responseText == "yes") {
-		    alert("좋아요(ㅇㅠㅇ)b");
-		    likeBtn.style.color = "blue";
+		  if (likeBtn.getAttribute("har-like-type") == 1) {
+			  url = "like";
+		  } else if (likeBtn.getAttribute("har-like-type") == 2) {
+			  url = "comment/like";
+		  } else if (likeBtn.getAttribute("har-like-type") == 3) {
+			  url = "reComment/like";
 		  }
-		}
 			
+			$.ajax(url, {
+			  method: "POST",
+			  data:"no=" + no,
+		    success: function(data) {
+		      console.log(data);
+		      if (data == "yes") {
+		    	  likeBtn.style.color = "blue";
+		      } else if (data == "no") {
+		    	  likeBtn.style.color = "red";
+	        }
+		    },
+		    error : function(data) {
+		    	console.log(data);
+		    }
+	    });
+			
+			location.reload();
+	  }
+	
+		
 	
 	
 		function reCommentAdd(cmtNo, tgNo, fdNo) {
@@ -196,8 +223,6 @@
      var recommentDiv = e.target.parentElement;
      var content = recommentDiv.querySelector(".har-cmt-input").value;
      var no = recommentDiv.getAttribute("har-cmt-no");
-     var feedNo = recommentDiv.getAttribute("har-feed-no");
-     /* console.log(feedNo, no, content); */
      recommentDiv.querySelector(".har-cmt-input").style.display = "none";
      recommentDiv.querySelector(".har-cmt-content").style.display = "";
      
@@ -211,7 +236,7 @@
      
       $.ajax(url, {
 	     	 method : "POST",
-	     	 data : "no=" + no + "&content=" + content + "&feedNo=" + feedNo,
+	     	 data : "no=" + no + "&content=" + content,
 	     	 success : function() {
 	     		 alert("성공했습니다.");
 	     	 },
