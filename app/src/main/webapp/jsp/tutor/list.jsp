@@ -15,7 +15,7 @@
 <thead>
 <tr>
 <th>번호</th> <th>이름</th> <th>이메일</th> <th></th> <th>전화번호</th> 
-<th>닉네임</th> <th>성별</th> <th>대분류</th> <th>소분류</th> <th>시도</th> <th>시군구</th>
+<th>닉네임</th> <th>성별</th> <!-- <th>대분류</th> <th>소분류</th> <th>시도</th> <th>시군구</th>-->
 </tr>
 </thead>
 <tbody>
@@ -34,12 +34,12 @@
 		<td>${t.tel}</td>
 		<td>${t.nickname}</td>
 		<td>${t.sex == 1 ? "남" : "여"}</td> 
-		<c:forEach items="${t.tutorCategories}" var="tc">
+		<!-- <c:forEach items="${t.tutorCategories}" var="tc">
 		  <td>${tc.broadCategory}, ${tc.narrowCategory}</td>
 		</c:forEach>
 		<c:forEach items="${t.tutorDistricts}" var="td">
-		<td>${td.sido}, ${td.sigungu}</td>
-		</c:forEach>
+		<td>${td.sido}, ${td.sigungu}</td> 
+		</c:forEach> -->
   </tr>
 </c:forEach>
 

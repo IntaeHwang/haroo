@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import com.bit189.haroo.domain.Member;
 import com.bit189.haroo.domain.Tutor;
+import com.bit189.haroo.domain.TutorCategory;
+import com.bit189.haroo.domain.TutorDistrict;
 import com.bit189.haroo.service.MemberService;
 import com.bit189.haroo.service.TutorService;
 import net.coobird.thumbnailator.ThumbnailParameter;
@@ -54,7 +56,8 @@ public class TutorUpdateHandler extends HttpServlet {
       //      if (oldTutor.getWriter().getNo() != loginUser.getNo()) {
       //        throw new Exception("변경 권한이 없습니다!");
       //      }
-
+      TutorCategory tc = new TutorCategory();
+      TutorDistrict td = new TutorDistrict();
       Member m = new Member();
       Tutor t = new Tutor();
       m.setNo(no);
@@ -101,22 +104,12 @@ public class TutorUpdateHandler extends HttpServlet {
       t.setIntro(request.getParameter("intro"));
       t.setApplication(request.getParameter("application"));
 
-      //      String[] values = request.getParameterValues("tutorDistrict");
-      //      ArrayList<TutorDistrict> tutorDistrictList = new ArrayList<>();
-      //      if (values != null) {
-      //        for (String value : values) {
-      //          TutorDistrict tutorDistrict = new TutorDistrict();
-      //          tutorDistrict.setNo(Integer.parseInt(value));
-      //          tutorDistrictList.add(tutorDistrict);
-      //        }
-      //      }
-      //      tutor.setTutorDistricts(tutorDistrictList);
-      // ㅅㅂ?
+      td.setTno(no);
+      td.setSigunguNo(Integer.parseInt(request.getParameter("sigungu")));
 
-      //      member.setRank(request.getParameter("rank"));
-      //      member.setState(Boolean.parseBoolean(request.getParameter("mstate")));
-
-      tutorService.update(t,m);
+      tc.setTno(no);
+      tc.setNarrowCategoryNo(Integer.parseInt(request.getParameter("narrowCategory")));
+      tutorService.update(t, m, td, tc);
 
       response.sendRedirect("list");
 

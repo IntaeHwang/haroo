@@ -33,7 +33,6 @@ public class LearningReviewDetailHandler extends HttpServlet {
         throw new ServletException("파라미터가 없습니다.");
       }
 
-
       LearningReview review = learningReviewService.get(Integer.parseInt(rno));
 
       request.setAttribute("lno", lno);
