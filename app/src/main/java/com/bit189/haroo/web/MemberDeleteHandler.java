@@ -27,7 +27,6 @@ public class MemberDeleteHandler extends HttpServlet {
         throw new Exception("해당 번호의 회원이 없습니다.");
       }
 
-      // 회원 관리를 관리자가 할 경우 모든 회원의 정보 변경 가능
       //      Member loginUser = (Member) request.getSession().getAttribute("loginUser");
       //      if (oldBoard.getWriter().getNo() != loginUser.getNo()) {
       //        throw new Exception("삭제 권한이 없습니다!");

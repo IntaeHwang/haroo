@@ -78,6 +78,12 @@
     values (#{no}, #{commentNo}, #{reWriter.no}, #{content}, #{taggedMember.no})
   </insert>
   
+  <update id="update" parameterType="ReComment">
+    update har_recomment set
+        content = #{content}
+    where recom_no = #{no}
+  </update>
+  
   <delete id="delete" parameterType="int">
     update har_recomment set
         recom_stat=0

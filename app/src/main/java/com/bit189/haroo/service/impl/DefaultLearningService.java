@@ -14,6 +14,7 @@ import com.bit189.haroo.dao.ServiceInfoDao;
 import com.bit189.haroo.dao.SidoDao;
 import com.bit189.haroo.dao.SigunguDao;
 import com.bit189.haroo.domain.Learning;
+import com.bit189.haroo.domain.LearningSchedule;
 import com.bit189.haroo.domain.ServiceInfo;
 import com.bit189.haroo.service.LearningService;
 
@@ -44,7 +45,7 @@ public class DefaultLearningService implements LearningService {
   }
 
   @Override
-  public int add(ServiceInfo serviceInfo, Learning learning) throws Exception {
+  public int add(ServiceInfo serviceInfo, Learning learning, LearningSchedule learningSchedule) throws Exception {
 
     return transactionTemplate.execute(new TransactionCallback<Integer>() {
       @Override
@@ -88,4 +89,5 @@ public class DefaultLearningService implements LearningService {
     // TODO Auto-generated method stub
     return null;
   }
+
 }

@@ -6,10 +6,17 @@
 <mapper namespace="com.bit189.haroo.dao.BroadCategoryDao">
   
   <resultMap id="broadCategoryMap" type="broadCategory">
-    <id column="bcat_no" property="no"/>
-    <result column="bcat_name" property="name"/>
+      <id column="bcat_no" property="no"/>
+      <result column="bcat_name" property="name"/>
   </resultMap>
   
+  <select id="findAll" resultMap="broadCategoryMap">
+    select
+      bcat_no,
+      bcat_name
+    from har_broad_cat
+    order by bcat_no
+  </select>
 </mapper>
 
 

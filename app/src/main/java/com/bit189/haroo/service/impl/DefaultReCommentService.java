@@ -33,5 +33,10 @@ public class DefaultReCommentService implements ReCommentService{
     return reCommentDao.delete(reCommentNo);
   }
 
+  @Override
+  public int update(ReComment reComment) throws Exception {
+    return reCommentDao.update(reComment);
+  }
+
 
 }

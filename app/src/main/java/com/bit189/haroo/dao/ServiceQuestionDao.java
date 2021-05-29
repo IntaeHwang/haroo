@@ -7,7 +7,7 @@ import com.bit189.haroo.domain.Question;
 public interface ServiceQuestionDao {
   int insert(Map<String,Object> param) throws Exception;
 
-  List<Question> findAll(String keyword) throws Exception;
+  List<Question> findAll() throws Exception;
 
   List<Question> findByMember(int mno) throws Exception;
 
@@ -18,4 +18,6 @@ public interface ServiceQuestionDao {
   int delete(int no) throws Exception;
 
   List<Question> findByKeyword(String keyword) throws Exception;
+
+  int insertReply(Map<String,Object> params) throws Exception;
 }

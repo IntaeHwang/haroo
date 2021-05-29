@@ -1,6 +1,7 @@
 package com.bit189.haroo.domain;
 
 import java.util.Date;
+import java.util.List;
 
 public class Comment {
   private int no;
@@ -9,7 +10,7 @@ public class Comment {
   private boolean state;
   private Date registeredDate;
   private Member writer;
-  //  private List<ReComment> reComments;
+  private List<ReComment> reComments;
 
   public int getNo() {
     return no;
@@ -47,12 +48,12 @@ public class Comment {
   public void setWriter(Member writer) {
     this.writer = writer;
   }
-  //  public List<ReComment> getReComments() {
-  //    return reComments;
-  //  }
-  //  public void setReComments(List<ReComment> reComments) {
-  //    this.reComments = reComments;
-  //  }
+  public List<ReComment> getReComments() {
+    return reComments;
+  }
+  public void setReComments(List<ReComment> reComments) {
+    this.reComments = reComments;
+  }
 
 
 

@@ -36,7 +36,6 @@ public class QuestionUpdateHandler extends HttpServlet {
 
       Question q = new Question();
       q.setNo(oldQuestion.getNo());
-      q.setTitle(request.getParameter("title"));
       q.setContent(request.getParameter("content"));
       serviceQuestionService.update(q);
 
