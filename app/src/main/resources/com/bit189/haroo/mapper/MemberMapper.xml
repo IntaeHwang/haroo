@@ -104,6 +104,31 @@
     where email = #{email} and password = password(#{password})
   </select>
   
+  <select id="findByEmail" resultMap="memberMap" parameterType="string">
+    select 
+      mno,
+      name,
+      email,
+      profile_pic,
+      tel 
+    from har_member
+    where email = #{value}
+    order by name asc
+  </select>
+  
+  <select id="findByNickname" resultMap="memberMap" parameterType="string">
+    select 
+      mno,
+      name,
+      email,
+      profile_pic,
+      tel,
+      nickname 
+    from har_member
+    where nickname = #{value}
+    order by name asc
+  </select>
+  
   <update id="update" parameterType="member">
   update har_member set
     name=#{name},
@@ -117,9 +142,21 @@
     where mno=#{no}
   </update>
   
+  <update id="update1" parameterType="member">
+  update har_member set
+  mrno=2
+    where mno=#{no}
+  </update>
+  
   <delete id="delete" parameterType="int">
   update har_member set
   mstat=0 
+    where mno=#{no}
+  </delete>
+  
+  <delete id="deleteTutor" parameterType="int">
+  update from har_member set
+  mstat=0
     where mno=#{no}
   </delete>
   
