@@ -2,13 +2,15 @@ package com.bit189.haroo.service.impl;
 
 import java.util.HashMap;
 import java.util.List;
+import org.springframework.stereotype.Service;
 import com.bit189.haroo.dao.CommentDao;
 import com.bit189.haroo.domain.Comment;
 import com.bit189.haroo.service.CommentService;
 
+@Service
 public class DefaultCommentService implements CommentService{
-  CommentDao commentDao;
 
+  CommentDao commentDao;
 
   public DefaultCommentService(CommentDao commentDao) {
     this.commentDao = commentDao;

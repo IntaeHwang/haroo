@@ -1,52 +1,49 @@
 package com.bit189.haroo.web;
 
-import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 import com.bit189.haroo.domain.Member;
 import com.bit189.haroo.service.FeedService;
 
-@SuppressWarnings("serial")
-@WebServlet("/feed/like")
-public class FeedLikeHandler extends HttpServlet{
 
-  @Override
-  protected void doPost(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
+@Controller
+public class FeedLikeHandler {
 
-    FeedService feedService = (FeedService) request.getServletContext().getAttribute("feedService");
+  FeedService feedService;
 
+  public FeedLikeHandler(FeedService feedService) {
+    this.feedService = feedService;
+  }
 
-    try {
-      response.setContentType("text/plain;charset=UTF-8");
-      PrintWriter out = response.getWriter();
+  @RequestMapping("/feed/like")
+  public String execute(HttpServletRequest request, HttpServletResponse response)
+      throws Exception {
 
-      Member loginUser = (Member) request.getSession().getAttribute("loginUser");
-      if (loginUser == null) {
-        out.print("login");
-      }
+    response.setContentType("text/plain;charset=UTF-8");
+    PrintWriter out = response.getWriter();
 
-      int feedNo = Integer.parseInt(request.getParameter("no"));
-
-      int isLike = feedService.getLike(feedNo, loginUser.getNo());
-
-      if (isLike == 1) {
-        feedService.deleteLike(feedNo, loginUser.getNo());
-        out.print("no");
-      } else {
-        feedService.addLike(feedNo, loginUser.getNo());
-        out.print("yes");
-      }
-
-      //      response.sendRedirect("list");
-
-    } catch (Exception e) {
-      throw new ServletException(e);
+    Member loginUser = (Member) request.getSession().getAttribute("loginUser");
+    if (loginUser == null) {
+      out.print("login");
     }
+
+    int feedNo = Integer.parseInt(request.getParameter("no"));
+
+    int isLike = feedService.getLike(feedNo, loginUser.getNo());
+
+    if (isLike == 1) {
+      feedService.deleteLike(feedNo, loginUser.getNo());
+      out.print("no");
+    } else {
+      feedService.addLike(feedNo, loginUser.getNo());
+      out.print("yes");
+    }
+
+    return "redirect:list";
+
 
 
   }

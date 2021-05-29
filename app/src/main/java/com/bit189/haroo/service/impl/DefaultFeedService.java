@@ -2,6 +2,7 @@ package com.bit189.haroo.service.impl;
 
 import java.util.HashMap;
 import java.util.List;
+import org.springframework.stereotype.Service;
 import com.bit189.haroo.dao.CommentDao;
 import com.bit189.haroo.dao.FeedDao;
 import com.bit189.haroo.dao.LikeDao;
@@ -11,6 +12,7 @@ import com.bit189.haroo.domain.Feed;
 import com.bit189.haroo.domain.Post;
 import com.bit189.haroo.service.FeedService;
 
+@Service
 public class DefaultFeedService implements FeedService{
 
   FeedDao feedDao;
