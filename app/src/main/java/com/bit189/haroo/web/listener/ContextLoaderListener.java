@@ -26,7 +26,9 @@ import com.bit189.haroo.dao.ServiceInfoDao;
 import com.bit189.haroo.dao.ServiceQuestionDao;
 import com.bit189.haroo.dao.SidoDao;
 import com.bit189.haroo.dao.SigunguDao;
+import com.bit189.haroo.dao.TutorCategoryDao;
 import com.bit189.haroo.dao.TutorDao;
+import com.bit189.haroo.dao.TutorDistrictDao;
 import com.bit189.haroo.service.BroadCategoryService;
 import com.bit189.haroo.service.CommentService;
 import com.bit189.haroo.service.FeedService;
@@ -80,6 +82,9 @@ public class ContextLoaderListener implements ServletContextListener {
       CommentDao commentDao = daoFactory.createDao(CommentDao.class);
       ReCommentDao reCommentDao = daoFactory.createDao(ReCommentDao.class);
       TutorDao tutorDao = daoFactory.createDao(TutorDao.class);
+      TutorDistrictDao tutorDistrictDao = daoFactory.createDao(TutorDistrictDao.class);
+      TutorCategoryDao tutorCategoryDao = daoFactory.createDao(TutorCategoryDao.class);
+
       PostDao postDao = daoFactory.createDao(PostDao.class);
       LikeDao likeDao = daoFactory.createDao(LikeDao.class);
       ServiceInfoDao serviceInfoDao = daoFactory.createDao(ServiceInfoDao.class);
@@ -105,7 +110,7 @@ public class ContextLoaderListener implements ServletContextListener {
       FeedService feedService = new DefaultFeedService(feedDao, commentDao, likeDao, postDao);
       CommentService commentService = new DefaultCommentService(commentDao);
       ReCommentService reCommentService = new DefaultReCommentService(reCommentDao);
-      TutorService tutorService = new DefaultTutorService(tutorDao, memberDao); // 확인 바람!!!
+      TutorService tutorService = new DefaultTutorService(txManager, tutorDao, memberDao, tutorDistrictDao, tutorCategoryDao); 
       PostService postService = new DefaultPostService(postDao);
 
       LearningService learningService = new DefaultLearningService(txManager, serviceInfoDao, learningDao, learningScheduleDao);

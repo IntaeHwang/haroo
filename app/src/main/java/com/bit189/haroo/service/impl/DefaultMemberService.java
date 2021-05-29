@@ -42,6 +42,16 @@ public class DefaultMemberService implements MemberService {
     return memberDao.findByEmailPassword(params);
   }
 
+  @Override
+  public Member getEmail(String email) throws Exception {
+    return memberDao.findByEmail(email);
+  }
+
+  @Override
+  public Member getNickname(String nickname) throws Exception {
+    return memberDao.findByNickname(nickname);
+  }
+
   // 내정보 수정시 비밀번호 재검증 - Dao에 없음
   @Override
   public Member get(String password) throws Exception {

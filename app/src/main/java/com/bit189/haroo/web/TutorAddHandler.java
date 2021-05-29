@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.bit189.haroo.domain.Member;
 import com.bit189.haroo.domain.Tutor;
+import com.bit189.haroo.domain.TutorCategory;
+import com.bit189.haroo.domain.TutorDistrict;
+import com.bit189.haroo.service.MemberService;
 import com.bit189.haroo.service.TutorService;
 
 @SuppressWarnings("serial")
@@ -29,17 +32,30 @@ public class TutorAddHandler extends HttpServlet {
       throws ServletException, IOException {
 
     TutorService tutorService = (TutorService) request.getServletContext().getAttribute("tutorService");
-
+    MemberService memberService = (MemberService) request.getServletContext().getAttribute("memberService");
     try {
+      TutorCategory tc = new TutorCategory();
+      TutorDistrict td = new TutorDistrict();
       Tutor t = new Tutor();
       Member m = new Member();
+      t.setNo(Integer.parseInt(request.getParameter("tno")));
+
+      //      if (  == null) {
+      //        throw new Exception("해당번호의 멤버가 없습니다.");
+      //      }
 
       t.setIntro(request.getParameter("tintro"));
       t.setApplication(request.getParameter("tappl"));
 
-      m.setRank(2);
+      m.setNo(Integer.parseInt(request.getParameter("tno")));
 
-      tutorService.add(t);
+      td.setTno(Integer.parseInt(request.getParameter("tno")));
+      td.setSigunguNo(Integer.parseInt(request.getParameter("sgg_no")));
+
+      tc.setTno(Integer.parseInt(request.getParameter("tno")));
+      tc.setNarrowCategoryNo(Integer.parseInt(request.getParameter("ncat_no")));
+      tutorService.add(t, m, td, tc);
+
       response.sendRedirect("list");
     }catch (Exception e) {
       throw new ServletException(e);

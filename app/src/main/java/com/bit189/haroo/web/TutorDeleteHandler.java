@@ -18,7 +18,6 @@ public class TutorDeleteHandler extends HttpServlet {
       throws ServletException, IOException {
 
     TutorService tutorService = (TutorService) request.getServletContext().getAttribute("tutorService");
-
     try {
       int no = Integer.parseInt(request.getParameter("no"));
 
