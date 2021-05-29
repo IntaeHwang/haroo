@@ -1,7 +1,6 @@
 package com.bit189.haroo.web;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,8 +15,6 @@ import com.bit189.haroo.service.FeedService;
 @SuppressWarnings("serial")
 @WebServlet("/feed/detail")
 public class FeedDetailHandler extends HttpServlet {
-
-  SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)

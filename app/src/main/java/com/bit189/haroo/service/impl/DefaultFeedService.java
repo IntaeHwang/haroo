@@ -75,6 +75,33 @@ public class DefaultFeedService implements FeedService{
     return feed;
   }
 
+  @Override
+  public int getLike(int feedNo, int memberNo) throws Exception {
+    HashMap<String, Object> params = new HashMap<>();
+    params.put("feedNo", feedNo);
+    params.put("memberNo", memberNo);
+
+    return Integer.parseInt(feedDao.findLike(params));
+  }
+
+  @Override
+  public int addLike(int feedNo, int memberNo) throws Exception {
+    HashMap<String, Object> params = new HashMap<>();
+    params.put("feedNo", feedNo);
+    params.put("memberNo", memberNo);
+
+    return feedDao.insertLike(params);
+  }
+
+  @Override
+  public int deleteLike(int feedNo, int memberNo) throws Exception {
+    HashMap<String, Object> params = new HashMap<>();
+    params.put("feedNo", feedNo);
+    params.put("memberNo", memberNo);
+
+    return feedDao.deleteLike(params);
+  }
+
 
 
 }

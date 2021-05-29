@@ -1,6 +1,7 @@
 package com.bit189.haroo.dao;
 
 import java.util.List;
+import java.util.Map;
 import com.bit189.haroo.domain.Comment;
 
 public interface CommentDao {
@@ -19,4 +20,10 @@ public interface CommentDao {
   int delete(int commentNo) throws Exception;
 
   String commentCount(int feedNo) throws Exception;
+
+  String findLike(Map<String, Object> params) throws Exception;
+
+  int deleteLike(Map<String, Object> params) throws Exception;
+
+  int addLike(Map<String, Object> params) throws Exception;
 }

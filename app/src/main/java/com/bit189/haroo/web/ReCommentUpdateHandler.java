@@ -40,7 +40,6 @@ public class ReCommentUpdateHandler extends HttpServlet {
 
       reCommentService.update(reComment);
 
-      //      System.out.println("여기 오니?");
       //      response.sendRedirect("../detail?no=" + feedNo);
     } catch (Exception e) {
       throw new ServletException(e);
