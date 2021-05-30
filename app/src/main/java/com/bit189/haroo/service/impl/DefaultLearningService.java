@@ -1,16 +1,13 @@
 package com.bit189.haroo.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import com.bit189.Mybatis.TransactionCallback;
 import com.bit189.Mybatis.TransactionManager;
 import com.bit189.Mybatis.TransactionTemplate;
-import com.bit189.haroo.dao.BroadCategoryDao;
 import com.bit189.haroo.dao.LearningDao;
 import com.bit189.haroo.dao.LearningScheduleDao;
-import com.bit189.haroo.dao.NarrowCategoryDao;
 import com.bit189.haroo.dao.ServiceInfoDao;
-import com.bit189.haroo.dao.SidoDao;
-import com.bit189.haroo.dao.SigunguDao;
 import com.bit189.haroo.domain.Learning;
 import com.bit189.haroo.domain.ServiceInfo;
 import com.bit189.haroo.service.LearningService;
@@ -21,23 +18,14 @@ public class DefaultLearningService implements LearningService {
   ServiceInfoDao serviceInfoDao;
   LearningDao learningDao;
   LearningScheduleDao learningScheduleDao;
-  BroadCategoryDao broadCategoryDao;
-  NarrowCategoryDao narrowCategoryDao;
-  SidoDao sidoDao;
-  SigunguDao sigunguDao;
 
   public DefaultLearningService(TransactionManager txManager, ServiceInfoDao serviceInfoDao,
-      LearningDao learningDao, LearningScheduleDao learningScheduleDao, BroadCategoryDao broadCategoryDao,
-      NarrowCategoryDao narrowCategoryDao, SidoDao sidoDao, SigunguDao sigunguDao) {
+      LearningDao learningDao, LearningScheduleDao learningScheduleDao) {
 
     this.transactionTemplate = new TransactionTemplate(txManager);
     this.serviceInfoDao = serviceInfoDao;
     this.learningDao = learningDao;
     this.learningScheduleDao = learningScheduleDao;
-    this.broadCategoryDao = broadCategoryDao;
-    this.narrowCategoryDao = narrowCategoryDao;
-    this.sidoDao = sidoDao;
-    this.sigunguDao = sigunguDao;
   }
 
   @Override
@@ -46,8 +34,18 @@ public class DefaultLearningService implements LearningService {
     return (int) transactionTemplate.execute(new TransactionCallback() {
       @Override
       public Object doInTransaction() throws Exception {
+
         int count = serviceInfoDao.insert(serviceInfo);
-        learningDao.insert(learning);
+
+        HashMap<String,Object> param = new HashMap<>();
+        param.put("no", serviceInfo.getNo());
+        param.put("learning", learning);
+        learningDao.insert(param);
+
+        HashMap<String,Object> params = new HashMap<>();
+        params.put("learningNo", serviceInfo.getNo());
+        params.put("schedules", learning.getSchedules());
+        learningScheduleDao.insert(params);
 
         return count;
       }
@@ -65,9 +63,27 @@ public class DefaultLearningService implements LearningService {
   }
 
   @Override
-  public int update(Learning Learning) throws Exception {
-    // TODO Auto-generated method stub
-    return 0;
+  public int update(ServiceInfo serviceInfo, Learning learning) throws Exception {
+
+    return (int) transactionTemplate.execute(new TransactionCallback() {
+      @Override
+      public Object doInTransaction() throws Exception {
+
+        int count = serviceInfoDao.update(serviceInfo);
+
+        HashMap<String,Object> param = new HashMap<>();
+        param.put("no", serviceInfo.getNo());
+        param.put("learning", learning);
+        learningDao.update(param);
+
+        HashMap<String,Object> params = new HashMap<>();
+        params.put("learningNo", serviceInfo.getNo());
+        params.put("schedules", learning.getSchedules());
+        learningScheduleDao.update(params);
+
+        return count;
+      }
+    });
   }
 
   @Override
@@ -77,7 +93,6 @@ public class DefaultLearningService implements LearningService {
 
   @Override
   public Learning Search(int no) throws Exception {
-    // TODO Auto-generated method stub
     return null;
   }
 }
