@@ -57,7 +57,7 @@ public class QuestionAddHandler extends HttpServlet{
       ArrayList<AttachedFile> attachedFiles = new ArrayList<>();
 
       question.setTitle(request.getParameter("title"));
-      question.setSecret(false);
+      question.setSecret(Integer.parseInt(request.getParameter("secret")));
       post.setContent(request.getParameter("content"));
 
 

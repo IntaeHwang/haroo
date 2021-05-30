@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import com.bit189.haroo.domain.AttachedFile;
 import com.bit189.haroo.domain.Member;
-import com.bit189.haroo.domain.Post;
 import com.bit189.haroo.domain.Question;
 import com.bit189.haroo.service.ServiceQuestionService;
 import net.coobird.thumbnailator.ThumbnailParameter;
@@ -46,14 +45,26 @@ public class QuestionReplyAddHandler extends HttpServlet{
 
     ServiceQuestionService serviceQuestionService =
         (ServiceQuestionService) request.getServletContext().getAttribute("serviceQuestionService");
+    //    AttachedFileService attachedFileService =
+    //        (AttachedFileService) request.getServletContext().getAttribute("attachedFileService");
+
+    int no = Integer.parseInt(request.getParameter("no"));
 
     try {
-      Question question = new Question();
-      Post post = new Post();
-      AttachedFile attachedFile = new AttachedFile();
 
-      question.setNo(Integer.parseInt(request.getParameter("no")));
+      Question oldQuestion = serviceQuestionService.get(no);
+
+      Member loginUser = (Member) request.getSession().getAttribute("loginUser");
+      if (oldQuestion.getWriter().getNo() != loginUser.getNo()) {
+        throw new Exception("작업 권한이 없습니다!");
+      }
+
+      Question question = new Question();
+      question.setNo(oldQuestion.getNo());
       question.setReplyContent(request.getParameter("content"));
+
+
+      AttachedFile attachedFile = new AttachedFile();
 
       Collection<Part> files = request.getParts();
       for (Part file : files) {
@@ -91,18 +102,12 @@ public class QuestionReplyAddHandler extends HttpServlet{
           }
         }
 
-
         System.out.println("uploadDir5 : " + uploadDir);
       }
 
+      serviceQuestionService.replyUpdate(question, attachedFile);
 
-
-      Member loginUser = (Member) request.getSession().getAttribute("loginUser");
-      question.setWriter(loginUser);
-
-      serviceQuestionService.addreply(question, post, attachedFile);
-
-      response.sendRedirect("../detail?no=" + question.getNo());
+      response.sendRedirect("list");
 
     } catch (Exception e) {
       throw new ServletException(e);

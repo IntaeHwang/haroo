@@ -33,7 +33,7 @@ public class CommentAddHandler extends HttpServlet {
       response.sendRedirect("../detail?no=" + comment.getFeedNo());
 
     } catch (Exception e) {
-
+      throw new ServletException(e);
     }
 
   }
