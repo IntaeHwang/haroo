@@ -21,14 +21,14 @@
 	</c:if>
 
   <c:if test="${not empty learning.coverImage}">
-    <c:set var="cover800x450Url">../upload/${learning.coverImage}_800x450.jpg</c:set>
-    <c:set var="coverUrl">../upload/${learning.coverImage}</c:set>
+    <c:set var="cover800x450Url">../../upload/${learning.coverImage}_800x450.jpg</c:set>
+    <c:set var="coverUrl">../../upload/${learning.coverImage}</c:set>
   </c:if>
   <c:if test="${not empty learning.owner.profilePicture}">
-    <c:set var="profilePictureUrl">../upload/${learning.owner.profilePicture}_30x30.jpg</c:set>
+    <c:set var="profilePictureUrl">../../upload/${learning.owner.profilePicture}_30x30.jpg</c:set>
   </c:if>
   <c:if test="${empty learning.owner.profilePicture}">
-    <c:set var="profilePictureUrl">../images/person_30x30.jpg</c:set>
+    <c:set var="profilePictureUrl">../../images/person_30x30.jpg</c:set>
   </c:if>
 
   <fmt:formatDate value="${learning.registeredDate}" pattern="yyyy-MM-dd hh:mm:ss" var="registeredDate"/>
