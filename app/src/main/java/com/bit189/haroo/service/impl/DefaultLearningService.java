@@ -1,20 +1,16 @@
 package com.bit189.haroo.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
-import com.bit189.haroo.dao.BroadCategoryDao;
 import com.bit189.haroo.dao.LearningDao;
 import com.bit189.haroo.dao.LearningScheduleDao;
-import com.bit189.haroo.dao.NarrowCategoryDao;
 import com.bit189.haroo.dao.ServiceInfoDao;
-import com.bit189.haroo.dao.SidoDao;
-import com.bit189.haroo.dao.SigunguDao;
 import com.bit189.haroo.domain.Learning;
-import com.bit189.haroo.domain.LearningSchedule;
 import com.bit189.haroo.domain.ServiceInfo;
 import com.bit189.haroo.service.LearningService;
 
@@ -25,40 +21,39 @@ public class DefaultLearningService implements LearningService {
   ServiceInfoDao serviceInfoDao;
   LearningDao learningDao;
   LearningScheduleDao learningScheduleDao;
-  BroadCategoryDao broadCategoryDao;
-  NarrowCategoryDao narrowCategoryDao;
-  SidoDao sidoDao;
-  SigunguDao sigunguDao;
 
   public DefaultLearningService(PlatformTransactionManager txManager, ServiceInfoDao serviceInfoDao,
-      LearningDao learningDao, LearningScheduleDao learningScheduleDao, BroadCategoryDao broadCategoryDao,
-      NarrowCategoryDao narrowCategoryDao, SidoDao sidoDao, SigunguDao sigunguDao) {
+      LearningDao learningDao, LearningScheduleDao learningScheduleDao) {
 
     this.transactionTemplate = new TransactionTemplate(txManager);
     this.serviceInfoDao = serviceInfoDao;
     this.learningDao = learningDao;
     this.learningScheduleDao = learningScheduleDao;
-    this.broadCategoryDao = broadCategoryDao;
-    this.narrowCategoryDao = narrowCategoryDao;
-    this.sidoDao = sidoDao;
-    this.sigunguDao = sigunguDao;
   }
 
   @Override
-  public int add(ServiceInfo serviceInfo, Learning learning, LearningSchedule learningSchedule) throws Exception {
-
+  public int add(ServiceInfo serviceInfo, Learning learning) throws Exception {
     return transactionTemplate.execute(new TransactionCallback<Integer>() {
       @Override
       public Integer doInTransaction(TransactionStatus status) {
-        int count;
         try {
-          count = serviceInfoDao.insert(serviceInfo);
-          learningDao.insert(learning);
+          int count = serviceInfoDao.insert(serviceInfo);
+
+          HashMap<String,Object> param = new HashMap<>();
+          param.put("no", serviceInfo.getNo());
+          param.put("learning", learning);
+          learningDao.insert(param);
+
+          HashMap<String,Object> params = new HashMap<>();
+          params.put("learningNo", serviceInfo.getNo());
+          params.put("schedules", learning.getSchedules());
+          learningScheduleDao.insert(params);
+
+          return count;
+
         } catch (Exception e) {
           throw new RuntimeException(e);
         }
-
-        return count;
       }
     });
   }
@@ -74,9 +69,29 @@ public class DefaultLearningService implements LearningService {
   }
 
   @Override
-  public int update(Learning Learning) throws Exception {
-    // TODO Auto-generated method stub
-    return 0;
+  public int update(ServiceInfo serviceInfo, Learning learning) throws Exception {
+    return transactionTemplate.execute(new TransactionCallback<Integer>() {
+      @Override
+      public Integer doInTransaction(TransactionStatus status) {
+        try {
+          int count = serviceInfoDao.update(serviceInfo);
+
+          HashMap<String,Object> param = new HashMap<>();
+          param.put("no", serviceInfo.getNo());
+          param.put("learning", learning);
+          learningDao.update(param);
+
+          HashMap<String,Object> params = new HashMap<>();
+          params.put("learningNo", serviceInfo.getNo());
+          params.put("schedules", learning.getSchedules());
+          learningScheduleDao.update(params);
+
+          return count;
+        } catch (Exception e) {
+          throw new RuntimeException(e);
+        }
+      }
+    });
   }
 
   @Override
@@ -86,8 +101,6 @@ public class DefaultLearningService implements LearningService {
 
   @Override
   public Learning Search(int no) throws Exception {
-    // TODO Auto-generated method stub
     return null;
   }
-
 }

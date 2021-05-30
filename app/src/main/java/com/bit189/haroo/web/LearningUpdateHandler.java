@@ -12,9 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.bit189.haroo.domain.Learning;
 import com.bit189.haroo.domain.LearningSchedule;
-import com.bit189.haroo.domain.Member;
 import com.bit189.haroo.domain.ServiceInfo;
-import com.bit189.haroo.domain.Tutor;
 import com.bit189.haroo.service.BroadCategoryService;
 import com.bit189.haroo.service.LearningService;
 import com.bit189.haroo.service.NarrowCategoryService;
@@ -26,7 +24,7 @@ import net.coobird.thumbnailator.geometry.Positions;
 import net.coobird.thumbnailator.name.Rename;
 
 @Controller
-public class LearningAddHandler {
+public class LearningUpdateHandler {
 
   BroadCategoryService broadCategoryService;
   NarrowCategoryService narrowCategoryService;
@@ -34,7 +32,7 @@ public class LearningAddHandler {
   SigunguService sigunguService;
   LearningService learningService;
 
-  public LearningAddHandler(BroadCategoryService broadCategoryService, NarrowCategoryService narrowCategoryService,
+  public LearningUpdateHandler(BroadCategoryService broadCategoryService, NarrowCategoryService narrowCategoryService,
       SidoService sidoService, SigunguService sigunguService, LearningService learningService) {
 
     this.broadCategoryService = broadCategoryService;
@@ -44,7 +42,7 @@ public class LearningAddHandler {
     this.learningService = learningService;
   }
 
-  @RequestMapping("/learning/add")
+  @RequestMapping("/learning/update")
   public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
     String uploadDir = request.getServletContext().getRealPath("/upload");
@@ -54,25 +52,30 @@ public class LearningAddHandler {
     request.setAttribute("sidos", sidoService.list());
     request.setAttribute("sigungus", sigunguService.list());
 
+    int no = Integer.parseInt(request.getParameter("no"));
+    Learning learning = learningService.get(no);
+    request.setAttribute("learning", learning);
+
     if (request.getMethod().equals("GET")) {
-      return "/jsp/learning/form.jsp";
+      return "/jsp/learning/update.jsp";
     }
 
-    /* 커버이미지
-     * 서비스이름, 대분류, 소분류
-     * 우편번호 API (기본주소, 광역시도명, 시군구명 자동출력),
-     * 상세주소, 서비스소개, 진행순서, 환불정보, 최소인원수, 최대인원수,
-     * 날짜, 시작시각, 종료시각,
-     * 가격
-     */
+    //      보류 (jsp로 옮길지)
+    //      int no = Integer.parseInt(request.getParameter("no"));
+    //
+    //      Learning oldLearning = learningService.get(no);
+    //
+    //      if (oldLearning == null) {
+    //        throw new Exception("해당 번호의 체험학습이 없습니다.");
+    //      }
+
+    //      Member loginUser = (Member) request.getSession().getAttribute("loginUser");
+    //      if (oldLearning.getOwner().getNo() != loginUser.getNo()) {
+    //        throw new Exception("변경 권한이 없습니다!");
+    //      }
+
     ServiceInfo s = new ServiceInfo();
     Learning l = new Learning();
-
-    // 개설자
-    Member loginUser = (Member) request.getSession().getAttribute("loginUser");
-    Tutor tutor = new Tutor();
-    tutor.setNo(loginUser.getNo());
-    l.setOwner(tutor);
 
     s.setName(request.getParameter("name"));
     s.setBroadCategoryNo(Integer.parseInt(request.getParameter("broadCategoryNo")));
@@ -131,7 +134,7 @@ public class LearningAddHandler {
       });
     }
 
-    learningService.add(s, l);
+    learningService.update(s, l);
 
     // list말고 detail?
     return "redirect:list";

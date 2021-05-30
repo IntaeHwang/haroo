@@ -13,10 +13,34 @@
     <result column="lno" property="learningNo"/>
   </resultMap>
   
-  <insert id="insert" parameterType="learningSchedule">
-    insert into
-      har_schedule(date,stm,etm,lno)
-      values(#{date},#{stm},#{etm},#{lno})
+  <insert id="insert" parameterType="map">
+    insert into har_schedule(sche_no,lno,date,stm,etm)
+    values
+    <foreach collection="schedules" item="s" separator=",">
+      (#{s.no},#{learningNo},#{s.learningDate},#{s.startTime},#{s.endTime})
+    </foreach>
+  </insert>
+  
+  <!--
+  <insert id="update" parameterType="map">
+    update har_schedule set
+      <foreach collection="schedules" item="s" separator=",">
+        (lno=#{learningNo},
+         date=#{s.learningDate},
+         stm=#{s.startTime},
+         etm=#{s.endTime})
+         where sche_no=#{s.no}
+      </foreach>
+  </insert>
+  -->
+  
+  <insert id="update" parameterType="map">
+    update har_schedule set
+      lno=#{learningNo},
+      date=#{s.learningDate},
+      stm=#{s.startTime},
+      etm=#{s.endTime}
+    where sche_no=#{s.no}
   </insert>
   
 </mapper>
