@@ -55,7 +55,9 @@
 			<tr><th>제목</th> <td>${learning.name}</td></tr>
 			<tr><th>광역시도</th> <td>${learning.sido}</td></tr>
 			<tr><th>시군구</th> <td>${learning.sigungu}</td></tr>
+			<!-- 계산식 필요
 			<tr><th>평균평점</th> <td>${learning.averageRate}</td></tr>
+			-->
 			<tr><th>등록일</th> <td>${registeredDate}</td></tr>
 			<tr><th>본문</th> <td>${learning.intro}</td></tr>
 			<tr><th>진행순서</th> <td>${learning.progressOrder}</td></tr>
