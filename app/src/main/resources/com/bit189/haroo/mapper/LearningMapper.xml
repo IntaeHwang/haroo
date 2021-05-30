@@ -114,7 +114,6 @@
     select
       s.sno,
       s.sname,
-      s.avg_rate,
       s.rdttm,
       s.cov_img,
       s.sintro,

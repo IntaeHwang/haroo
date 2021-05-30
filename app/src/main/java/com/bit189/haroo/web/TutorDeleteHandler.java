@@ -1,39 +1,35 @@
 package com.bit189.haroo.web;
 
-import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 import com.bit189.haroo.domain.Tutor;
 import com.bit189.haroo.service.TutorService;
 
-@SuppressWarnings("serial")
-@WebServlet("/tutor/delete")
-public class TutorDeleteHandler extends HttpServlet {
+@Controller
+public class TutorDeleteHandler {
 
-  @Override
-  protected void doGet(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
+  TutorService tutorService;
 
-    TutorService tutorService = (TutorService) request.getServletContext().getAttribute("tutorService");
+  public TutorDeleteHandler(TutorService tutorService) {
+    this.tutorService = tutorService;
+  }
 
-    try {
-      int no = Integer.parseInt(request.getParameter("no"));
+  @RequestMapping("/tutor/delete")
+  public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-      Tutor tutor = tutorService.get(no);
-      if (tutor == null) {
-        throw new Exception("해당 번호의 튜터가 없습니다.");
-      }
+    int no = Integer.parseInt(request.getParameter("no"));
 
-      tutorService.delete(no);
-
-      response.sendRedirect("list");
-
-    } catch (Exception e) {
-      throw new ServletException(e);
+    Tutor tutor = tutorService.get(no);
+    if (tutor == null) {
+      throw new Exception("해당 번호의 튜터가 없습니다.");
     }
+
+    tutorService.delete(no);
+
+    return "redirect:list";
+
   }
 }
 

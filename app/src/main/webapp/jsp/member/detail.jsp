@@ -12,11 +12,11 @@
 <h1>회원 상세보기</h1>
 <c:if test="${not empty member}">
   <c:if test="${not empty member.profilePicture}">
-    <c:set var="profilePicture80x80Url">../upload/${member.profilePicture}_80x80.jpg</c:set>
-    <c:set var="profilePictureUrl">../upload/${member.profilePicture}</c:set>
+    <c:set var="profilePicture80x80Url">../../upload/${member.profilePicture}_80x80.jpg</c:set>
+    <c:set var="profilePictureUrl">../../upload/${member.profilePicture}</c:set>
   </c:if>
   <c:if test="${empty member.profilePicture}">
-    <c:set var="profilePicture80x80Url">../images/person_80x80.jpg</c:set>
+    <c:set var="profilePicture80x80Url">../../images/person_80x80.jpg</c:set>
     <c:set var="profilePictureUrl"></c:set>
   </c:if>
 		<form action='update' method='post' enctype='multipart/form-data'>

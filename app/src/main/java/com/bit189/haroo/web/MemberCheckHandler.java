@@ -1,6 +1,7 @@
 package com.bit189.haroo.web;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,8 +11,8 @@ import com.bit189.haroo.domain.Member;
 import com.bit189.haroo.service.MemberService;
 
 @SuppressWarnings("serial")
-@WebServlet("/member/upgrade")
-public class MemberUpgradeHandler extends HttpServlet {
+@WebServlet("/member/check")
+public class MemberCheckHandler extends HttpServlet {
 
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -20,12 +21,18 @@ public class MemberUpgradeHandler extends HttpServlet {
     MemberService memberService = (MemberService) request.getServletContext().getAttribute("memberService");
 
     try {
-      int no = Integer.parseInt(request.getParameter("no"));
+      String email = request.getParameter("email");
 
-      Member m = memberService.get(no);
-      request.setAttribute("member", m);
-      response.setContentType("text/html;charset=UTF-8");
-      request.getRequestDispatcher("/jsp/tutor/change2.jsp").include(request, response);
+      Member m = memberService.get(email);
+
+      response.setContentType("text/plain;charset=UTF-8");
+      PrintWriter out = response.getWriter();
+
+      if (m == null) {
+        out.print("no");
+      } else {
+        out.print("yes");
+      }
 
     } catch (Exception e) {
       throw new ServletException(e);

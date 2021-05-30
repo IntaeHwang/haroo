@@ -1,35 +1,30 @@
 package com.bit189.haroo.web;
 
-import java.io.IOException;
 import java.util.List;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 import com.bit189.haroo.domain.Tutor;
 import com.bit189.haroo.service.TutorService;
 
-@SuppressWarnings("serial")
-@WebServlet("/tutor/list") 
-public class TutorListHandler extends HttpServlet {
+@Controller
+public class TutorListHandler {
 
-  @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
+  TutorService tutorService;
 
-    TutorService tutorService = (TutorService) request.getServletContext().getAttribute("tutorService");
+  public TutorListHandler(TutorService tutorService) {
+    this.tutorService = tutorService;
+  }
 
-    try {
-      List<Tutor> list = tutorService.list(request.getParameter("keyword"));
+  @RequestMapping("/tutor/list")
+  public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-      request.setAttribute("list", list);
-      response.setContentType("text/html;charset=UTF-8");
-      request.getRequestDispatcher("/jsp/tutor/list.jsp").include(request, response);
+    List<Tutor> list = tutorService.list(request.getParameter("keyword"));
 
-    } catch (Exception e) {
-      throw new ServletException(e);
-    }
+    request.setAttribute("list", list);
+    return "/jsp/tutor/list.jsp";
+
   }
 
 }
