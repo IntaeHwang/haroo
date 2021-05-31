@@ -14,6 +14,7 @@
 <body>
 <h1>체험 후기 목록</h1>
 <h2>${learning.name}</h2>
+<!-- 러닝.평균평점 만들기 -->
 <p><a href='add'>후기 작성</a></p>
 
 <c:if test="${empty reviews}">
