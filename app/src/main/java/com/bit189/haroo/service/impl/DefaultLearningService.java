@@ -1,17 +1,20 @@
 package com.bit189.haroo.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
-import com.bit189.Mybatis.TransactionCallback;
-import com.bit189.Mybatis.TransactionManager;
-import com.bit189.Mybatis.TransactionTemplate;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
 import com.bit189.haroo.dao.LearningDao;
 import com.bit189.haroo.dao.LearningScheduleDao;
 import com.bit189.haroo.dao.ServiceInfoDao;
 import com.bit189.haroo.domain.Learning;
-import com.bit189.haroo.domain.LearningSchedule;
 import com.bit189.haroo.domain.ServiceInfo;
 import com.bit189.haroo.service.LearningService;
 
+@Service
 public class DefaultLearningService implements LearningService {
 
   TransactionTemplate transactionTemplate;
@@ -19,7 +22,7 @@ public class DefaultLearningService implements LearningService {
   LearningDao learningDao;
   LearningScheduleDao learningScheduleDao;
 
-  public DefaultLearningService(TransactionManager txManager, ServiceInfoDao serviceInfoDao,
+  public DefaultLearningService(PlatformTransactionManager txManager, ServiceInfoDao serviceInfoDao,
       LearningDao learningDao, LearningScheduleDao learningScheduleDao) {
 
     this.transactionTemplate = new TransactionTemplate(txManager);
@@ -29,16 +32,28 @@ public class DefaultLearningService implements LearningService {
   }
 
   @Override
-  public int add(ServiceInfo serviceInfo, Learning learning, LearningSchedule learningSchedule) throws Exception {
-
-    return (int) transactionTemplate.execute(new TransactionCallback() {
+  public int add(ServiceInfo serviceInfo, Learning learning) throws Exception {
+    return transactionTemplate.execute(new TransactionCallback<Integer>() {
       @Override
-      public Object doInTransaction() throws Exception {
-        int count = serviceInfoDao.insert(serviceInfo);
-        learningDao.insert(learning);
-        learningScheduleDao.insert(learningSchedule);
+      public Integer doInTransaction(TransactionStatus status) {
+        try {
+          int count = serviceInfoDao.insert(serviceInfo);
 
-        return count;
+          HashMap<String,Object> param = new HashMap<>();
+          param.put("no", serviceInfo.getNo());
+          param.put("learning", learning);
+          learningDao.insert(param);
+
+          HashMap<String,Object> params = new HashMap<>();
+          params.put("learningNo", serviceInfo.getNo());
+          params.put("schedules", learning.getSchedules());
+          learningScheduleDao.insert(params);
+
+          return count;
+
+        } catch (Exception e) {
+          throw new RuntimeException(e);
+        }
       }
     });
   }
@@ -54,8 +69,29 @@ public class DefaultLearningService implements LearningService {
   }
 
   @Override
-  public int update(Learning Learning) throws Exception {
-    return 0;
+  public int update(ServiceInfo serviceInfo, Learning learning) throws Exception {
+    return transactionTemplate.execute(new TransactionCallback<Integer>() {
+      @Override
+      public Integer doInTransaction(TransactionStatus status) {
+        try {
+          int count = serviceInfoDao.update(serviceInfo);
+
+          HashMap<String,Object> param = new HashMap<>();
+          param.put("no", serviceInfo.getNo());
+          param.put("learning", learning);
+          learningDao.update(param);
+
+          HashMap<String,Object> params = new HashMap<>();
+          params.put("learningNo", serviceInfo.getNo());
+          params.put("schedules", learning.getSchedules());
+          learningScheduleDao.update(params);
+
+          return count;
+        } catch (Exception e) {
+          throw new RuntimeException(e);
+        }
+      }
+    });
   }
 
   @Override

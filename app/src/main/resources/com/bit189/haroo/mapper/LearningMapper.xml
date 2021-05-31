@@ -8,11 +8,10 @@
   <resultMap id="learningMap" type="learning">
   
     <!-- domain.ServiceInfo -->
-    <id column="sno" property="no"/>
+    <id column="lno" property="no"/>
     <result column="sname" property="name"/>
     <result column="sintro" property="intro"/>
     <result column="cov_img" property="coverImage"/>
-    <result column="avg_rate" property="averageRate"/>
     <result column="sstat" property="state"/>
     <result column="rdttm" property="registeredDate"/>
     <result column="ncat_no" property="narrowCategoryNo"/>
@@ -45,7 +44,7 @@
       <result column="prom_dttm" property="promotedDate"/>
     </association>
     
-    <collection property="schedules" ofType="LearningSchedule">
+    <collection property="schedules" ofType="learningSchedule">
       <id column="sche_no" property="no"/>
       <result column="lno" property="learningNo"/>
       <result column="date" property="learningDate"/>
@@ -54,14 +53,29 @@
     </collection>
   </resultMap>
   
-  <insert id="insert" parameterType="learning">
-    insert into har_learning(min_head,max_head,curriculum,price,zipcode,addr,det_addr,rfnd_info,sgg_no)
-    values(#{minPeople},#{maxPeople},#{progressOrder},#{price},#{zipcode},#{address},#{detailAddress},#{refundInformation},#{sigunguNo})
+  <insert id="insert" parameterType="map">
+    insert into har_learning(lno,tno,min_head,max_head,curriculum,price,zipcode,addr,det_addr,rfnd_info,sgg_no)
+    values(#{no},#{learning.owner.no},#{learning.minPeople},#{learning.maxPeople},#{learning.progressOrder},#{learning.price},#{learning.zipcode},#{learning.address},#{learning.detailAddress},#{learning.refundInformation},#{learning.sigunguNo})
   </insert>
+  
+  <update id="update" parameterType="map">
+    update har_learning set
+      min_head=#{learning.minPeople},
+      max_head=#{learning.maxPeople},
+      curriculum=#{learning.progressOrder},
+      price=#{learning.price},
+      zipcode=#{learning.zipcode},
+      addr=#{learning.address},
+      det_addr=#{learning.detailAddress},
+      rfnd_info=#{learning.refundInformation},
+      sgg_no=#{learning.sigunguNo}
+    where lno=#{no}
+  </update>
   
   <!-- PK번호만 기입하였음 -->
   <select id="findAll" resultMap="learningMap">
     select
+      l.lno,
       l.min_head,
       l.max_head,
       l.curriculum,
@@ -74,7 +88,6 @@
       s.sname,
       s.sintro,
       s.cov_img,
-      s.avg_rate,
       s.sstat,
       s.rdttm,
       e.sche_no,
@@ -114,7 +127,6 @@
     select
       s.sno,
       s.sname,
-      s.avg_rate,
       s.rdttm,
       s.cov_img,
       s.sintro,
@@ -123,8 +135,16 @@
       m.nickname,
       m.profile_pic,
       m.mrno,
+      l.lno,
+      l.min_head,
+      l.max_head,
       l.curriculum,
+      l.price,
       l.rfnd_info,
+      e.sche_no,
+      e.date,
+      e.stm,
+      e.etm,
       n.ncat_name,
       b.bcat_name,
       g.sgg_name,
@@ -137,6 +157,7 @@
       inner join har_broad_cat b on b.bcat_no=n.bcat_no
       inner join har_sigungu g on g.sgg_no=l.sgg_no
       inner join har_sido d on d.sido_no=g.sido_no
+      inner join har_schedule e on e.lno=l.lno
       inner join har_tutor t on t.tno=l.tno
       inner join har_member m on m.mno=t.tno
     where
