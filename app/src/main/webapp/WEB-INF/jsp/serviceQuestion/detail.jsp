@@ -23,12 +23,12 @@
 <fmt:formatDate value="${question.writingDate}" pattern="yyyy-MM-dd HH:mm:ss" var="writingDate"/>
 <form action='update' method='post'>
 <table border='1'>
-	<tbody>
-		<tr><th>번호</th> <td><input type='text' name='no' value='${question.no}' readonly></td>
-		<th>조회수</th> <td>${question.viewCount}</td></tr>
-		<tr><th>제목</th> <td colspan='5'><input name='title' type='text' value='${question.title}' readonly></td></tr>
-		<tr><th>내용</th> <td colspan='5'><textarea name='content' rows='30' cols='180'>${question.content}</textarea></td></tr>
-		<tr><th>첨부파일</th> <td>
+  <tbody>
+    <tr><th>번호</th> <td><input type='text' name='no' value='${question.no}' readonly></td>
+    <th>조회수</th> <td>${question.viewCount}</td></tr>
+    <tr><th>제목</th> <td colspan='5'><input name='title' type='text' value='${question.title}' readonly></td></tr>
+    <tr><th>내용</th> <td colspan='5'><textarea name='content' rows='30' cols='180'>${question.content}</textarea></td></tr>
+    <tr><th>첨부파일</th> <td>
           <c:forEach items="${question.attachedFiles}" var="file">
             <c:if test="${not empty file.name}">
              <c:set var="photoUrl">../upload/${file.name}_500x500.jpg</c:set>
@@ -38,8 +38,8 @@
         </td>
       </tr>
  <tr><th>작성자</th> <td>${question.writer.name}</td><th>작성일</th> <td colspan='3'>${writingDate}</td></tr>
-		
-	</tbody>
+    
+  </tbody>
 
  <c:if test="${not empty loginUser and loginUser.no == question.writer.no}">
   <tfoot>
@@ -47,15 +47,15 @@
     <td colspan='2'>
       <input type='submit' value='수정'><a href='delete?no=${question.no}'>삭제</a>
     </td>
-	</tr>
-	
-	<c:if test="${not empty loginUser and loginUser.no == question.writer.no}">
-	<td colspan='2'>
-	<input type='button' value='답글' onclick="changeView(${question.no})">
-	  </td>
-	</c:if>
+  </tr>
+  
+  <c:if test="${not empty loginUser and loginUser.no == question.writer.no}">
+  <td colspan='2'>
+  <input type='button' value='답글' onclick="changeView(${question.no})">
+    </td>
+  </c:if>
 
-	</tfoot>    
+  </tfoot>    
   </c:if>
   
   </table>

@@ -276,7 +276,7 @@
 	  });
 
 	  location.reload();
-	}
+	} 
 
 
 

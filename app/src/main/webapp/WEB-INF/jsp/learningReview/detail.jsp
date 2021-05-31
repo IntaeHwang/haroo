@@ -31,11 +31,11 @@
 <table border='1'>
   <tbody>
     <tr><th>번호</th> <td><input type='text' name='no' value='${review.no}' readonly></td>
-	    <th>평점</th> <td><input class='har-upab' name='rate' type='text' value='${review.rate}' readonly></td>
+	    <th>평점</th> <td><input class='har-lrv_det-updatable' name='rate' type='text' value='${review.rate}' readonly></td>
 	    <th>조회수</th> <td>${review.viewCount}</td>
     </tr>
     <tr>
-      <th>제목</th> <td colspan='5'><input class='har-upab''
+      <th>제목</th> <td colspan='5'><input class='har-lrv-det-updatable'
        name='title' type='text' value='${review.title}' readonly></td>
       </tr>
     <tr>
@@ -43,7 +43,7 @@
 	    <th>작성일</th> <td colspan='3'>${writingDate}</td>
     </tr>
     <tr>
-      <th>내용</th> <td colspan='5'><textarea class='har-upab' name='content' 
+      <th>내용</th> <td colspan='5'><textarea class='har-lrv-det-updatable' name='content' 
       rows='30' cols='180' readonly>${review.content}</textarea></td>
     </tr>
     <tr></tr>
@@ -51,10 +51,10 @@
     <tr></tr>
   </tbody>
 </table>
-<input class='har-up' type='submit' style='{display: none;}' value='확인'><button class='har-up' style='{display: none;}'>취소</a>
+<input class='har-lrv-det-up' type='submit' style='{display: none;}' value='확인'><a class='har-lrv-det-up' style='{display: none;}'>취소</a>
 </form>
 	<c:if test="${not empty loginUser and loginUser.no == review.writer.no}">
-	  <button id="har-up" class = "har-up-hid">수정</button><a class = "har-up-hid" href='delete?no=${review.no}'>삭제</a>
+	  <button id='har-lrv-det-up-btn' class = 'har-lrv-det-up-hid'>수정</button><a class = 'har-lrv-det-up-hid' href='delete?no=${review.no}'>삭제</a>
 	</c:if>
 </c:if>
 
@@ -66,7 +66,7 @@
 <script>
 "use stricet";
 
-$("#har-up").click({
+$("#har-lrv-det-up-btn").click({
 	
 });
 	
