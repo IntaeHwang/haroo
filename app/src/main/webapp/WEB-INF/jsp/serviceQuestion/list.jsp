@@ -5,7 +5,6 @@
     trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +13,7 @@
 </head>
 <body>
 <h1>문의 목록</h1>
-<p><a href='add'>새 글</a></p>
+<p><a href='form'>새 글</a></p>
 <table border='1'>
 <thead>
 <tr>
