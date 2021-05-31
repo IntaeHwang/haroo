@@ -23,7 +23,7 @@
 
 <style>
 a {
-	text-decoration: none;
+	text-decoration: none; 
 	color: #333;
 }
 
