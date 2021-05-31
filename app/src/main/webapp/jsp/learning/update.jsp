@@ -13,6 +13,9 @@
 <h1>체험학습 수정</h1>
 <c:if test="${not empty learning}">
 <form action="update" method="post" enctype="multipart/form-data">
+
+<input type='hidden' name='no' value='${learning.no}'>
+
 커버이미지: <input type="file" name="coverImage" value="${learning.coverImage}"><br>
 체험학습 이름(제목): <input type="text" name="name" value="${learning.name}"><br>
 

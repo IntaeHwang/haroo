@@ -1,6 +1,5 @@
 package com.bit189.haroo.web;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
@@ -9,11 +8,9 @@ import javax.servlet.http.Part;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.bit189.haroo.domain.AttachedFile;
-import com.bit189.haroo.domain.Feed;
 import com.bit189.haroo.domain.Member;
-import com.bit189.haroo.domain.Post;
-import com.bit189.haroo.domain.Tutor;
-import com.bit189.haroo.service.FeedService;
+import com.bit189.haroo.domain.Question;
+import com.bit189.haroo.service.ServiceQuestionService;
 import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.geometry.Positions;
@@ -21,38 +18,40 @@ import net.coobird.thumbnailator.name.Rename;
 
 
 @Controller
-public class FeedAddHandler {
+public class QuestionReplyAddHandler {
 
-  FeedService feedService;
+  ServiceQuestionService serviceQuestionService;
 
-  public FeedAddHandler(FeedService feedService) {
-    this.feedService = feedService; 
+  public QuestionReplyAddHandler(ServiceQuestionService serviceQuestionService) {
+    this.serviceQuestionService = serviceQuestionService;
   }
 
-
-  @RequestMapping("/feed/add")
+  @RequestMapping("/question/reply/add")
   public String execute(HttpServletRequest request, HttpServletResponse response)
       throws Exception {
 
     String uploadDir = request.getServletContext().getRealPath("/upload");
 
+
     if (request.getMethod().equals("GET")) {
-      return "/jsp/feed/form.jsp";
+      return "/jsp/serviceQuestion/form2.jsp";
     }
 
-    Post post = new Post();
-    post.setContent(request.getParameter("content"));
+    int no = Integer.parseInt(request.getParameter("no"));
+
+    Question oldQuestion = serviceQuestionService.get(no);
 
     Member loginUser = (Member) request.getSession().getAttribute("loginUser");
-    // 로그인유저가 튜터인지 확인하는 코드 작성 필요
-    Tutor tutor = new Tutor();
-    tutor.setNo(loginUser.getNo());
+    if (oldQuestion.getWriter().getNo() != loginUser.getNo()) {
+      throw new Exception("작업 권한이 없습니다!");
+    }
 
-    Feed feed = new Feed();
-    feed.setWriter(tutor);
+    Question question = new Question();
+    question.setNo(oldQuestion.getNo());
+    question.setReplyContent(request.getParameter("content"));
 
-    ArrayList<AttachedFile> attachedFiles = new ArrayList<>();
 
+    AttachedFile attachedFile = new AttachedFile();
 
     Collection<Part> files = request.getParts();
     for (Part file : files) {
@@ -61,9 +60,7 @@ public class FeedAddHandler {
 
         System.out.println("uploadDir1 : " + uploadDir);
 
-        //          Part photoPart = request.getPart("file");
         if (file.getSize() > 0) {
-          // 파일을 선택해서 업로드 했다면,
           String filename = UUID.randomUUID().toString();
 
           System.out.println("uploadDir2 : " + uploadDir);
@@ -72,24 +69,10 @@ public class FeedAddHandler {
           System.out.println("uploadDir3 : " + uploadDir);
           System.out.println(uploadDir + "/");
 
-          AttachedFile f = new AttachedFile();
-          f.setName(filename);
 
-          attachedFiles.add(f);
-          //          f.setPostNo(post.getNo());
-          //          postService.addFile(f);
+          attachedFile.setName(filename);
 
-          // 썸네일 이미지 생성
-          Thumbnails.of(uploadDir + "/" + filename)
-          .size(330, 220)
-          .outputFormat("jpg")
-          .crop(Positions.CENTER)
-          .toFiles(new Rename() {
-            @Override
-            public String apply(String name, ThumbnailParameter param) {
-              return name + "_330x220";
-            }
-          });
+          //attachedFile.add(attachedFile);
 
           System.out.println("uploadDir4 : " + uploadDir);
 
@@ -100,23 +83,20 @@ public class FeedAddHandler {
           .toFiles(new Rename() {
             @Override
             public String apply(String name, ThumbnailParameter param) {
-              return name + "_500x500";
+              return name + "_300x300";
             }
           });
         }
       }
 
-
       System.out.println("uploadDir5 : " + uploadDir);
     }
 
-    feedService.add(post, attachedFiles, feed);
-
+    serviceQuestionService.replyUpdate(question, attachedFile);
 
     return "redirect:list";
 
 
-
-  }
-
+  }    
 }
+
