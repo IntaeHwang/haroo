@@ -1,27 +1,16 @@
 package com.bit189.haroo.web;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.bit189.haroo.domain.AttachedFile;
 import com.bit189.haroo.domain.Member;
-import com.bit189.haroo.domain.Post;
 import com.bit189.haroo.domain.Question;
-import com.bit189.haroo.domain.ServiceInfo;
 import com.bit189.haroo.service.ServiceQuestionService;
-import net.coobird.thumbnailator.ThumbnailParameter;
-import net.coobird.thumbnailator.Thumbnails;
-import net.coobird.thumbnailator.geometry.Positions;
-import net.coobird.thumbnailator.name.Rename;
 
 
 @Controller
@@ -40,82 +29,82 @@ public class QuestionController{
   public void form() throws Exception {
   }
 
-  @RequestMapping("add")
-  public String add(Question question, Post post, HttpSession session)
-      throws Exception {
-
-    String uploadDir = sc.getRealPath("/upload");
-
-    ArrayList<AttachedFile> attachedFiles = new ArrayList<>();
-
-    Member loginUser = (Member) session.getAttribute("loginUser");
-    question.setWriter(loginUser);
-
-    ServiceInfo s = new ServiceInfo();
-    s.setNo(2);
-    question.setServiceInfo(s);
-
-    Collection<Part> files = request.getParts();
-    for (Part file : files) {
-      if (file.getName().equals("file") && file.getSize() > 0) {
-        System.out.println(">" + file.getSubmittedFileName());
-
-        System.out.println("uploadDir1 : " + uploadDir);
-
-        //          Part photoPart = request.getPart("file");
-        if (file.getSize() > 0) {
-          // 파일을 선택해서 업로드 했다면,
-          String filename = UUID.randomUUID().toString();
-
-          System.out.println("uploadDir2 : " + uploadDir);
-
-          file.write(uploadDir + "/" + filename);
-          System.out.println("uploadDir3 : " + uploadDir);
-          System.out.println(uploadDir + "/");
-
-          AttachedFile f = new AttachedFile();
-          f.setName(filename);
-
-          attachedFiles.add(f);
-          //          f.setPostNo(post.getNo());
-          //          postService.addFile(f);
-
-          // 썸네일 이미지 생성
-          Thumbnails.of(uploadDir + "/" + filename)
-          .size(330, 220)
-          .outputFormat("jpg")
-          .crop(Positions.CENTER)
-          .toFiles(new Rename() {
-            @Override
-            public String apply(String name, ThumbnailParameter param) {
-              return name + "_330x220";
-            }
-          });
-
-          System.out.println("uploadDir4 : " + uploadDir);
-
-          Thumbnails.of(uploadDir + "/" + filename)
-          .size(500, 500)
-          .outputFormat("jpg")
-          .crop(Positions.CENTER)
-          .toFiles(new Rename() {
-            @Override
-            public String apply(String name, ThumbnailParameter param) {
-              return name + "_300x300";
-            }
-          });
-        }
-      }
-
-
-      System.out.println("uploadDir5 : " + uploadDir);
-    }
-
-    serviceQuestionService.add(question, post, attachedFiles);
-
-    return "redirect:list";
-
-  }    
+  //  @RequestMapping("add")
+  //  public String add(Question question, Post post, HttpSession session)
+  //      throws Exception {
+  //
+  //    String uploadDir = sc.getRealPath("/upload");
+  //
+  //    ArrayList<AttachedFile> attachedFiles = new ArrayList<>();
+  //
+  //    Member loginUser = (Member) session.getAttribute("loginUser");
+  //    question.setWriter(loginUser);
+  //
+  //    ServiceInfo s = new ServiceInfo();
+  //    s.setNo(2);
+  //    question.setServiceInfo(s);
+  //
+  //    Collection<Part> files = request.getParts();
+  //    for (Part file : files) {
+  //      if (file.getName().equals("file") && file.getSize() > 0) {
+  //        System.out.println(">" + file.getSubmittedFileName());
+  //
+  //        System.out.println("uploadDir1 : " + uploadDir);
+  //
+  //        //          Part photoPart = request.getPart("file");
+  //        if (file.getSize() > 0) {
+  //          // 파일을 선택해서 업로드 했다면,
+  //          String filename = UUID.randomUUID().toString();
+  //
+  //          System.out.println("uploadDir2 : " + uploadDir);
+  //
+  //          file.write(uploadDir + "/" + filename);
+  //          System.out.println("uploadDir3 : " + uploadDir);
+  //          System.out.println(uploadDir + "/");
+  //
+  //          AttachedFile f = new AttachedFile();
+  //          f.setName(filename);
+  //
+  //          attachedFiles.add(f);
+  //          //          f.setPostNo(post.getNo());
+  //          //          postService.addFile(f);
+  //
+  //          // 썸네일 이미지 생성
+  //          Thumbnails.of(uploadDir + "/" + filename)
+  //          .size(330, 220)
+  //          .outputFormat("jpg")
+  //          .crop(Positions.CENTER)
+  //          .toFiles(new Rename() {
+  //            @Override
+  //            public String apply(String name, ThumbnailParameter param) {
+  //              return name + "_330x220";
+  //            }
+  //          });
+  //
+  //          System.out.println("uploadDir4 : " + uploadDir);
+  //
+  //          Thumbnails.of(uploadDir + "/" + filename)
+  //          .size(500, 500)
+  //          .outputFormat("jpg")
+  //          .crop(Positions.CENTER)
+  //          .toFiles(new Rename() {
+  //            @Override
+  //            public String apply(String name, ThumbnailParameter param) {
+  //              return name + "_300x300";
+  //            }
+  //          });
+  //        }
+  //      }
+  //
+  //
+  //      System.out.println("uploadDir5 : " + uploadDir);
+  //    }
+  //
+  //    serviceQuestionService.add(question, post, attachedFiles);
+  //
+  //    return "redirect:list";
+  //
+  //  }    
 
   @GetMapping("delete")
   public String delete(int no, HttpSession session) throws Exception {
