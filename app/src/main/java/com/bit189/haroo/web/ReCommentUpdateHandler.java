@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import com.bit189.haroo.domain.Member;
 import com.bit189.haroo.domain.ReComment;
 import com.bit189.haroo.service.ReCommentService;
@@ -19,12 +20,12 @@ public class ReCommentUpdateHandler {
   }
 
   @RequestMapping("/feed/reComment/update")
+  @ResponseBody
   public String execute(HttpServletRequest request, HttpServletResponse response)
       throws Exception {
 
     int no = Integer.parseInt(request.getParameter("no"));
     String content = request.getParameter("content");
-    int feedNo = Integer.parseInt(request.getParameter("feedNo"));
 
     ReComment oldReComment = reCommentService.get(no);
 
@@ -43,7 +44,7 @@ public class ReCommentUpdateHandler {
 
     reCommentService.update(reComment);
 
-    return "redirect:../detail?no=" + feedNo;
+    return "yes!";
   }
 
 

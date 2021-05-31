@@ -77,7 +77,6 @@
 	    left join har_member tm on r.tagged_mem=tm.mno
 		where
 		  c.feed_no=#{no}
-		  and c.com_stat=1
 		order by c.com_dttm desc, c.com_no desc, r.rdttm desc
   </select>
   

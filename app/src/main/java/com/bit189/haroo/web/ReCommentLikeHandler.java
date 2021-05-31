@@ -1,10 +1,10 @@
 package com.bit189.haroo.web;
 
-import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import com.bit189.haroo.domain.Member;
 import com.bit189.haroo.service.ReCommentService;
 
@@ -19,15 +19,13 @@ public class ReCommentLikeHandler {
   }
 
   @RequestMapping("/feed/reComment/like")
+  @ResponseBody
   public String execute(HttpServletRequest request, HttpServletResponse response)
       throws Exception {
 
-    response.setContentType("text/plain;charset=UTF-8");
-    PrintWriter out = response.getWriter();
 
     Member loginUser = (Member) request.getSession().getAttribute("loginUser");
     if (loginUser == null) {
-      out.print("login");
     }
 
     int reCommentNo = Integer.parseInt(request.getParameter("no"));
@@ -36,14 +34,12 @@ public class ReCommentLikeHandler {
 
     if (isLike == 1) {
       reCommentService.deleteLike(reCommentNo, loginUser.getNo());
-      out.print("no");
+      return "no";
     } else {
       reCommentService.addLike(reCommentNo, loginUser.getNo());
-      out.print("yes");
+      return "yes";
     }
 
-
-    return "";
 
   }
 

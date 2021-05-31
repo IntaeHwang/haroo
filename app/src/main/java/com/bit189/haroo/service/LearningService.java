@@ -2,18 +2,17 @@ package com.bit189.haroo.service;
 
 import java.util.List;
 import com.bit189.haroo.domain.Learning;
-import com.bit189.haroo.domain.LearningSchedule;
 import com.bit189.haroo.domain.ServiceInfo;
 
 public interface LearningService {
 
-  int add(ServiceInfo serviceInfo, Learning learning, LearningSchedule learningSchedule) throws Exception;
+  int add(ServiceInfo serviceInfo, Learning learning) throws Exception;
 
   List<Learning> list() throws Exception;
 
   Learning get(int no) throws Exception;
 
-  int update(Learning Learning) throws Exception;
+  int update(ServiceInfo serviceInfo, Learning Learning) throws Exception;
 
   int delete(int no) throws Exception;
 
