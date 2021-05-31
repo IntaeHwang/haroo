@@ -24,7 +24,7 @@
 	<h1>스토리 목록(JSTL)</h1>
 
 	<p>
-		<a href='add'>스토리 등록</a>
+		<a href='form'>스토리 등록</a>
 	</p>
 
 	<c:forEach items="${feeds}" var="feed">

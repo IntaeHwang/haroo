@@ -143,8 +143,7 @@
 											<img src="${profilePictureUrl}" class="har-feed-wr-pro3" />
 										</div>
 										<b class="har-feed-font4">${reComment.reWriter.name}</b><br>
-										<span class="har-cmt-content har-rcmt-content"><span
-											class="har-reComment-tag">@${reComment.taggedMember.name}</span>
+										<span class="har-cmt-content har-rcmt-content"><span class="har-reComment-tag">@${reComment.taggedMember.name}</span>
 											${reComment.content}</span>
 										<div class="har-like-box har-like-box2">
 											<input type="text" class="har-cmt-input har-rcmt-input"
@@ -214,7 +213,6 @@
 
 	      if (data == "no") {
 	        if (lType == 1) {
-	          feedLike.style.backgroundPosition = "-9px -9px";
 	        } else {
 	          l.style.color = "#666";
 	        }
@@ -283,7 +281,7 @@
 	    + "<input type='text' name='content' placeholder='댓글을 달아주세요.'  class='har-comment-text'/>"
 	    + "<input type='submit' value='등록' class='har-comment-btn'>";
 	    
-	    document.querySelector("input").focus();
+	    document.querySelector(".har-comment-text").focus();
 	}
 
 

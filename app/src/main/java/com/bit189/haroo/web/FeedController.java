@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -11,7 +12,9 @@ import javax.servlet.http.Part;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import com.bit189.haroo.domain.AttachedFile;
 import com.bit189.haroo.domain.Comment;
 import com.bit189.haroo.domain.Feed;
@@ -21,6 +24,7 @@ import com.bit189.haroo.domain.Tutor;
 import com.bit189.haroo.service.CommentService;
 import com.bit189.haroo.service.FeedService;
 import com.bit189.haroo.service.PostService;
+import com.bit189.haroo.service.ReCommentService;
 import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.geometry.Positions;
@@ -34,28 +38,32 @@ public class FeedController {
   FeedService feedService;
   PostService postService;
   CommentService commentService;
+  ReCommentService reCommentService;
+  ServletContext sc;
 
-  public FeedController(FeedService feedService, PostService postService, CommentService commentService) {
+  public FeedController(FeedService feedService, PostService postService, CommentService commentService, 
+      ReCommentService reCommentService, ServletContext sc) {
     this.feedService = feedService; 
     this.postService = postService;
     this.commentService = commentService;
+    this.reCommentService = reCommentService;
+    this.sc = sc;
+  }
+
+  @GetMapping("form")
+  public void form() throws Exception {
   }
 
 
-  @RequestMapping("add")
-  public String add(HttpServletRequest request, HttpServletResponse response)
+  @PostMapping("add")
+  public String add(Post post, HttpServletRequest request, HttpSession session, Part photoFile)
       throws Exception {
 
-    String uploadDir = request.getServletContext().getRealPath("/upload");
+    System.out.println("?");
 
-    if (request.getMethod().equals("GET")) {
-      return "/jsp/feed/form.jsp";
-    }
+    String uploadDir = sc.getRealPath("/upload");
 
-    Post post = new Post();
-    post.setContent(request.getParameter("content"));
-
-    Member loginUser = (Member) request.getSession().getAttribute("loginUser");
+    Member loginUser = (Member) session.getAttribute("loginUser");
     // 로그인유저가 튜터인지 확인하는 코드 작성 필요
     Tutor tutor = new Tutor();
     tutor.setNo(loginUser.getNo());
@@ -67,59 +75,46 @@ public class FeedController {
 
 
     Collection<Part> files = request.getParts();
+    System.out.println("?2");
     for (Part file : files) {
-      if (file.getName().equals("file") && file.getSize() > 0) {
+      if (file.getName().equals("files") && file.getSize() > 0) {
         System.out.println(">" + file.getSubmittedFileName());
 
-        System.out.println("uploadDir1 : " + uploadDir);
+        // 파일을 선택해서 업로드 했다면,
+        String filename = UUID.randomUUID().toString();
+        file.write(uploadDir + "/" + filename);
 
-        //          Part photoPart = request.getPart("file");
-        if (file.getSize() > 0) {
-          // 파일을 선택해서 업로드 했다면,
-          String filename = UUID.randomUUID().toString();
+        AttachedFile f = new AttachedFile();
+        f.setName(filename);
 
-          System.out.println("uploadDir2 : " + uploadDir);
+        attachedFiles.add(f);
+        System.out.println("?3");
 
-          file.write(uploadDir + "/" + filename);
-          System.out.println("uploadDir3 : " + uploadDir);
-          System.out.println(uploadDir + "/");
+        // 썸네일 이미지 생성
+        Thumbnails.of(uploadDir + "/" + filename)
+        .size(330, 220)
+        .outputFormat("jpg")
+        .crop(Positions.CENTER)
+        .toFiles(new Rename() {
+          @Override
+          public String apply(String name, ThumbnailParameter param) {
+            return name + "_330x220";
+          }
+        });
 
-          AttachedFile f = new AttachedFile();
-          f.setName(filename);
-
-          attachedFiles.add(f);
-          //          f.setPostNo(post.getNo());
-          //          postService.addFile(f);
-
-          // 썸네일 이미지 생성
-          Thumbnails.of(uploadDir + "/" + filename)
-          .size(330, 220)
-          .outputFormat("jpg")
-          .crop(Positions.CENTER)
-          .toFiles(new Rename() {
-            @Override
-            public String apply(String name, ThumbnailParameter param) {
-              return name + "_330x220";
-            }
-          });
-
-          System.out.println("uploadDir4 : " + uploadDir);
-
-          Thumbnails.of(uploadDir + "/" + filename)
-          .size(500, 500)
-          .outputFormat("jpg")
-          .crop(Positions.CENTER)
-          .toFiles(new Rename() {
-            @Override
-            public String apply(String name, ThumbnailParameter param) {
-              return name + "_500x500";
-            }
-          });
-        }
+        Thumbnails.of(uploadDir + "/" + filename)
+        .size(500, 500)
+        .outputFormat("jpg")
+        .crop(Positions.CENTER)
+        .toFiles(new Rename() {
+          @Override
+          public String apply(String name, ThumbnailParameter param) {
+            return name + "_500x500";
+          }
+        });
       }
 
 
-      System.out.println("uploadDir5 : " + uploadDir);
     }
 
     feedService.add(post, attachedFiles, feed);
@@ -192,6 +187,59 @@ public class FeedController {
 
 
     return "redirect:list";
+
+  }
+
+
+  @PostMapping("like")
+  @ResponseBody
+  public String like(int no, HttpSession session)
+      throws Exception {
+
+    Member loginUser = (Member) session.getAttribute("loginUser");
+    if (loginUser == null) {
+    }
+
+    int isLike = feedService.getLike(no, loginUser.getNo());
+
+    if (isLike == 1) {
+      feedService.deleteLike(no, loginUser.getNo());
+      return "no";
+    } else {
+      feedService.addLike(no, loginUser.getNo());
+      return "yes";
+    }
+
+  }
+
+
+  @PostMapping("likeCheck")
+  @ResponseBody
+  public String likeCheck(int no, int lType, HttpSession session)
+      throws Exception {
+
+    Member loginUser = (Member) session.getAttribute("loginUser");
+
+    if (loginUser == null) {
+      return "no";
+    }
+
+    int isLike = 0;
+
+    if (lType == 1) {
+      isLike = feedService.getLike(no, loginUser.getNo());
+    } else if (lType == 2) {
+      isLike = commentService.getLike(no, loginUser.getNo());
+    } else if (lType == 3) {
+      isLike = reCommentService.getLike(no, loginUser.getNo());
+    }
+
+    if (isLike == 1) {
+      return "yes";
+    } else {
+      return "no";
+    }
+
 
   }
 
