@@ -8,18 +8,21 @@
 <head>
 <title>피드 상세</title>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
 	rel="stylesheet"
 	integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
 	crossorigin="anonymous">
-	
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
 	crossorigin="anonymous"></script>
 
-<link href="../../css/har_feed_detail.css" rel="stylesheet">
+<link href="../../css/har_feed_detail.css" rel="stylesheet" />
 
 </head>
 <body>
@@ -27,7 +30,8 @@
 
 	<section>
 		<c:if test="${not empty feed}">
-			<fmt:formatDate value="${feed.writingDate}" pattern="yyyy년 MM월 dd일" var="writingDate" />
+			<fmt:formatDate value="${feed.writingDate}" pattern="yyyy년 MM월 dd일"
+				var="writingDate" />
 			<div class="card">
 				<form action='update' method='post'>
 					<input type="hidden" name='no' value='${feed.no}' readonly>
@@ -70,7 +74,7 @@
 
 					<div class="card-body">
 						<!-- <div class="like"></div> -->
-						<p class="fst-normal har-feed-font3">${feed.content}</p>
+						<pre class="fst-normal har-feed-font3">${feed.content}</pre>
 						<br> <br> <br> <br> <br> <br> <br>
 						<!-- <div class="comment"></div> -->
 						<!-- <p class="fst-normal har-feed-font3">583</p> -->
@@ -152,8 +156,8 @@
 											<img src="${profilePictureUrl}" class="har-feed-wr-pro3" />
 										</div>
 										<b class="har-feed-font4">${reComment.reWriter.name}</b><br>
-										<span class="har-reComment-tag">@${reComment.taggedMember.name}</span><span
-											class="har-cmt-content har-rcmt-content">
+										<span class="har-cmt-content har-rcmt-content"><span
+											class="har-reComment-tag">@${reComment.taggedMember.name}</span>
 											${reComment.content}</span>
 										<div class="har-like-box har-like-box2">
 											<input type="text" class="har-cmt-input har-rcmt-input"
@@ -181,7 +185,7 @@
 						</c:forEach>
 					</c:forEach>
 				</div>
-				
+
 				<div class="har-comment-input">
 					<form action='comment/add' method='post' id="har-comment-add">
 						<input type="hidden" name="no" value="${feed.no}" /> <input
@@ -201,6 +205,154 @@
 		<a href='list' class="listBtn">목록</a>
 	</section>
 
-	<script type="text/javascript" src="../../js/har_feed_detail.js"></script>
+	<!-- 	<script type="text/javascript" src="../../js/har_feed_detail.js"> -->
+	<script>
+	"use strict"
+
+
+	var likeBtns = document.querySelectorAll(".har-like");
+	var feedLike = document.getElementById('like');
+
+
+	for (var l of likeBtns) {
+	  var no = l.getAttribute("har-like-no");
+	  var lType = l.getAttribute("har-like-type");
+
+	  $.ajax("likeCheck", {
+	    method: "POST",
+	    data: "no=" + no + "&lType=" + lType,
+	    async: false,
+	    success: function(data) {
+	      console.log(no, data, "피드라이크!");
+
+	      if (data == "no") {
+	        if (lType == 1) {
+	        } else {
+	          l.style.color = "#666";
+	        }
+	      } else if (data == "yes") {
+	        if (lType == 1) {
+	          feedLike.style.backgroundPosition = "-38px -9px";
+	        } else {
+	          l.style.color = "blue";
+	        }
+
+	      }
+	    },
+	    error: function(data) {
+	      console.log(data);
+	    }
+	  });
+	}
+
+
+	function likeCheck(e) {
+	  var likeBtn = e.target;
+	  var no = likeBtn.getAttribute("har-like-no");
+	  var url = '';
+
+	  if (likeBtn.getAttribute("har-like-type") == 1) {
+	    url = "like";
+	  } else if (likeBtn.getAttribute("har-like-type") == 2) {
+	    url = "comment/like";
+	  } else if (likeBtn.getAttribute("har-like-type") == 3) {
+	    url = "reComment/like";
+	  }
+
+	  $.ajax(url, {
+	    method: "POST",
+	    data: "no=" + no,
+	    success: function(data) {
+	      console.log(data);
+	      if (data == "yes") {
+	        likeBtn.style.color = "blue";
+	      } else if (data == "no") {
+	        likeBtn.style.color = "#666";
+	      }
+	    },
+	    error: function(data) {
+	      console.log(data);
+	    }
+	  });
+
+	  location.reload();
+	}
+
+
+
+
+	function reCommentAdd(cmtNo, tgNo, fdNo) {
+	  var cmtForm = document.getElementById("har-comment-add");
+	  var originForm = cmtForm.innerHTML;
+
+	  cmtForm["action"] = "reComment/add";
+
+	  cmtForm.innerHTML = "<input type='hidden' name='commentNo' value='" + cmtNo + "'/>"
+	    + "<input type='hidden' name='taggedNo' value='" + tgNo + "'/>"
+	    + "<input type='hidden' name='no' value='" + fdNo + "' />"
+	    + "<input type='text' name='content' placeholder='답글을 달아주세요.'  class='har-comment-text'/>"
+	    + "<input type='submit' value='등록' class='har-comment-btn'>";
+	    
+	    document.querySelector(".har-comment-text").focus();
+	}
+
+
+	var reCmtInputList = document.querySelectorAll(".har-cmt-input");
+	var reCmtConfirm = document.querySelectorAll(".har-cmt-confirm");
+
+	for (var e of reCmtInputList) {
+	  e.style.display = "none";
+	}
+
+	for (var e of reCmtConfirm) {
+	  e.style.display = "none";
+	}
+
+	function cmtUpdate(e) {
+	  /* console.log("e.target", e.target); */
+	  var recommentDiv = e.target.parentElement;
+	  recommentDiv = recommentDiv.parentElement;
+
+	  recommentDiv.querySelector(".har-cmt-input").style.display = "";
+	  recommentDiv.querySelector(".har-cmt-confirm").style.display = "";
+	  recommentDiv.querySelector(".har-cmt-content").style.display = "none";
+	  /* recommentDiv.querySelector(".har-like-box").style.top = 15px; */
+	  recommentDiv.querySelector(".har-cmt-update").style.display = "none";
+	}
+
+	function cmtConfirm(e) {
+	  var recommentDiv = e.target.parentElement;
+	  recommentDiv = recommentDiv.parentElement;
+	  var content = recommentDiv.querySelector(".har-cmt-input").value;
+	  var no = recommentDiv.getAttribute("har-cmt-no");
+	  recommentDiv.querySelector(".har-cmt-input").style.display = "none";
+	  recommentDiv.querySelector(".har-cmt-content").style.display = "";
+
+	  var url = '';
+
+	  if (recommentDiv.getAttribute("har-cmt-type") == 1) {
+	    url = "comment/update";
+	  } else {
+	    url = "reComment/update";
+	  }
+
+	  $.ajax(url, {
+	    method: "POST",
+	    data: "no=" + no + "&content=" + content,
+	    success: function() {
+	      alert("성공했습니다.");
+	    },
+	    error: function() {
+	      alert("실패했습니다.");
+	    }
+	  });
+
+	  location.reload();
+	}
+
+
+
+
+	</script>
 </body>
 </html>
