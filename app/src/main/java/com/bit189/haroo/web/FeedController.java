@@ -2,18 +2,25 @@ package com.bit189.haroo.web;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.bit189.haroo.domain.AttachedFile;
+import com.bit189.haroo.domain.Comment;
 import com.bit189.haroo.domain.Feed;
 import com.bit189.haroo.domain.Member;
 import com.bit189.haroo.domain.Post;
 import com.bit189.haroo.domain.Tutor;
+import com.bit189.haroo.service.CommentService;
 import com.bit189.haroo.service.FeedService;
+import com.bit189.haroo.service.PostService;
 import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.geometry.Positions;
@@ -21,17 +28,22 @@ import net.coobird.thumbnailator.name.Rename;
 
 
 @Controller
-public class FeedAddHandler {
+@RequestMapping("/feed")
+public class FeedController {
 
   FeedService feedService;
+  PostService postService;
+  CommentService commentService;
 
-  public FeedAddHandler(FeedService feedService) {
+  public FeedController(FeedService feedService, PostService postService, CommentService commentService) {
     this.feedService = feedService; 
+    this.postService = postService;
+    this.commentService = commentService;
   }
 
 
-  @RequestMapping("/feed/add")
-  public String execute(HttpServletRequest request, HttpServletResponse response)
+  @RequestMapping("add")
+  public String add(HttpServletRequest request, HttpServletResponse response)
       throws Exception {
 
     String uploadDir = request.getServletContext().getRealPath("/upload");
@@ -114,8 +126,72 @@ public class FeedAddHandler {
 
 
     return "redirect:list";
+  }
 
 
+  @GetMapping("list")
+  public void list(Model model) throws Exception {
+
+    List<Feed> feeds = feedService.list();
+
+    model.addAttribute("feeds", feeds);
+
+
+  }
+
+
+  @GetMapping("delete")
+  public String delete(int no, HttpSession session) throws Exception {
+
+    Feed feed = feedService.get(no);
+
+    Member loginUser = (Member) session.getAttribute("loginUser");
+    if (feed.getWriter().getNo() != loginUser.getNo()) {
+      throw new Exception("삭제 권한이 없습니다!");
+    }
+
+    postService.delete(no);
+
+    return "redirect:list";
+
+  }
+
+
+  @GetMapping("detail")
+  public void detail(int no, Model model)
+      throws Exception {
+
+    Feed feed = feedService.get(no);
+    List<Comment> comments = commentService.list(no);
+
+    model.addAttribute("feed", feed);
+    model.addAttribute("comments", comments);
+
+
+  }
+
+
+  @RequestMapping("update")
+  public String update(HttpServletRequest request, HttpServletResponse response)
+      throws Exception {
+
+    int no = Integer.parseInt(request.getParameter("no"));
+
+    Feed oldFeed = feedService.get(no);
+
+    if (oldFeed == null) {
+      throw new Exception("해당 번호의 스토리가 없습니다.");
+    }
+
+    Feed feed = new Feed();
+
+    // 아직 작업 보류..
+
+
+
+
+
+    return "redirect:list";
 
   }
 
