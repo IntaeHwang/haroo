@@ -60,24 +60,18 @@
 	
 		<c:forEach items="${comments}" var="comment">
 		  <div har-cmt-no="${comment.no}" har-feed-no="${feed.no}" har-cmt-type="1">
-				<c:if test="${comment.state == true}">
-				  <b>${comment.writer.name}</b> 
-					<span class="har-cmt-content">${comment.content}</span>
-					<input type="text" class="har-cmt-input" value="${comment.content}">
-					<span>좋아요 ${comment.likeCount}개</span>
-					<button type="button" har-like-no="${comment.no}" har-like-type="2" onclick="likeCheck(event)">댓글좋아요</button>
-					<button type="button" onclick="reCommentAdd(${comment.no},${comment.writer.no},${feed.no})">답글달기</button>
-		     	
-		     	<c:if test="${not empty loginUser and loginUser.no == comment.writer.no}">
-		     	  <button type="button" onclick="cmtUpdate(event)" class="har-cmt-update">수정</button>
-	          <button type="button" onclick="cmtConfirm(event)" class="har-cmt-confirm">확인</button>
-		     	  <a href="comment/delete?no=${comment.no}&feedNo=${feed.no}">댓글삭제</a>
-		     	</c:if>
-	     	</c:if>
+				<b>${comment.writer.name}</b> 
+				<span class="har-cmt-content">${comment.content}</span>
+				<input type="text" class="har-cmt-input" value="${comment.content}">
+				<span>좋아요 ${comment.likeCount}개</span>
+				<button type="button" har-like-no="${comment.no}" har-like-type="2" onclick="likeCheck(event)">댓글좋아요</button>
+				<button type="button" onclick="reCommentAdd(${comment.no},${comment.writer.no},${feed.no})">답글달기</button>
 	     	
-	     	<c:if test="${comment.state == false}">
-          <span>삭제 된 댓글입니다.</span>
-        </c:if>
+	     	<c:if test="${not empty loginUser and loginUser.no == comment.writer.no}">
+	     	  <button type="button" onclick="cmtUpdate(event)" class="har-cmt-update">수정</button>
+          <button type="button" onclick="cmtConfirm(event)" class="har-cmt-confirm">확인</button>
+	     	  <a href="comment/delete?no=${comment.no}&feedNo=${feed.no}">댓글삭제</a>
+	     	</c:if>
 	    </div>
      	
 		  <c:forEach items="${comment.reComments}" var="reComment">

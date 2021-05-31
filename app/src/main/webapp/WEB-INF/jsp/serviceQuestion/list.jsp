@@ -29,7 +29,7 @@
 <c:forEach items="${questions}" var="question">
 <fmt:formatDate value="${question.writingDate}" pattern="yyyy-MM-dd" var="writingDate"/>
 <tr> 
-    <c:set var="title" value="${question.secret eq '1' || question.writer.no eq loginUser.no ? question.title : '비밀글은 작성자와 튜터만 볼 수 있습니다.'}"/>
+    <c:set var="title" value="${question.secret eq 'Y' || question.writer.no eq loginUser.no ? question.title : '비밀글은 작성자와 튜터만 볼 수 있습니다.'}"/>
       <td>${question.no}</td>
   <td><a href='detail?no=${question.no}'>${title}</a></td>
   <td>${question.writer.nickname}</td>
@@ -37,14 +37,6 @@
   <td>${question.viewCount}</td>        
     </tr>
 </c:forEach>
-  
-<c:if test="${question.title > 0 }">
-<c:forEach begin="1" end="${question.title}">
-&nbsp;&nbsp;
-</c:forEach>
-RE :
-</c:if>
-
 
 </tbody>
 </table>
