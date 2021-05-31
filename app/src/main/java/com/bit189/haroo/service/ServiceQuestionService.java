@@ -17,9 +17,10 @@ public interface ServiceQuestionService {
 
   int update(Question question) throws Exception;
 
+  int replyUpdate(Question question, AttachedFile attachedFile) throws Exception;
+
   int delete(int no) throws Exception;
 
   List<Question> Search(String keyword) throws Exception;
 
-  int addreply(Question question, Post post, AttachedFile attachedFile) throws Exception;
 }

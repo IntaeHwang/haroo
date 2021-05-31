@@ -8,12 +8,18 @@
 <html>
 <head>
 <title>문의</title>
+
 </head>
 <body>
 <h1>문의</h1>
 <c:if test="${not empty question}">
 <h2>${question.serviceInfo.name}</h2>
-
+  <script type="text/javascript">
+        function changeView(value)
+        {           
+         location.href="reply/add?no="+value;
+            }
+</script>
 <fmt:formatDate value="${question.writingDate}" pattern="yyyy-MM-dd HH:mm:ss" var="writingDate"/>
 <form action='update' method='post'>
 <table border='1'>
@@ -42,6 +48,13 @@
       <input type='submit' value='수정'><a href='delete?no=${question.no}'>삭제</a>
     </td>
 	</tr>
+	
+	<c:if test="${not empty loginUser and loginUser.no == question.writer.no}">
+	<td colspan='2'>
+	<input type='button' value='답글' onclick="changeView(${question.no})">
+	  </td>
+	</c:if>
+
 	</tfoot>    
   </c:if>
   

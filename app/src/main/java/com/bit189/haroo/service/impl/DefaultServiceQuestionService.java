@@ -2,9 +2,11 @@ package com.bit189.haroo.service.impl;
 
 import java.util.HashMap;
 import java.util.List;
-import com.bit189.Mybatis.TransactionCallback;
-import com.bit189.Mybatis.TransactionManager;
-import com.bit189.Mybatis.TransactionTemplate;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
 import com.bit189.haroo.dao.AttachedFileDao;
 import com.bit189.haroo.dao.PostDao;
 import com.bit189.haroo.dao.ServiceQuestionDao;
@@ -14,7 +16,7 @@ import com.bit189.haroo.domain.Question;
 import com.bit189.haroo.service.ServiceQuestionService;
 
 
-
+@Service
 public class DefaultServiceQuestionService implements ServiceQuestionService{
 
   TransactionTemplate transactionTemplate;
@@ -23,7 +25,7 @@ public class DefaultServiceQuestionService implements ServiceQuestionService{
   PostDao postDao;
   AttachedFileDao attachedFileDao;
 
-  public DefaultServiceQuestionService(TransactionManager txManager, ServiceQuestionDao serviceQuestionDao, PostDao postDao, 
+  public DefaultServiceQuestionService(PlatformTransactionManager txManager, ServiceQuestionDao serviceQuestionDao, PostDao postDao, 
       AttachedFileDao attachedFileDao) {
     this.transactionTemplate = new TransactionTemplate(txManager);
     this.serviceQuestionDao = serviceQuestionDao;
@@ -34,27 +36,33 @@ public class DefaultServiceQuestionService implements ServiceQuestionService{
 
   @Override
   public int add(Question question, Post post, List<AttachedFile> files) throws Exception {
-    return (int) transactionTemplate.execute(new TransactionCallback() {
+    return transactionTemplate.execute(new TransactionCallback<Integer>(){
 
       @Override
-      public Object doInTransaction() throws Exception {
+      public Integer doInTransaction(TransactionStatus status) {
+        try {
+          int count = postDao.insert(post);
 
-        postDao.insert(post);
+          HashMap<String,Object> param = new HashMap<>();
+          param.put("no", post.getNo());
+          param.put("question", question);
 
-        HashMap<String,Object> param = new HashMap<>();
-        param.put("no", post.getNo());
-        param.put("question", question);
+          for (AttachedFile file : files) {
+            file.setPostNo(post.getNo());
 
-        for (AttachedFile file : files) {
-          file.setPostNo(post.getNo());
+            postDao.insertFile(file);
+          }
 
-          postDao.insertFile(file);
+          serviceQuestionDao.insert(param);
+
+          return count;
+        } catch (Exception e) {
+          throw new RuntimeException(e);
         }
-
-        return  serviceQuestionDao.insert(param);
       }
     });
   }
+
 
   @Override
   public List<Question> list() throws Exception {
@@ -95,18 +103,8 @@ public class DefaultServiceQuestionService implements ServiceQuestionService{
   }
 
   @Override
-  public int addreply(Question question, Post post, AttachedFile attachedFile) throws Exception {
-    postDao.insert(post);
+  public int replyUpdate(Question question, AttachedFile attachedFile) throws Exception {
     attachedFileDao.insert(attachedFile);
-
-    HashMap<String,Object> params = new HashMap<>();
-    params.put("no", post.getNo());
-    params.put("question", question);
-    params.put("no", attachedFile.getNo());
-
-    return serviceQuestionDao.insert(params);
+    return serviceQuestionDao.update(question);
   }
-
-
-
 }

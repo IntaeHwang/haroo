@@ -35,13 +35,20 @@
       <result column="fname" property="name"/>
     </collection>
     
+     <collection property="replyAttachedFiles" ofType="AttachedFile">
+      <id column="srpl_fno" property="no"/>
+       <result column="pno" property="postNo"/>
+      <result column="srpl_fname" property="name"/>
+    </collection>
     
   </resultMap>
   
   <insert id="insert" parameterType="Map">
-    insert into har_sqna (pno, mno, sno, title, secret)
-    values (#{no}, #{question.writer.no}, #{question.serviceInfo.no}, #{question.title}, #{question.secret})
+    insert into har_sqna (pno, mno, sno, title, secret, rpl_content)
+    values (#{no}, #{question.writer.no}, #{question.serviceInfo.no}, #{question.title}, #{question.secret}
+    , #{question.replyContent})
   </insert>
+  
   
   <select id="findAll" resultMap="serviceQuestionMap">
     select
@@ -63,8 +70,8 @@
       f.fname,
       s.sname,
       s.sstat,
-      r.fno,
-      r.fname 
+      r.srpl_fno,
+      r.srpl_fname 
     from
       har_sqna q
       inner join har_member m on m.mno=q.mno
@@ -110,14 +117,20 @@
   </select>
 
  <update id="update" parameterType="question">
-    update har_sqna set
+    update har_post set
         content = #{content}
-    where no = #{no}
+    where pno = #{no}
+  </update>
+  
+  <update id="replyUpdate" parameterType="question">
+    update har_sqna set
+        rpl_content = #{replyContent}
+    where pno = #{no}
   </update>
   
   <delete id="delete" parameterType="int">
     delete from har_sqna
-    where no = #{value}
+    where pno = #{value}
   </delete>
 
 
