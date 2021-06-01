@@ -35,7 +35,7 @@
 		  <th>사진</th> 
 		  <td><a href='${profilePictureUrl}'>
 		  <img src='${profilePicture80x80Url}'></a><br>
-		  <input name='profilepicture' type='file'></td></tr>
+		  <input name='profileFile' type='file'></td></tr>
 		<tr>
 		  <th>닉네임</th> 
 		  <td><input type='text' name='nickname' value='${tutor.nickname}' ></td></tr>

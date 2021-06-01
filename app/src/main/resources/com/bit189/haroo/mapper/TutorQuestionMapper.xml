@@ -24,7 +24,7 @@
     </association> 
     
   <association property="tutor" javaType="Member">
-      <id column="tno" property="no"/>
+      <id column="mno" property="no"/>
       <result column="name" property="name"/>
       <result column="mstat" property="state"/>
   </association> 
@@ -69,5 +69,10 @@
       where
     p.pstat=1
     order by tq.pno
+  </select>
+  
+  <select id="findByNo" resultMap="tutorQuestionMap" parameterType="int">
+    select 
+  
   </select>
 </mapper>

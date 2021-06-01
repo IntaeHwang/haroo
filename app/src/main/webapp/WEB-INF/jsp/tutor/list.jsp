@@ -10,7 +10,7 @@
 </head>
 <body>
 <h1>튜터 목록</h1>
-<p><a href='add'>튜터등록</a></p>
+<p><a href='form'>튜터등록</a></p>
 <table border='1'>
 <thead>
 <tr>
