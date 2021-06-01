@@ -5,7 +5,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,8 +43,9 @@ public class QuestionController{
   }
 
   @PostMapping("add")
-  public String add(Question question, Post post, HttpSession session, AttachedFile attachedFile)
-      throws Exception {
+  public String add(Question question, Post post, HttpSession session, Part photoFile,
+      AttachedFile attachedFile, HttpServletRequest request)
+          throws Exception {
 
     String uploadDir = sc.getRealPath("/upload");
 
@@ -178,11 +181,15 @@ public class QuestionController{
   }
 
   @PostMapping("reply/add")
-  public String replyAdd(@RequestParam(defaultValue = "0") int no, Question question,
-      Model model, HttpSession session, AttachedFile attachedFile)
+  public String replyAdd(@RequestParam(defaultValue = "0") int pno, Question question,
+      Model model, HttpSession session, Part photoFile,
+      AttachedFile attachedFile, HttpServletRequest request)
           throws Exception {
 
     Question oldQuestion = serviceQuestionService.get(question.getNo());
+    if (oldQuestion == null) {
+      throw new Exception("해당 번호의 게시글이 없습니다.");
+    }
 
     Member loginUser = (Member) session.getAttribute("loginUser");
     if (oldQuestion.getWriter().getNo() != loginUser.getNo()) {
@@ -190,7 +197,8 @@ public class QuestionController{
     }
 
     question.setWriter(loginUser);
-    // question.setNo(oldQuestion.getNo());
+    question.setNo(oldQuestion.getNo());
+
 
     String uploadDir = sc.getRealPath("/upload");
 

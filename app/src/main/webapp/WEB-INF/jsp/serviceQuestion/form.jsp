@@ -32,13 +32,13 @@
             <label class="custom-file-label" for="file">첨부파일</label>
         </div>
 <div class="form-check">
-  <input class="form-check-input" type="checkbox" value="1" id="secret">
+  <input class="form-check-input" type="radio" value="1" name="secret">
   <label class="form-check-label" for="secret">
     공개
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="checkbox" value="0" id="secret" checked>
+  <input class="form-check-input" type="radio" value="0" name="secret" checked>
   <label class="form-check-label" for="secret">
     비공개
   </label>
