@@ -168,7 +168,7 @@ public class LearningController {
     int no = Integer.parseInt(request.getParameter("no"));
     Learning learning = learningService.get(no);
     request.setAttribute("learning", learning);
-    return "/jsp/learning/detail.jsp";
+    return "/WEB-INF/jsp/learning/detail.jsp";
   }
 
   @GetMapping("list")
