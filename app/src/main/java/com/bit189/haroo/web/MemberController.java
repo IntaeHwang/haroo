@@ -103,7 +103,7 @@ public class MemberController {
   }
 
   @PostMapping("update")
-  public String update(Member member, Part profileFile) throws Exception {
+  public String update(Member member , Part profileFile) throws Exception {
 
     String uploadDir =sc.getRealPath("/upload");
     if (profileFile.getSize() > 0) {
@@ -137,7 +137,6 @@ public class MemberController {
     if (memberService.update(member) == 0) {
       throw new Exception("해당 번호의 회원이 없습니다.");
     }
-
     return "redirect:list";
 
   }
