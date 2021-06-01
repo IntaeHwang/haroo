@@ -15,9 +15,9 @@
 <p><a href='basket'>장바구니에 넣기</a></p>
 <p><a href='wish'>찜하기</a></p>
 
-  <c:if test="${loginUser.rank == 1 || loginUser.rank == 2}">
-    <p><a href='add'>체험학습 등록</a></p>
-  </c:if>
+<p><a href='form'>체험학습 등록</a></p>
+<!-- <c:if test="${loginUser.rank == 1 || loginUser.rank == 2}">
+</c:if>  -->
 
 <table border='1'>
 <thead>
@@ -32,31 +32,31 @@
     <c:if test="${l.state == true}">
     
       <c:if test="${not empty l.coverImage}">
-        <c:set var="coverUrl">../upload/${l.coverImage}_80x80.jpg</c:set>
+        <c:set var="coverUrl">../../upload/${l.coverImage}_240x160.jpg</c:set>
       </c:if>
       <c:if test="${not empty l.owner.profilePicture}">
-        <c:set var="profilePictureUrl">../upload/${l.owner.profilePicture}_30x30.jpg</c:set>
+        <c:set var="profilePictureUrl">../../upload/${l.owner.profilePicture}_30x30.jpg</c:set>
       </c:if>
       <c:if test="${empty l.owner.profilePicture}">
-        <c:set var="profilePictureUrl">../images/person_30x30.jpg</c:set>
+        <c:set var="profilePictureUrl">../../images/person_30x30.jpg</c:set>
       </c:if>
       
-			<tr>
-			  <td><img src='${coverUrl}'></td>
-			  <td>${l.broadCategory}</td>
-			  <td>${l.narrowCategory}</td>
-			  <td><a href='detail?no=${l.no}'>${l.name}</a></td>
-			  <td>${l.sido}</td>
-			  <!-- 구매횟수 -->
-			  <td>${l.sigungu}</td>
-			  
-			  <!-- 튜터 마이페이지 링크 연결하기 -->
-			  <td><img src='${profilePictureUrl}'></td>
-			  <td>${l.owner.nickname}</td>
-			  
-			  <td>${l.price}</td>
-			</tr>
-			
+      <tr>
+        <td><img src='${coverUrl}'></td>
+        <td>${l.broadCategory}</td>
+        <td>${l.narrowCategory}</td>
+        <td><a href='detail?no=${l.no}'>${l.name}</a></td>
+        <td>${l.sido}</td>
+        <!-- 구매횟수 -->
+        <td>${l.sigungu}</td>
+        
+        <!-- 튜터 마이페이지 링크 연결하기 -->
+        <td><img src='${profilePictureUrl}'></td>
+        <td>${l.owner.nickname}</td>
+        
+        <td>${l.price}</td>
+      </tr>
+      
     </c:if>
 </c:forEach>
 

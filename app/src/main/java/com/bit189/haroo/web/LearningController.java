@@ -54,14 +54,12 @@ public class LearningController {
     this.memberService = memberService;
   }
 
-  @GetMapping("add")
-  public String form(Model model) throws Exception {
+  @GetMapping("form")
+  public void form(Model model) throws Exception {
     model.addAttribute("broadCategorys", broadCategoryService.list());
     model.addAttribute("narrowCategorys", narrowCategoryService.list());
     model.addAttribute("sidos", sidoService.list());
     model.addAttribute("sigungus", sigunguService.list());
-
-    return "/jsp/learning/form.jsp";
   }
 
   @PostMapping("add")
@@ -70,6 +68,12 @@ public class LearningController {
 
     String uploadDir = sc.getRealPath("/upload");
 
+    // 개설자
+    Member loginUser = (Member) session.getAttribute("loginUser");
+    Tutor tutor = new Tutor();
+    tutor.setNo(loginUser.getNo());
+    l.setOwner(tutor);
+
     /* 커버이미지
      * 서비스이름, 대분류, 소분류
      * 우편번호 API (기본주소, 광역시도명, 시군구명 자동출력),
@@ -77,12 +81,6 @@ public class LearningController {
      * 날짜, 시작시각, 종료시각,
      * 가격
      */
-
-    // 개설자
-    Member loginUser = (Member) session.getAttribute("loginUser");
-    Tutor tutor = new Tutor();
-    tutor.setNo(loginUser.getNo());
-    l.setOwner(tutor);
 
     // 우편번호 API 추가하기
 
@@ -146,27 +144,24 @@ public class LearningController {
   }
 
   @GetMapping("detail")
-  public String detail(int no, Model model) throws Exception {
+  public void detail(int no, Model model) throws Exception {
     model.addAttribute("learning", learningService.get(no));
-    return "/jsp/learning/detail.jsp";
   }
 
   @GetMapping("list")
-  public String list(Model model) throws Exception {
+  public void list(Model model) throws Exception {
     List<Member> members = memberService.list(null);
     List<Learning> learnings = learningService.list();
     model.addAttribute("learnings", learnings);
     model.addAttribute("members", members);
-    return "/jsp/learning/list.jsp";
   }
 
-  @GetMapping("update")
-  public String updateForm(Model model) throws Exception {
+  @GetMapping("updateForm")
+  public void updateForm(Model model) throws Exception {
     model.addAttribute("broadCategorys", broadCategoryService.list());
     model.addAttribute("narrowCategorys", narrowCategoryService.list());
     model.addAttribute("sidos", sidoService.list());
     model.addAttribute("sigungus", sigunguService.list());
-    return "/jsp/learning/update.jsp";
   }
 
   @PostMapping("update")
@@ -181,7 +176,7 @@ public class LearningController {
     //        throw new Exception("변경 권한이 없습니다!");
     //      }
 
-    s.setNo(no);
+    //    s.setNo(no);
 
     // 우편번호 API 추가하기
 
