@@ -34,15 +34,15 @@ public class TutorController {
     this.sc = sc;
   }
 
-  @GetMapping("add")
-  public String form() throws Exception {
-    return "/jsp/tutor/form.jsp";
+  @GetMapping("form")
+  public void form() throws Exception {
   }
 
   @PostMapping("add")
-  public String add(Member m, Tutor t, TutorCategory tc, TutorDistrict td) throws Exception {
-
-    tutorService.add(t, m, td, tc);
+  public String add(Tutor t, TutorDistrict td, TutorCategory tc) throws Exception {
+    td.setTno(t.getNo());
+    tc.setTno(t.getNo());
+    tutorService.add(t, td, tc);
 
     return "redirect:list";
 
@@ -62,21 +62,18 @@ public class TutorController {
   }
 
   @GetMapping("detail")
-  public String detail(int no, Model model) throws Exception {
+  public void detail(int no, Model model) throws Exception {
 
     Tutor t = tutorService.get(no);
     model.addAttribute("tutor", t);
 
-    return "/jsp/tutor/detail.jsp";
-
   }
 
   @GetMapping("list")
-  public String list(String keyword, Model model) throws Exception {
+  public void list(String keyword, Model model) throws Exception {
 
     List<Tutor> list = tutorService.list(keyword);
     model.addAttribute("list", list);
-    return "/jsp/tutor/list.jsp";
 
   }
 
