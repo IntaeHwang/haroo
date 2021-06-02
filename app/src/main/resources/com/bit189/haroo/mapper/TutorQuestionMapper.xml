@@ -2,62 +2,55 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.bit189.haroo.dao.TutorQuestionDao">
 
-<mapper namespace="com.bit189.haroo.dao.ServiceQuestionDao">
-
-  <resultMap id="serviceQuestionMap" type="Question">
+  <resultMap id="tutorQuestionMap" type="TutorQuestion">
     <id column="pno" property="no"/>
-     <result column="content" property="content"/>
+    <result column="content" property="content"/>
     <result column="wdttm" property="writingDate"/>
     <result column="view_cnt" property="viewCount"/>
     <result column="pstat" property="state"/>
     <result column="title" property="title"/>
     <result column="secret" property="secret"/>
-    <result column="rpl_content" property="replyContent"/>
+    <result column="reply" property="reply"/>
     <result column="rpl_dttm" property="replyDate"/>
-    
-    <association property="writer" javaType="Member">
+  
+  <association property="writer" javaType="Member">
       <id column="mno" property="no"/>
       <result column="profile_pic" property="profilePicture"/>
       <result column="name" property="name"/>
       <result column="nickname" property="nickname"/>
     </association> 
     
-    <association property="serviceInfo" javaType="ServiceInfo">
-      <id column="sno" property="no"/>
-      <result column="sname" property="name"/>
-      <result column="sstat" property="state"/>
-    </association> 
+  <association property="tutor" javaType="Member">
+      <id column="mno" property="no"/>
+      <result column="name" property="name"/>
+      <result column="mstat" property="state"/>
+  </association> 
     
-    <collection property="attachedFiles" ofType="AttachedFile">
+  <collection property="attachedFiles" ofType="AttachedFile">
       <id column="fno" property="no"/>
        <result column="pno" property="postNo"/>
       <result column="fname" property="name"/>
-    </collection>
-    
-     <collection property="replyAttachedFiles" ofType="AttachedFile">
-      <id column="srpl_fno" property="no"/>
-       <result column="pno" property="postNo"/>
-      <result column="srpl_fname" property="name"/>
-    </collection>
-    
+  </collection>
+  
   </resultMap>
-  
+    
   <insert id="insert" parameterType="Map">
-    insert into har_sqna (pno, mno, sno, title, secret, rpl_content)
-    values (#{no}, #{question.writer.no}, #{question.serviceInfo.no}, #{question.title}, #{question.secret}
-    , #{question.replyContent})
+    insert into har_tqna (pno, mno, tno, title, secret, reply)
+    values (#{no}, #{tutorQuestion.writer.no}, #{tutorQuestion.serviceInfo.no}, #{tutorQuestion.title}, #{tutorQuestion.secret}
+    , #{tutorQuestion.replyContent})
   </insert>
-  
-  
-  <select id="findAll" resultMap="serviceQuestionMap">
+    
+  <select id="findAll" resultMap="tutorQuestionMap">
     select
       q.pno,
       q.mno,
-      q.sno,
+      q.tno,
       q.title,
       q.secret,
-      q.rpl_content,
+      q.reply,
       q.rpl_dttm,
       p.content,
       p.wdttm,
@@ -68,30 +61,30 @@
       m.nickname,
       f.fno,
       f.fname,
-      s.sname,
-      s.sstat,
-      r.srpl_fno,
-      r.srpl_fname 
+      m.name,
+      m.mstat,
+      r.trpl_fno,
+      r.trpl_fname 
     from
-      har_sqna q
+      har_tqna q
       inner join har_member m on m.mno=q.mno
       inner join har_post p on p.pno=q.pno
       left join har_file f on f.pno=p.pno
-      inner join har_service s on s.sno=q.sno
-      left join har_srpl_file r on r.pno=q.pno
+      inner join har_tutor t on t.tno=q.tno
+      left join har_trpl_file r on r.pno=q.pno
       where
     p.pstat=1
     order by q.pno
   </select>
   
-   <select id="findByNo" parameterType="int" resultMap="serviceQuestionMap">
+  <select id="findByNo" resultMap="tutorQuestionMap" parameterType="int">
     select
       q.pno,
       q.mno,
-      q.sno,
+      q.tno,
       q.title,
       q.secret,
-      q.rpl_content,
+      q.reply,
       q.rpl_dttm,
       p.content,
       p.wdttm,
@@ -102,39 +95,27 @@
       m.nickname,
       f.fno,
       f.fname,
-      s.sname,
-      s.sstat
+      m.name,
+      m.mstat
     from
-      har_sqna q
+      har_tqna q
       inner join har_member m on m.mno=q.mno
       inner join har_post p on p.pno=q.pno
       left join har_file f on f.pno=p.pno
-      inner join har_service s on s.sno=q.sno
+      inner join har_tutor t on t.tno=q.tno
       where
       q.pno = #{no}
       and p.pstat=1
       order by q.pno
+  
   </select>
-
- <update id="update" parameterType="question">
+  
+  <update id="update" parameterType="tutorQuestion">
     update har_post set
         content = #{content}
     where pno = #{no}
   </update>
   
-  <update id="replyUpdate" parameterType="question">
-    update har_sqna set
-        rpl_content = #{replyContent}
-    where pno = #{no}
-  </update>
   
-  <delete id="delete" parameterType="int">
-    delete from har_sqna
-    where pno = #{value}
-  </delete>
-
-
-
+  
 </mapper>
-  
-  
