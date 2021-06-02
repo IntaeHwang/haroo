@@ -44,8 +44,8 @@
 		  <td><input type='tel' name='tel' value='${member.tel}' >  <input type='button' value='문자인증'></td></tr>
 		<tr>
 		  <th>성별</th> 
-		  <td><input type='checkbox' name='sex' ${member.sex == 1 ? "checked" : ""}  onclick='return(false);'>남 
-		      <input type='checkbox' name='sex' ${member.sex == 2 ? "checked" : ""}  onclick='return(false);'>여
+		  <td><input type='checkbox' ${member.sex == 1 ? "checked" : ""}  onclick='return(false);'>남 
+		      <input type='checkbox' ${member.sex == 2 ? "checked" : ""}  onclick='return(false);'>여
 		<tr>
 		  <th>생일</th> 
 		  <td><input type='date' name='birthDate' value='${member.birthDate}' readonly></td></tr>
