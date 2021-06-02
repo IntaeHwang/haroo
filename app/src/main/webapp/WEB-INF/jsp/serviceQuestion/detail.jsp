@@ -49,7 +49,7 @@
      <div class="mb-3 row">
     <label for="file" class="col-sm-1 col-form-label">첨부파일</label>
     <div class="col-sm-7">
-          <c:forEach class="form-control form-control-sm" id="file" items="${question.attachedFiles}" var="file">
+          <c:forEach items="${question.attachedFiles}" var="file">
             <c:if test="${not empty file.name}">
              <c:set var="photoUrl">../upload/${file.name}_500x500.jpg</c:set>
             </c:if>     
