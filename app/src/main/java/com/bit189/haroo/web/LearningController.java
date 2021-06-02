@@ -156,20 +156,22 @@ public class LearningController {
   }
 
   @GetMapping("updateForm")
-  public void updateForm(Model model) throws Exception {}
+  public void updateForm(int no, Model model) throws Exception {
+    model.addAttribute("learning", learningService.get(no));
+  }
 
   @PostMapping("update")
   public String update(int no, Model model, Part coverImage,
       HttpSession session, HttpServletRequest request) throws Exception {
 
+    Learning learning = learningService.get(no);
     String uploadDir = sc.getRealPath("/upload");
-    model.addAttribute("learning", learningService.get(no));
 
     ServiceInfo s = new ServiceInfo();
     Learning l = new Learning();
 
     Member loginUser = (Member) session.getAttribute("loginUser");
-    if (l.getOwner().getNo() != loginUser.getNo()) {
+    if (learning.getOwner().getNo() != loginUser.getNo()) {
       throw new Exception("변경 권한이 없습니다!");
     }
 
@@ -194,10 +196,12 @@ public class LearningController {
     List<LearningSchedule> schedules = new ArrayList<>();
     LearningSchedule schedule = new LearningSchedule();
     schedule.setLearningDate(Date.valueOf(request.getParameter("learningDate")));
-    schedule.setStartTime(Time.valueOf(request.getParameter("learningStartTime") + ":00"));
-    schedule.setEndTime(Time.valueOf(request.getParameter("learningEndTime") + ":00"));
+    schedule.setStartTime(Time.valueOf(request.getParameter("startTime") + ":00"));
+    schedule.setEndTime(Time.valueOf(request.getParameter("endTime") + ":00"));
     schedules.add(schedule);
     l.setSchedules(schedules);
+
+    l.setPrice(Integer.parseInt(request.getParameter("price")));
 
     if (coverImage.getSize() > 0) {
       String filename = UUID.randomUUID().toString();
