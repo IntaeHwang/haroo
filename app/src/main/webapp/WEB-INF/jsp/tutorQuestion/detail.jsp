@@ -55,7 +55,7 @@
 </form>
 </c:if>
 
-<c:if test="${empty question}">
+<c:if test="${empty tutorQuestion}">
 <p>해당 번호의 문의글이 없습니다.</p>
 </c:if>
 <p><a href='list'>목록</a></p>
