@@ -7,6 +7,9 @@
 <html>
 <head>
 <title>회원 상세</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+<link href="../css/common.css" rel="stylesheet" >
 </head>
 <body>
 <h1>회원 상세보기</h1>
@@ -53,7 +56,14 @@
       <input type="file" class="form-control-plaintext form-control-sm" id="profileFile"  name="profileFile" value='${member.profilePicture}'>
     </div>
   </div>
-		  
+   <div class="mb-3 row">
+    <label for="sex" class="col-sm-1 col-form-label">성별</label>
+          <div><input type='checkbox' ${member.sex == 1 ? "checked" : ""}  onclick='return(false);'>남 
+          <input type='checkbox' ${member.sex == 2 ? "checked" : ""}  onclick='return(false);'>여
+          </div>
+    <div class="col-sm-7">
+    </div>
+  </div>
 		<div class="mb-3 row">
     <label for="tel" class="col-sm-1 col-form-label">전화번호</label>
     <div class="col-sm-7">
