@@ -16,7 +16,7 @@
   <p><a href='/application/add'>체험학습 신청</a></p>
 
   <c:if test="${loginUser.no == learning.owner.no || loginUser.rank == 1}">
-    <p><a href='update?no=${learning.no}'>수정</a></p>
+    <p><a href='updateForm?no=${learning.no}'>수정</a></p>
     <p><a href='delete?no=${learning.no}'>삭제</a></p>
   </c:if>
 
