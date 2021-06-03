@@ -12,9 +12,6 @@
 <body>
 <h1>체험학습 상세보기</h1>
 
-<button>장바구니에 넣기</button>
-<button>찜하기</button>
-
 <c:if test="${not empty learning}">
   <p><a href='/application/add'>체험학습 신청</a></p>
 
@@ -58,6 +55,9 @@
       <tr><th>제목</th> <td>${learning.name}</td></tr>
       <tr><th>광역시도</th> <td>${learning.sido}</td></tr>
       <tr><th>시군구</th> <td>${learning.sigungu}</td></tr>
+      <tr><th>우편번호</th> <td>${learning.zipcode}</td></tr>
+      <tr><th>기본주소</th> <td>${learning.address}</td></tr>
+      <tr><th>상세주소</th> <td>${learning.detailAddress}</td></tr>
       <!-- <tr><th>평균평점</th> <td>${learning.averageRate}</td></tr> -->
       <tr><th>등록일</th> <td>${registeredDate}</td></tr>
       <tr><th>본문</th> <td>${learning.intro}</td></tr>
@@ -80,6 +80,8 @@
 <c:if test="${empty learning}">
   <p>해당 번호의 체험학습이 없습니다.</p>
 </c:if>
+
+<p><a href='../learning/list'>목록</a></p>
 
 </body>
 </html>

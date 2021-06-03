@@ -2,7 +2,8 @@
     contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     trimDirectiveWhitespaces="true"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,6 +13,7 @@
 <body>
 <h1>체험학습 수정</h1>
 <c:if test="${not empty learning}">
+
 <form action="update" method="post" enctype="multipart/form-data">
 
 <input type='hidden' name='no' value='${learning.no}'>
@@ -19,7 +21,7 @@
 커버이미지: <input type="file" name="coverImage" value="${learning.coverImage}"><br>
 체험학습 이름(제목): <input type="text" name="name" value="${learning.name}"><br>
 
-<select id="broadCategory" name="broadCategoryNo" data-broadCategory="${serviceInfo.broadCategoryNo}">
+<select id="broadCategory" name="broadCategoryNo" data-broadCategory="${learning.broadCategoryNo}">
   <option value="1">공예·DIY</option>
   <option value="2">댄스</option>
   <option value="3">요리</option>
@@ -30,7 +32,7 @@
   <option value="8">미술·드로잉</option>
   <option value="9">뷰티</option>
 </select>
-<select id="narrowCategory" name="narrowCategoryNo" data-narrowCategory="${serviceInfo.narrowCategoryNo}">
+<select id="narrowCategory" name="narrowCategoryNo" data-narrowCategory="${learning.narrowCategoryNo}">
   <option value="1">도자기</option>
   <option value="2">가죽</option>
   <option value="3">목공</option>
@@ -97,14 +99,15 @@
 
 상세주소: <input type="text" name="detailAddress" value="${learning.detailAddress}"><br>
 본문: <textarea name="intro" rows="10" cols="60">${learning.intro}</textarea><br>
-진행순서: <textarea name="progressOrder" rows="10" cols="30"${learning.progressOrder}></textarea><br>
-환불정보: <textarea name="refundInformation" rows="10" cols="30">${learning.refundInformation}</textarea><br>
+진행순서: <textarea name="progressOrder" rows="10" cols="60">${learning.progressOrder}</textarea><br>
+환불정보: <textarea name="refundInformation" rows="10" cols="60">${learning.refundInformation}</textarea><br>
 최소 인원수: <input type="number" name="minPeople" value="${learning.minPeople}"><br>
 최대 인원수: <input type="number" name="maxPeople" value="${learning.maxPeople}"><br>
 
-날짜: <input type="date" name="learningDate" value="${learningSchedule.learningDate}"><br>
-시작시각: <input type="time" name="startTime" value="${learningSchedule.startTime}"><br>
-종료시각: <input type="time" name="endTime" value="${learningSchedule.endTime}"><br>
+<fmt:formatDate value="${learning.schedules[0].learningDate}" pattern="yyyy-MM-dd" var="learningDate"/>
+날짜: <input type="date" name="learningDate" value="${learningDate}"><br>
+시작시각: <input type="time" name="startTime" value="${learning.schedules[0].startTime}"><br>
+종료시각: <input type="time" name="endTime" value="${learning.schedules[0].endTime}"><br>
 
 가격: <input type="number" name="price" value="${learning.price}"><br>
 <a href='../learning/detail?no=${learning.no}'><input type="submit" value="변경"></a>

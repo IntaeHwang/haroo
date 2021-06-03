@@ -7,13 +7,10 @@
 <html>
 <head>
 <title>체험학습 목록</title>
+
 </head>
 <body>
 <h1>체험학습 목록</h1>
-
-<!-- 체험학습 한 개당 한 쌍씩 -->
-<button>장바구니에 넣기</button>
-<button>찜하기</button>
 
 <c:if test="${loginUser.rank == 1 || loginUser.rank == 2}">
 <p><a href='form'>체험학습 등록</a></p>

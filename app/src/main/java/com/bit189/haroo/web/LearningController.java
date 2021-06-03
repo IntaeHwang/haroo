@@ -110,10 +110,9 @@ public class LearningController {
       });
     }
 
-    learningService.add(s, l);
+    int learningNo = learningService.add(s, l);
 
-    // 등록한 체험학습으로 연결하기 detail?
-    return "redirect:list";
+    return "redirect:detail?no=" + learningNo;
   }
 
   @RequestMapping("delete")
@@ -136,8 +135,6 @@ public class LearningController {
   @GetMapping("detail")
   public void detail(int no, Model model) throws Exception {
     model.addAttribute("learning", learningService.get(no));
-    Learning learning = learningService.get(no);
-    System.out.println(learning);
   }
 
   @GetMapping("list")
@@ -151,8 +148,6 @@ public class LearningController {
   @GetMapping("updateForm")
   public void updateForm(int no, Model model) throws Exception {
     model.addAttribute("learning", learningService.get(no));
-    Learning learning = learningService.get(no);
-    System.out.println(learning);
   }
 
   @PostMapping("update")
@@ -225,10 +220,9 @@ public class LearningController {
       });
     }
 
-    learningService.update(s, l);
+    int learningNo = learningService.update(s, l);
 
-    // 수정한 체험학습으로 연결하기 detail?
-    return "redirect:list";
+    return "redirect:detail?no=" + learningNo;
   }
 }
 
