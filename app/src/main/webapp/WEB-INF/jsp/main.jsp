@@ -150,7 +150,35 @@
 section {
       padding: 150px;
       margin: 0 auto;
+      min-height: 200px;
     }
+    
+#har-main {
+  display:table;
+  margin : 0 auto;
+  }
+    
+.har-list {
+  width: 250px;
+  height: 100px;
+  border: 1px solid #0566A3;
+  border-radius: 60px;
+  font-size: 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  color: #666;
+  font-weight: bold;
+  padding-top: 75px;
+  margin: 30px;
+}
+
+.har-list:hover {
+  background-color: #0566A3;
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+}
     
 </style>
 </head>
@@ -171,7 +199,7 @@ section {
 			</form>
 
 			<c:if test="${empty loginUser}">
-				<a href="#" id="har-login">로그인/회원가입</a>
+				<a href="login_form" id="har-login">로그인/회원가입</a>
 			</c:if>
 
 			<c:if test="${not empty loginUser}">
@@ -194,47 +222,11 @@ section {
 	</header>
 
 	<section>
-   <c:if test="${empty loginUser}">
-      <h1>비회원</h1>
-      <p>
-         <a href='member/form'>회원가입</a>
-      </p>
-      <p>
-         <a href='login_form'>로그인</a>
-      </p>
-      <p>
-         <a href='learning/list'>클래스 찾기</a>
-      </p>
-      <p>
-         <a href='feed/list'>피드 목록</a>
-      </p>
-   </c:if>
-   <c:if test="${not empty loginUser}">
-   <!--  Member loginUser = (Member) session.getAttribute("loginUser");
-    member.setNo(loginUser.getNo());-->
-    
-      <h1>회원</h1>
-      <p>
-      <form action='member/detail' method='get'>
-         </p>
-         <input name='detail' type='submit' value='내 정보 관리'>
-      </form>
-      <p>
-      <form action='logout' method='post'>
-         </p>
-         <input name='logout' type='submit' value='로그아웃'>
-      </form>
-      <p>
-         <a href='tutor/list'>튜터 찾기</a>
-      </p>
-      <p>
-         <a href='learning/list'>클래스 찾기</a>
-      </p>
-      <p>
-         <a href='feed/list'>피드 목록</a>
-      </p>
-   </c:if>
-   </section>
+	 <div id="har-main">
+    <a href="" id="har-class-list" class="har-list">클래스</a> 
+    <a href="" id="har-tutor-list" class="har-list">튜터</a> 
+    </div>
+  </section>
    
    
    <footer>
