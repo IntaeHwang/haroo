@@ -15,7 +15,7 @@
 <h1>회원 상세보기</h1>
 <c:if test="${not empty member}">
   <c:if test="${not empty member.profilePicture}">
-    <c:set var="profilePicture80x80Url">../../upload/${member.profilePicture}_80x80.jpg</c:set>
+    <c:set var="profilePicture110x110Url">../../upload/${member.profilePicture}_110x110.jpg</c:set>
     <c:set var="profilePictureUrl">../../upload/${member.profilePicture}</c:set>
   </c:if>
   <c:if test="${empty member.profilePicture}">
@@ -52,7 +52,7 @@
   <div class="mb-3 row">
     <label for="profileFile" class="col-sm-1 col-form-label">사진</label>
     <div class="col-sm-7">
-      <div><a href='${profilePictureUrl}' ><img src='${profilePicture80x80Url}'></a></div>
+      <div><a href='${profilePictureUrl}' ><img src='${profilePicture110x110Url}'></a></div>
       <input type="file" class="form-control-plaintext form-control-sm" id="profileFile"  name="profileFile" value='${member.profilePicture}'>
     </div>
   </div>

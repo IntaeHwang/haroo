@@ -74,7 +74,7 @@
       left join har_trpl_file r on r.pno=q.pno
       where
     p.pstat=1
-    order by q.pno
+    order by q.pno desc
   </select>
   
   <select id="findByNo" resultMap="tutorQuestionMap" parameterType="int">
