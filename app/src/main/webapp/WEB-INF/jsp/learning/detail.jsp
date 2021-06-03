@@ -35,14 +35,17 @@
   </c:if>
 
   <fmt:formatDate value="${learning.registeredDate}" pattern="yyyy-MM-dd hh:mm:ss" var="registeredDate"/>
+  <fmt:formatDate value="${learning.schedules[0].learningDate}" pattern="yyyy-MM-dd" var="learningDate"/>
+  <fmt:formatDate value="${learning.schedules[0].startTime}" pattern="HH:mm" var="startTime"/>
+  <fmt:formatDate value="${learning.schedules[0].endTime}" pattern="HH:mm" var="endTime"/>
 
   <table border='1'>
     <tbody>
       <tr><th>가격</th> <td>${learning.price}</td></tr>
       
-<%--       <tr><th>체험날짜</th> <td>${learning.schedules.learningDate}</td></tr>
-      <tr><th>시작시간</th> <td>${learning.schedules.startTime}</td></tr>
-      <tr><th>종료시간</th> <td>${learning.schedules.endTime}</td></tr> --%>
+      <tr><th>체험날짜</th> <td>${learningDate}</td></tr>
+      <tr><th>시작시간</th> <td>${startTime}</td></tr>
+      <tr><th>종료시간</th> <td>${endTime}</td></tr>
          
       <tr><th>최소인원</th> <td>${learning.minPeople}</td></tr>
       <tr><th>최대인원</th> <td>${learning.maxPeople}</td></tr>
