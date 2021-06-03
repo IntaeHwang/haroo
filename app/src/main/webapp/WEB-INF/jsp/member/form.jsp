@@ -11,6 +11,10 @@
 <link href="../css/common.css" rel="stylesheet" >
 </head>
 <body>
+
+<jsp:include page="/jsp/header/header.jsp"/>
+
+
 <div class="container">
 <h1>회원 가입</h1>
 <form action="add" method="post" enctype="multipart/form-data">
@@ -92,6 +96,8 @@
   </div>
 <button class="btn btn-primary btn-sm">등록</button>
 </form>
+
+<jsp:include page="/jsp/footer/footer.jsp"/>
 
 <script>
 document.querySelector("#checkBtn").onclick = function() {

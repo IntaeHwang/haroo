@@ -12,6 +12,8 @@
 <link href="../css/common.css" rel="stylesheet" >
 </head>
 <body>
+<jsp:include page="/jsp/header/header.jsp"/>
+
 <div class="container">
 <h1>튜터 목록</h1>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -60,6 +62,8 @@
 </table>
 
 </div>
+
+<jsp:include page="/jsp/footer/footer.jsp"/>
 <script>
 var trList = document.querySelectorAll(".har-email");
 for (var tr of trList) {

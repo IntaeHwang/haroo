@@ -29,6 +29,9 @@
 
 </head>
 <body>
+<jsp:include page="/jsp/header/header.jsp"/>
+
+
   <h1>회원 상세보기</h1>
   
   <section>
@@ -145,6 +148,8 @@
 <c:if test="${empty member}">
 <p>해당 번호의 회원이 없습니다.</p>
 </c:if>
+
+<jsp:include page="/jsp/footer/footer.jsp"/>
 
 </body>
 </html>

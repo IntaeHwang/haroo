@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
+	pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
-<title>메인</title>
 
 <style>
  
@@ -34,7 +33,7 @@
     display: inline-block;
     height: 46px;
     width: 125px;
-    background-image: url('../images/haroo_logo.png');
+    background-image: url('../../images/haroo_logo.png');
     background-repeat: no-repeat;
     background-position: 0px 0px;
     cursor: pointer;
@@ -48,7 +47,7 @@
 #har-menu-btn {
     height: 45px;
     width: 45px;
-    background-image: url('../images/icon-01.png');
+    background-image: url('../../images/icon-01.png');
     background-repeat: no-repeat;
     background-position: -147px 0px;
     background-size: 650px;
@@ -127,7 +126,7 @@
     position: relative;
     top: -20px;
 }
-
+ 
    body {
         margin: 0;
         padding: 0;
@@ -145,17 +144,15 @@
         height: 100%;
         margin: 0 auto;
     }
+    
+    section {
+  min-height: 600px;
+}
 
- 
-section {
-      padding: 150px;
-      margin: 0 auto;
-    }
     
 </style>
 </head>
 <body>
-
 	<header>
 		<div id="har-header">
 			<div id="har-logo">
@@ -169,78 +166,36 @@ section {
 					class="har-search"> <input type="submit" value="검색"
 					class="har-search-btn">
 			</form>
-
-			<c:if test="${empty loginUser}">
-				<a href="#" id="har-login">로그인/회원가입</a>
+      
+      <c:if test="${empty loginUser}">
+			<a href="../login_form" id="har-login">로그인/회원가입</a>
 			</c:if>
 
-			<c:if test="${not empty loginUser}">
-				<div id="har-member">
-					<%-- <span class="har-member-name">${loginUser.name}</span> --%>
-					<a id="har-login">로그아웃</a>
+			 <c:if test="${not empty loginUser}">
+        <div id="har-member">
+          <%-- <span class="har-member-name">${loginUser.name}</span> --%>
+          <a id="har-login">로그아웃</a>
 
-					<c:if test="${not empty loginUser.profilePicture}">
-						<c:set var="profilePictureUrl">../upload/${loginUser.profilePicture}_110x110.jpg</c:set>
-					</c:if>
-					<c:if test="${empty loginUser.profilePicture}">
-						<c:set var="profilePictureUrl">../images/person_80x80.jpg</c:set>
-					</c:if>
-					<div id="har-member-pro">
-						<img src="${profilePictureUrl}" />
-					</div>
-				</div>
-			</c:if>
+          <c:if test="${not empty loginUser.profilePicture}">
+            <c:set var="profilePictureUrl">../upload/${loginUser.profilePicture}_110x110.jpg</c:set>
+          </c:if>
+          <c:if test="${empty loginUser.profilePicture}">
+            <c:set var="profilePictureUrl">../images/person_80x80.jpg</c:set>
+          </c:if>
+          <div id="har-member-pro">
+            <img src="${profilePictureUrl}" />
+          </div>
+        </div>
+      </c:if>
 		</div>
 	</header>
 
-	<section>
-   <c:if test="${empty loginUser}">
-      <h1>비회원</h1>
-      <p>
-         <a href='member/form'>회원가입</a>
-      </p>
-      <p>
-         <a href='login_form'>로그인</a>
-      </p>
-      <p>
-         <a href='learning/list'>클래스 찾기</a>
-      </p>
-      <p>
-         <a href='feed/list'>피드 목록</a>
-      </p>
-   </c:if>
-   <c:if test="${not empty loginUser}">
-   <!--  Member loginUser = (Member) session.getAttribute("loginUser");
-    member.setNo(loginUser.getNo());-->
-    
-      <h1>회원</h1>
-      <p>
-      <form action='member/detail' method='get'>
-         </p>
-         <input name='detail' type='submit' value='내 정보 관리'>
-      </form>
-      <p>
-      <form action='logout' method='post'>
-         </p>
-         <input name='logout' type='submit' value='로그아웃'>
-      </form>
-      <p>
-         <a href='tutor/list'>튜터 찾기</a>
-      </p>
-      <p>
-         <a href='learning/list'>클래스 찾기</a>
-      </p>
-      <p>
-         <a href='feed/list'>피드 목록</a>
-      </p>
-   </c:if>
-   </section>
+
+	<script>
+
+
    
-   
-   <footer>
-    <div id="har-footer">
-        <img src="../images/footer-01.png">
-    </div>
-</footer>
+		
+	</script>
 </body>
 </html>

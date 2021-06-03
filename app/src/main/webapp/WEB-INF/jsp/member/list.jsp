@@ -32,7 +32,12 @@ section {
 </style>
 
 </head>
+
+
 <body>
+<jsp:include page="/jsp/header/header.jsp"/>
+
+<section>
 <div class="container">
 <h1>회원 목록</h1>
 
@@ -76,6 +81,10 @@ section {
 </table>
 
 </div>
+</section>
+
+<jsp:include page="/jsp/footer/footer.jsp"/>
+
 <script>
 var trList = document.querySelectorAll(".har-email");
 for (var tr of trList) {
