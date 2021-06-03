@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import com.bit189.haroo.domain.AttachedFile;
 import com.bit189.haroo.domain.Member;
 import com.bit189.haroo.domain.Post;
@@ -168,6 +169,77 @@ public class TutorQuestionController {
     return "redirect:list";
 
   }
+
+  @GetMapping("form2")
+  public void form2() throws Exception {
+  }
+
+  @PostMapping("reply/add")
+  public String replyAdd(@RequestParam(defaultValue = "0") int pno, TutorQuestion tutorQuestion,
+      Model model, HttpSession session, Part photoFile,
+      AttachedFile attachedFile, HttpServletRequest request)
+          throws Exception {
+
+    TutorQuestion oldTutorQuestion = tutorQuestionService.get(tutorQuestion.getNo());
+    if (oldTutorQuestion == null) {
+      throw new Exception("해당 번호의 게시글이 없습니다.");
+    }
+
+    Member loginUser = (Member) session.getAttribute("loginUser");
+    if (oldTutorQuestion.getWriter().getNo() != loginUser.getNo()) {
+      throw new Exception("작업 권한이 없습니다!");
+    }
+
+    tutorQuestion.setWriter(loginUser);
+    tutorQuestion.setNo(oldTutorQuestion.getNo());
+
+
+    String uploadDir = sc.getRealPath("/upload");
+
+
+    Collection<Part> files = request.getParts();
+    for (Part file : files) {
+      if (file.getName().equals("file") && file.getSize() > 0) {
+        System.out.println(">" + file.getSubmittedFileName());
+
+        System.out.println("uploadDir1 : " + uploadDir);
+
+        if (file.getSize() > 0) {
+          String filename = UUID.randomUUID().toString();
+
+          System.out.println("uploadDir2 : " + uploadDir);
+
+          file.write(uploadDir + "/" + filename);
+          System.out.println("uploadDir3 : " + uploadDir);
+          System.out.println(uploadDir + "/");
+
+
+          attachedFile.setName(filename);
+
+          System.out.println("uploadDir4 : " + uploadDir);
+
+          Thumbnails.of(uploadDir + "/" + filename)
+          .size(500, 500)
+          .outputFormat("jpg")
+          .crop(Positions.CENTER)
+          .toFiles(new Rename() {
+            @Override
+            public String apply(String name, ThumbnailParameter param) {
+              return name + "_300x300";
+            }
+          });
+        }
+      }
+
+      System.out.println("uploadDir5 : " + uploadDir);
+    }
+
+    tutorQuestionService.replyUpdate(tutorQuestion, attachedFile);
+
+    return "redirect:list";
+
+
+  }    
 
 }
 

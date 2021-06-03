@@ -10,39 +10,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-<link href="../../css/har_feed_detail.css" rel="stylesheet" />
+<link href="../../css/har_feed_detail2.css" rel="stylesheet" />
 <!-- <script type="text/javascript" src="../../js/har_feed_detail.js"></script> -->
 
-<style>
-#har-feed-file {
-	  position: relative;
-	}
-
-	#har-feed-file img {
-	  display: none;
-	}
-
-	.har-feed-fileBtn {
-	  width: 30px;
-	  position: absolute;
-	  top:260px;
-	}
-
-	.har-feed-next {
-	  /* float:right; */
-	  right:0px;
-	  margin-right: 15px;
-	}
-
-	.har-feed-pre {
-	  /* float:left; */
-	  left:0px;
-	}
-</style>
 </head>
 <body>
-	<h1>피드 상세보기2</h1>
-
+<jsp:include page="../header.jsp"/>
 	<section>
 		<c:if test="${not empty feed}">
 			<fmt:formatDate value="${feed.writingDate}" pattern="yyyy년 MM월 dd일" var="writingDate" />
