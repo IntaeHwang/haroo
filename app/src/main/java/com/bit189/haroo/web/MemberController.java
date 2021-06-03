@@ -3,12 +3,14 @@ package com.bit189.haroo.web;
 import java.util.List;
 import java.util.UUID;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import com.bit189.haroo.domain.Member;
 import com.bit189.haroo.service.MemberService;
 import net.coobird.thumbnailator.ThumbnailParameter;
@@ -53,13 +55,13 @@ public class MemberController {
       });
 
       Thumbnails.of(uploadDir + "/" + filename)
-      .size(80, 80)
+      .size(110, 110)
       .outputFormat("jpg")
       .crop(Positions.CENTER)
       .toFiles(new Rename() {
         @Override
         public String apply(String name, ThumbnailParameter param) {
-          return name + "_80x80";
+          return name + "_110x110";
         }
       });
     }
@@ -112,24 +114,13 @@ public class MemberController {
       member.setProfilePicture(filename);
 
       Thumbnails.of(uploadDir + "/" + filename)
-      .size(30, 30)
+      .size(110, 110)
       .outputFormat("jpg")
       .crop(Positions.CENTER)
       .toFiles(new Rename() {
         @Override
         public String apply(String name, ThumbnailParameter param) {
-          return name + "_30x30";
-        }
-      });
-
-      Thumbnails.of(uploadDir + "/" + filename)
-      .size(80, 80)
-      .outputFormat("jpg")
-      .crop(Positions.CENTER)
-      .toFiles(new Rename() {
-        @Override
-        public String apply(String name, ThumbnailParameter param) {
-          return name + "_80x80";
+          return name + "_110x110";
         }
       });
     }
@@ -140,6 +131,23 @@ public class MemberController {
     return "redirect:list";
 
   }
+
+
+  @PostMapping("loginCheck")
+  @ResponseBody
+  public String loginCheck(HttpSession session)throws Exception {
+
+    Member loginUser = (Member) session.getAttribute("loginUser");
+
+    if (loginUser == null) {
+      return "no";
+    } else {
+      return "yes";
+    }
+
+
+  }
+
 }
 
 
