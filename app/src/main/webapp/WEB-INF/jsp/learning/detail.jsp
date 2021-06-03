@@ -49,7 +49,7 @@
       <tr><th>최소인원</th> <td>${learning.minPeople}</td></tr>
       <tr><th>최대인원</th> <td>${learning.maxPeople}</td></tr>
       
-      <tr><th>커버이미지</th>
+      <tr><th>◎</th>
         <td><a href='${coverUrl}'>
         <img src='${cover800x450Url}'></a><br></td></tr>
       <tr><th>대분류</th> <td>${learning.broadCategory}</td></tr>
@@ -65,9 +65,9 @@
       <tr><th>본문</th> <td>${learning.intro}</td></tr>
       <tr><th>진행순서</th> <td>${learning.progressOrder}</td></tr>
       
-      <tr><th>튜터사진</th> <td><a href="../tutor/detail?no=${learning.owner.no}">
+      <tr><th>튜터사진</th> <td><a href="../feed/list?no=${learning.owner.no}">
       <img src="${profilePictureUrl}"></a></td></tr>
-      <tr><th>튜터명</th> <td><a href="../tutor/detail?no=${learning.owner.no}">
+      <tr><th>튜터명</th> <td><a href="../feed/list?no=${learning.owner.no}">
       ${learning.owner.nickname}</a></td></tr>
       <tr><th>튜터소개</th> <td>${learning.owner.intro}</td></tr>
       

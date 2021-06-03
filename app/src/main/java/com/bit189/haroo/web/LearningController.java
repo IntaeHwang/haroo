@@ -185,8 +185,8 @@ public class LearningController {
     List<LearningSchedule> schedules = new ArrayList<>();
     LearningSchedule schedule = new LearningSchedule();
     schedule.setLearningDate(Date.valueOf(request.getParameter("learningDate")));
-    schedule.setStartTime(Time.valueOf(request.getParameter("startTime") + ":00"));
-    schedule.setEndTime(Time.valueOf(request.getParameter("endTime") + ":00"));
+    schedule.setStartTime(Time.valueOf(request.getParameter("startTime")));
+    schedule.setEndTime(Time.valueOf(request.getParameter("endTime")));
     schedules.add(schedule);
     l.setSchedules(schedules);
 

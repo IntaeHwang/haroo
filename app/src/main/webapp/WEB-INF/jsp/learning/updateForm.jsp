@@ -49,9 +49,6 @@
   <option value="12">기타</option>
 </select><br>
 
-<!-- 추후 우편번호 API로 수정 -->
-우편번호: <input type="text" name="zipcode" value="${learning.zipcode}"><br>
-기본주소: <input type="text" name="address" value="${learning.address}"><br>
 <select id="sido" name="sidoNo" data-sido="${learning.sidoNo}">
     <option value="1">서울</option>
     <option value="2">경기</option>
@@ -99,8 +96,11 @@
   <option value="25">관악구</option>
 </select><br>
 
+<!-- 추후 우편번호 API로 수정 -->
+우편번호: <input type="text" name="zipcode" value="${learning.zipcode}"><br>
+기본주소: <input type="text" name="address" value="${learning.address}"><br>
 상세주소: <input type="text" name="detailAddress" value="${learning.detailAddress}"><br>
-본문: <textarea name="intro" rows="10" cols="60">${learning.intro}</textarea><br>
+　본문　: <textarea name="intro" rows="10" cols="60">${learning.intro}</textarea><br>
 진행순서: <textarea name="progressOrder" rows="10" cols="60">${learning.progressOrder}</textarea><br>
 환불정보: <textarea name="refundInformation" rows="10" cols="60">${learning.refundInformation}</textarea><br>
 최소 인원수: <input type="number" name="minPeople" value="${learning.minPeople}"><br>
