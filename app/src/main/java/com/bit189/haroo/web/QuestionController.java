@@ -177,7 +177,8 @@ public class QuestionController{
   }
 
   @GetMapping("form2")
-  public void form2() throws Exception {
+  public void form2(int pno, Model model) throws Exception {
+    model.addAttribute("pno", pno);
   }
 
   @PostMapping("reply/add")
@@ -186,7 +187,8 @@ public class QuestionController{
       AttachedFile attachedFile, HttpServletRequest request)
           throws Exception {
 
-    Question oldQuestion = serviceQuestionService.get(question.getNo());
+    System.out.println(question);
+    Question oldQuestion = serviceQuestionService.get(pno);
     if (oldQuestion == null) {
       throw new Exception("해당 번호의 게시글이 없습니다.");
     }
@@ -202,6 +204,7 @@ public class QuestionController{
 
     String uploadDir = sc.getRealPath("/upload");
 
+    ArrayList<AttachedFile> replyAttachedFiles = new ArrayList<>();
 
     Collection<Part> files = request.getParts();
     for (Part file : files) {
@@ -221,6 +224,8 @@ public class QuestionController{
 
 
           attachedFile.setName(filename);
+
+          replyAttachedFiles.add(attachedFile);
 
           System.out.println("uploadDir4 : " + uploadDir);
 

@@ -80,7 +80,7 @@
   
   <c:if test="${not empty loginUser and loginUser.no == question.writer.no}">
   <td colspan='2'>
-  <a href='form2' class="btn btn-outline-primary btn-sm" type="button">답글</a>
+  <a href='form2?pno=${question.no}' class="btn btn-outline-primary btn-sm" type="button">답글</a>
     </td>
   </c:if>
 

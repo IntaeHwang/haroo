@@ -105,6 +105,7 @@ public class DefaultServiceQuestionService implements ServiceQuestionService{
   @Override
   public int replyUpdate(Question question, AttachedFile attachedFile) throws Exception {
     attachedFileDao.insert(attachedFile);
+    System.out.println(attachedFile);
     return serviceQuestionDao.update(question);
   }
 }
