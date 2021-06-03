@@ -15,6 +15,7 @@
  section {
      width: 1050px;
      margin: 0 auto;
+     padding: 50px 0px;
  }
  
  a {
@@ -125,8 +126,8 @@
 
 </head>
 <body>
-<h1>스토리 수정</h1>
 <c:if test="${not empty feed}">
+<jsp:include page="../header.jsp"/>
 	<section>
 		<div id="har-feed-add1">
 			<form action="update" method="post" enctype="multipart/form-data">

@@ -164,29 +164,29 @@ public class FeedController {
 
 
   @RequestMapping("updateForm")
-  public String updateForm(Feed feed, Model model, HttpSession session, RedirectAttributes redirectAttrs)
+  public void updateForm(Feed feed, Model model, HttpSession session, RedirectAttributes redirectAttrs)
       throws Exception {
 
 
-    Feed oldFeed = feedService.get(feed.getNo());
+    Feed oldFeed = feedService.getCheck(feed.getNo());
 
-    if (oldFeed == null) {
-      redirectAttrs.addFlashAttribute("updateMsg","해당 번호의 스토리가 없습니다.");
+    //    if (oldFeed == null) {
+    //      redirectAttrs.addFlashAttribute("updateMsg","해당 번호의 스토리가 없습니다.");
+    //
+    //      return "redirect:list";
+    //    }
 
-      return "redirect:list";
-    }
+    //    Member loginUser = (Member) session.getAttribute("loginUser");
 
-    Member loginUser = (Member) session.getAttribute("loginUser");
-
-    if (loginUser.getNo() != oldFeed.getWriter().getNo()) {
-      redirectAttrs.addFlashAttribute("updateMsg","수정 권한이 없습니다.");
-
-      return "redirect:detail?no=" + feed.getNo();
-    }
+    //    if (loginUser.getNo() != oldFeed.getWriter().getNo()) {
+    //      redirectAttrs.addFlashAttribute("updateMsg","수정 권한이 없습니다.");
+    //
+    //      return "redirect:detail?no=" + feed.getNo();
+    //    }
 
     model.addAttribute("feed", oldFeed);
 
-    return "redirect:list";
+    //    return "updateForm";
   }
 
 

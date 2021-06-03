@@ -127,8 +127,9 @@
 
 </head>
 <body>
-<h1>스토리 작성</h1>
 <c:if test="${not empty loginUser}">
+
+<jsp:include page="../header.jsp"/>
 
 	<section>
 		<div id="har-feed-add1">
