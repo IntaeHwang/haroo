@@ -39,8 +39,8 @@
     
   <insert id="insert" parameterType="Map">
     insert into har_tqna (pno, mno, tno, title, secret, reply)
-    values (#{no}, #{tutorQuestion.writer.no}, #{tutorQuestion.serviceInfo.no}, #{tutorQuestion.title}, #{tutorQuestion.secret}
-    , #{tutorQuestion.replyContent})
+    values (#{no}, #{tutorQuestion.writer.no}, #{tutorQuestion.tutor.no}, #{tutorQuestion.title}, #{tutorQuestion.secret}
+    , #{tutorQuestion.reply})
   </insert>
     
   <select id="findAll" resultMap="tutorQuestionMap">
