@@ -1,11 +1,13 @@
 package com.bit189.haroo.service.impl;
 
 import java.util.List;
+import org.springframework.stereotype.Service;
 import com.bit189.haroo.dao.LearningApplicationDao;
 import com.bit189.haroo.dao.LearningScheduleDao;
 import com.bit189.haroo.domain.LearningApplication;
 import com.bit189.haroo.service.LearningApplicationService;
 
+@Service
 public class DefaultLearningApplicationService implements LearningApplicationService{
 
   LearningApplicationDao learningApplicationDao;

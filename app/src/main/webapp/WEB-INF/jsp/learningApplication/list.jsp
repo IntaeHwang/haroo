@@ -22,12 +22,12 @@
 <tbody> 
 
 <c:forEach items="${learningApplication}" var="l" >
-
+<fmt:formatDate value="${l.registeredDate}" pattern="yyyy-MM-dd" var="registeredDate"/>
   <tr> 
-  <td>${l.No}</td>
-  <td><a href='detail?no=${l.no}'>${l.name}</a></td>
-  <td>${l.ApplySize}</td>
-  <td>${l.RegisteredDate}</td> 
+  <td>${l.no}</td>
+  <td><a href='detail?no=${l.no}'>${l.writer.nickname}</a></td>
+  <td>${l.applySize}</td>
+  <td>${registeredDate}</td> 
 
   </tr>  
 </c:forEach>

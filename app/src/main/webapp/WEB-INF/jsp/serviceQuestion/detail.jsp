@@ -51,7 +51,7 @@
     <div class="col-sm-7">
           <c:forEach items="${question.attachedFiles}" var="file">
             <c:if test="${not empty file.name}">
-             <c:set var="photoUrl">../upload/${file.name}_500x500.jpg</c:set>
+             <c:set var="photoUrl">../../upload/${file.name}_300x300.jpg</c:set>
             </c:if>     
             <img src='${photoUrl}'> 
           </c:forEach>

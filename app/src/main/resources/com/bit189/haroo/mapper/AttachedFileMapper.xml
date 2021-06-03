@@ -5,17 +5,9 @@
 
 <mapper namespace="com.bit189.haroo.dao.AttachedFileDao">
 
-<!-- 
-  <resultMap id="attachedFileMap" type="attachedFile">
-    <id column="srpl_fno" property="no"/>
-    <result column="srpl_fname" property="name"/>
-    <result column="pno" property="postNo"/>
-
-  </resultMap>
-
-  <insert id="insert" parameterType="attachedFileMap" useGeneratedKeys="true" keyColumn="pno" keyProperty="no">
+  <insert id="insert" parameterType="AttachedFile" useGeneratedKeys="true" keyColumn="pno" keyProperty="no">
     insert into har_srpl_file (pno, srpl_fname)
-    values (#{postNo}, #{content})
+    values (#{postNo}, #{name})
   </insert>
-  -->
+
 </mapper> 
