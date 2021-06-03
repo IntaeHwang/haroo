@@ -9,44 +9,74 @@
 <title>회원 상세</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-<link href="../css/common.css" rel="stylesheet" >
+<link href="../../css/har_member_detail.css" rel="stylesheet" >
+
+<style>
+#har-member-file {
+    position: relative;
+  }
+
+  #har-member-file img {
+    display: none;
+  }
+
+  .har-member-fileBtn {
+    width: 30px;
+    position: absolute;
+    top:260px;
+  }
+</style>
+
 </head>
 <body>
-<h1>회원 상세보기</h1>
+  <h1>회원 상세보기</h1>
+  
+  <section>
 <c:if test="${not empty member}">
-  <c:if test="${not empty member.profilePicture}">
-    <c:set var="profilePicture110x110Url">../../upload/${member.profilePicture}_110x110.jpg</c:set>
-    <c:set var="profilePictureUrl">../../upload/${member.profilePicture}</c:set>
-  </c:if>
-  <c:if test="${empty member.profilePicture}">
-    <c:set var="profilePicture80x80Url">../../images/person_80x80.jpg</c:set>
-    <c:set var="profilePictureUrl"></c:set>
-  </c:if>
-		<form action='update' method='post' enctype='multipart/form-data'>
-		<table border='1'>
-		<tbody>
-		<div class="mb-3 row">
+<div class="card">
+        <form action='update' method='post' enctype='multipart/form-data'>
+          <input type="hidden" name='no' value='${member.no}' readonly>
+          <div class="har-member-info">
+            <div class="har-member-pro">
+						  <c:if test="${not empty member.profilePicture}">
+						    <c:set var="profilePicture110x110Url">../../upload/${member.profilePicture}_110x110.jpg</c:set>
+						    <c:set var="profilePictureUrl">../../upload/${member.profilePicture}</c:set>
+						  </c:if>
+						  <c:if test="${empty member.profilePicture}">
+						    <c:set var="profilePicture80x80Url">../../images/person_80x80.jpg</c:set>
+						    <c:set var="profilePictureUrl"></c:set>
+						  </c:if>
+						  <img src="${prhofilePictureUrl}">
+						</div>
+						
+						<p class="fw-bold har-member-font">${member.name}</p>
+            <p class="fw-light har-member-font">${member.nickname}</p>
+		</div>
+		<!--  <form action='update' method='post' enctype='multipart/form-data'>
+		<table border='1'>-->
+		<!--  <div class="mb-3 row">
     <label for="no" class="col-sm-1 col-form-label">번호</label>
     <div class="col-sm-7">
       <input type="text" class="form-control-plaintext form-control-sm" id="no" name="no" value='${member.no}'>
     </div>
-  </div>
-  <div class="mb-3 row">
+  </div>-->
+  <!--  <div class="mb-3 row">
     <label for="name" class="col-sm-1 col-form-label">이름</label>
     <div class="col-sm-7">
       <input type="text" class="form-control-plaintext form-control-sm" id="name" name="name" value='${member.name}'>
     </div>
   </div>
-  <div class="mb-3 row">
-    <label for="email" class="col-sm-1 col-form-label">이메일</label>
-    <div class="col-sm-7">
-      <input type="email" class="form-control-plaintext form-control-sm" id="email" name="email" value='${member.email}'>
-    </div>
-  </div>
+  
   <div class="mb-3 row">
     <label for="nickname" class="col-sm-1 col-form-label">닉네임</label>
     <div class="col-sm-7">
       <input type="text" class="form-control-plaintext form-control-sm" id="nickname" name="nickname" value='${member.nickname}'>
+    </div>
+  </div>-->
+  <div class="mb-3 row">
+    <label for="email" class="col-sm-1 col-form-label">이메일</label>
+    <div class="col-sm-7">
+      <input type="email" class="form-control-plaintext form-control-sm" id="email" name="email" value='${member.email}'>
     </div>
   </div>
   <div class="mb-3 row">
@@ -108,7 +138,6 @@
   
   <div> <a href='list' class="btn btn-primary btn-sm">목록</a></div>
   
-		</tbody>
 		</table>
 		</form>
 </c:if>
