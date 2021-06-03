@@ -9,6 +9,8 @@
 <title>체험학습 목록</title>
 </head>
 <body>
+<jsp:include page="/jsp/header/header.jsp"/>
+
 <h1>체험학습 목록</h1>
 
 <!-- 체험학습 한 개당 한 쌍씩 -->
@@ -62,6 +64,9 @@
 
 </tbody>
 </table>
+
+
+<jsp:include page="/jsp/footer/footer.jsp"/>
 
 </body>
 </html>

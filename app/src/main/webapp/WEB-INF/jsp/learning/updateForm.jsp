@@ -10,6 +10,8 @@
 <title>체험학습 수정</title>
 </head>
 <body>
+<jsp:include page="/jsp/header/header.jsp"/>
+
 <h1>체험학습 수정</h1>
 <c:if test="${not empty learning}">
 <form action="update" method="post" enctype="multipart/form-data">
@@ -114,6 +116,8 @@
 <c:if test="${empty learning}">
   <p>해당 번호의 체험학습이 없습니다.</p>
 </c:if>
+
+<jsp:include page="/jsp/footer/footer.jsp"/>
 
 <script>
 var broadCategory = document.getElementById("broadCategory");

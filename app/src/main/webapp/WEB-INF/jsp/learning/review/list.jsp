@@ -12,6 +12,9 @@
 <title>체험 후기 목록</title>
 </head>
 <body>
+
+<jsp:include page="/jsp/header/header.jsp"/>
+
 <h1>체험 후기 목록</h1>
 <h2>${learning.name}</h2>
 <!-- 러닝.평균평점 만들기 -->
@@ -72,5 +75,7 @@
 <button>검색</button>
 </form>
 </c:if>
+
+<jsp:include page="/jsp/footer/footer.jsp"/>
 </body>
 </html>

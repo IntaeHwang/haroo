@@ -10,6 +10,8 @@
 <title>체험학습 등록</title>
 </head>
 <body>
+<jsp:include page="/jsp/header/header.jsp"/>
+
 <h1>체험학습 등록</h1>
 <form action="add" method="post" enctype="multipart/form-data">
 커버이미지: <input type="file" name="coverImage"><br>
@@ -106,6 +108,7 @@
 <input type="submit" value="등록">
 </form>
 
+<jsp:include page="/jsp/footer/footer.jsp"/>
 <script>
 var t1 = document.querySelector("#sido");
 var t2 = document.querySelector("#sigungu");

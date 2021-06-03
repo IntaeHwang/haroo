@@ -10,12 +10,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-<link href="../../css/har_feed_detail2.css" rel="stylesheet" />
+<link href="../../css/har_feed_detail.css" rel="stylesheet" />
 <!-- <script type="text/javascript" src="../../js/har_feed_detail.js"></script> -->
 
 </head>
 <body>
-<jsp:include page="../header.jsp"/>
+<jsp:include page="/jsp/header/header.jsp"/>
 	<section>
 		<c:if test="${not empty feed}">
 			<fmt:formatDate value="${feed.writingDate}" pattern="yyyy년 MM월 dd일" var="writingDate" />
@@ -25,7 +25,7 @@
 					<div class="har-feed-info">
 						<div class="har-feed-pro">
 							<c:if test="${not empty feed.writer.profilePicture}">
-								<c:set var="profilePictureUrl">../../upload/${feed.writer.profilePicture}_30x30.jpg</c:set>
+								<c:set var="profilePictureUrl">../../upload/${feed.writer.profilePicture}_110x110.jpg</c:set>
 							</c:if>
 							<c:if test="${empty feed.writer.profilePicture}">
 								<c:set var="profilePictureUrl">../../images/person_30x30.jpg</c:set>
@@ -45,7 +45,7 @@
 						<c:if
 							test="${not empty loginUser and loginUser.no == feed.writer.no}">
 							<button type="submit" class="btn har-feed-btn">수정</button>
-							<button onclick="deleteCheck('delete?no=${feed.no}')" class="btn har-feed-btn" >삭제</button>
+							<button type="button" onclick="deleteCheck('delete?no=${feed.no}')" class="btn har-feed-btn" >삭제</button>
 							<%-- <a href="delete?no=${feed.no}">삭제</a> --%>
 						</c:if>
 						<p class="fw-light har-feed-view">${feed.viewCount}view</p>
@@ -197,8 +197,10 @@
 			<p>없는 피드입니다.</p>
 		</c:if>
 
-		<a href='list' class="listBtn">목록</a>
+		<a href='list?no=${feed.writer.no}' class="listBtn">목록</a>
 	</section>
+	
+	<jsp:include page="/jsp/footer/footer.jsp"/>
 	
 	
 	
@@ -394,7 +396,7 @@
 		  
 		  if (ok == true) {
 			  console.log("옙");
-			  window.location.href=link;
+			  location.href=link;
 		  } else {
 			  return;
 		  }

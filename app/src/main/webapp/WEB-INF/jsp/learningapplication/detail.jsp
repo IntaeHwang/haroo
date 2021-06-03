@@ -8,6 +8,8 @@
 <title>체험 신청</title>
 </head>
 <body>
+<jsp:include page="/jsp/header/header.jsp"/>
+
 <h1>체험 신청 정보</h1>
 <form action="update" method='post'>
 <table border='1'>
@@ -27,5 +29,7 @@
 </tfoot>
 </form>
 <p><a href='list'>목록</a></p>
+
+<jsp:include page="/jsp/footer/footer.jsp"/>
 </body>
 </html>

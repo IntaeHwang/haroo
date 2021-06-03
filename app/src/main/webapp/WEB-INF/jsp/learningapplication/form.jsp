@@ -12,6 +12,8 @@
 <title>체험 신청</title>
 </head>
 <body>
+<jsp:include page="/jsp/header/header.jsp"/>
+
 <h1>체험 신청</h1>
 <form action='add' method='post'>
 
@@ -29,5 +31,7 @@ for (LearningApplication la : learningApplications) {
 종료 시간: <select name='endTime'>
 </select><br>
 </form>
+
+<jsp:include page="/jsp/footer/footer.jsp"/>
 </body>
 </html>

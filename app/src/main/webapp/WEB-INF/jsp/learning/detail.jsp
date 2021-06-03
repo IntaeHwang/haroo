@@ -10,6 +10,8 @@
 <title>체험학습 상세</title>
 </head>
 <body>
+<jsp:include page="/jsp/header/header.jsp"/>
+
 <h1>체험학습 상세보기</h1>
 
 <c:if test="${not empty learning}">
@@ -79,5 +81,6 @@
   <p>해당 번호의 체험학습이 없습니다.</p>
 </c:if>
 
+<jsp:include page="/jsp/footer/footer.jsp"/>
 </body>
 </html>

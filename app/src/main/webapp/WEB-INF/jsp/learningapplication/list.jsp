@@ -13,6 +13,9 @@
 <title>체험 신청 목록</title>
 </head>
 <body>
+<jsp:include page="/jsp/header/header.jsp"/>
+
+
 <h1>체험 신청 목록</h1>
 <% 
 List<LearningApplication> list = (List<LearningApplication>) request.getAttribute("list");
@@ -46,5 +49,8 @@ for (LearningApplication l : list) { }
 </c:forEach>
 </tbody>
 </table>
+
+<jsp:include page="/jsp/footer/footer.jsp"/>
+
 </body>
 </html>

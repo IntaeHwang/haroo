@@ -14,6 +14,9 @@
 <link href="../css/common.css" rel="stylesheet" >
 </head>
 <body>
+<jsp:include page="/jsp/header/header.jsp"/>
+
+
 <div class="container">
 <h1>문의</h1>
 <c:if test="${not empty question}">
@@ -64,6 +67,8 @@
 <p>해당 번호의 문의글이 없습니다.</p>
 </c:if>
 <p><a href='list'>목록</a></p>
+
+<jsp:include page="/jsp/footer/footer.jsp"/>
 
 </body>
 </html>

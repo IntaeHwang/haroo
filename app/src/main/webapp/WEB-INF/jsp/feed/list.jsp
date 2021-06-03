@@ -55,7 +55,6 @@ section {
 #har-tutor-box {
   width:530px;
   margin: 0 auto; 
-  padding: 20px 0 20px 0px;
 }
 
 #har-tutor-pro {
@@ -145,18 +144,25 @@ section {
 </head>
 <body>
 
-<jsp:include page="../header.jsp"/>
+<jsp:include page="/jsp/header/header.jsp"/>
+
+	<c:if test="${not empty tutor.profilePicture}">
+		<c:set var="profilePictureUrl">../../upload/${loginUser.profilePicture}_110x110.jpg</c:set>
+	</c:if>
+	<c:if test="${empty tutor.profilePicture}">
+		<c:set var="profilePictureUrl">../../images/person.png</c:set>
+	</c:if>
 
 	<section>
 	   <div >
 			<div id="har-tutor-box">
 				<div id="har-tutor-pro">
-					<img src="../../images/person.png">
+					<img src="${profilePictureUrl}">
 				</div>
 
 				<div id="har-tutor-info">
 					<p id="har-tutor-name">
-						<b>아워먼트[OURMENT]</b>
+						<b>${tutor.name}</b>
 					</p>
 					<br>
 					<p>
@@ -168,7 +174,7 @@ section {
 							class="har-tutor-score">759</span>
 					</p>
 					<br>
-					<pre>안녕하세요!</pre>
+					<pre>${tutor.intro}</pre>
 					<br>
 
 					<button type="button" class="har-follow-btn">
@@ -178,25 +184,27 @@ section {
 			</div>
 			</div>
 
-		<div style="margin-top: 20px; display:inline-block;">
+		<div style="margin-top: 20px; display:inline-block; border-top:1px solid #0566A3">
 			<!-- tab 영역이다. -->
-			<ul class="nav nav-tabs">
-				<!-- data-load를 넣어서 이미 로드를 했는지 않했는지의 판단 값을 넣는다. -->
-				<!-- true면 이미 content영역에 load가 끝나서 더이상 load가 필요없다는 뜻이다. -->
+			<!-- <ul class="nav nav-tabs">
+				data-load를 넣어서 이미 로드를 했는지 않했는지의 판단 값을 넣는다.
+				true면 이미 content영역에 load가 끝나서 더이상 load가 필요없다는 뜻이다.
 				<li class="active"><a href="#story" data-toggle="tab"
 					data-load="true">스토리</a></li>
-				<!-- false라면 data-url영역의 url주소로 데이터를 가져와서 tab-content에 표시한다. -->
+				false라면 data-url영역의 url주소로 데이터를 가져와서 tab-content에 표시한다.
 				<li><a href="#oneday" data-toggle="tab" data-load="false">클래스</a></li>
 				<li><a href="#product" data-toggle="tab" data-load="false">판매상품</a></li>
 				<li><a href="#review" data-toggle="tab" data-load="false">리뷰</a></li>
 				<li><a href="#question" data-toggle="tab" data-load="false">문의</a></li>
 				<li><a href="#toTutor" data-toggle="tab" data-load="false">튜터에게
 						물어봐</a></li>
-			</ul>
+			</ul> -->
 			<!-- tab-content 영역이다. -->
 			<div class="tab-content">
 				<div class="tab-pane fade in active" id="story">
+				  <c:if test="${not empty loginUser and loginUser.no == tutor.no}">
 					<a href='form' class="addBtn">스토리 등록</a>
+					</c:if>
 
 
 					<c:forEach items="${feeds}" var="feed">
@@ -210,7 +218,7 @@ section {
 							<div class="har-feed-info">
 								<div class="har-feed-pro">
 									<c:if test="${not empty feed.writer.profilePicture}">
-										<c:set var="profilePictureUrl">../../upload/${feed.writer.profilePicture}_30x30.jpg</c:set>
+										<c:set var="profilePictureUrl">../../upload/${feed.writer.profilePicture}_110x110.jpg</c:set>
 									</c:if>
 									<c:if test="${empty feed.writer.profilePicture}">
 										<c:set var="profilePictureUrl">../../images/person_30x30.jpg</c:set>
@@ -244,6 +252,8 @@ section {
 
 
 	</section>
+	
+	<jsp:include page="/jsp/footer/footer.jsp"/>
 
 
 
