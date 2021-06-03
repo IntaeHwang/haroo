@@ -18,9 +18,9 @@
 <tbody>
 <tr><th>신청 번호</th> <td><input type='text' name='no' value='${learningApplication.no}' readonly></td></tr>
 <tr><th>회원 이름</th> <td><input type='text' id="writer" value='${learningApplication.writer.nickname}' readonly></td></tr>
-<tr><th>날짜</th> <td>${learningApplication.schedules}</td></tr>
-<tr><th>시작 시간</th> <td>${learningApplication.schedules}</td></tr>
-<tr><th>종료 시간</th> <td>${learningSchedule.endTime}</td></tr>
+<tr><th>날짜</th> <td>${schedules.learningDate[0]}</td></tr>
+<tr><th>시작 시간</th> <td>${schedules.startTime[0]}</td></tr>
+<tr><th>종료 시간</th> <td>${schedules.endTime[0]}</td></tr>
 <tr><th>인원수</th> <td>${learningApplication.applySize}</td></tr>
 <tr><th>등록일</th> <td>${registeredDate}</td></tr>
 </tbody>
