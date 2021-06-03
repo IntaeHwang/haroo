@@ -136,6 +136,8 @@ public class LearningController {
   @GetMapping("detail")
   public void detail(int no, Model model) throws Exception {
     model.addAttribute("learning", learningService.get(no));
+    Learning learning = learningService.get(no);
+    System.out.println(learning);
   }
 
   @GetMapping("list")
@@ -149,6 +151,8 @@ public class LearningController {
   @GetMapping("updateForm")
   public void updateForm(int no, Model model) throws Exception {
     model.addAttribute("learning", learningService.get(no));
+    Learning learning = learningService.get(no);
+    System.out.println(learning);
   }
 
   @PostMapping("update")
