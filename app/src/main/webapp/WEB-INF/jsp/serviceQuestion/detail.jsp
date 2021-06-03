@@ -14,6 +14,9 @@
 <link href="../css/common.css" rel="stylesheet" >
 </head>
 <body>
+<jsp:include page="/jsp/header/header.jsp"/>
+
+
 <div class="container">
 
 <h1>문의</h1>
@@ -96,6 +99,7 @@
 </c:if>
 <p><a href='list'>목록</a></p>
 
-</div>
+<jsp:include page="/jsp/footer/footer.jsp"/>
+
 </body>
 </html>

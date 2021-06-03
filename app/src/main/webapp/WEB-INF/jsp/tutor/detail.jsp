@@ -12,6 +12,9 @@
 <link href="../css/common.css" rel="stylesheet" >
 </head>
 <body>
+<jsp:include page="/jsp/header/header.jsp"/>
+
+
 <h1>튜터 상세보기</h1>
 <c:if test="${not empty tutor}">
   <c:if test="${not empty tutor.profilePicture}">
@@ -211,6 +214,8 @@
 <c:if test="${empty tutor}">
 <p>해당 번호의 튜터가 없습니다.</p>
 </c:if>
+
+<jsp:include page="/jsp/footer/footer.jsp"/>
 
 <script>
 
