@@ -31,7 +31,7 @@ section {
 </head>
 <body>
 <jsp:include page="/jsp/header/header.jsp"/>
-
+<section>
 <div class="container">
 <h1>튜터 등록</h1>
 <form action="add" method="post" enctype="multipart/form-data">
@@ -134,7 +134,7 @@ section {
 </div>
 <button class="btn btn-primary btn-sm">등록</button>
 </form>
-
+</section>
 <jsp:include page="/jsp/footer/footer.jsp"/>
 
 <script>

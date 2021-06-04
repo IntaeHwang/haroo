@@ -133,7 +133,7 @@ text-align: center;
 </head>
 <body>
 <jsp:include page="/jsp/header/header.jsp"/>
-
+<section>
 
   
   <section>
@@ -222,6 +222,10 @@ text-align: center;
 <c:if test="${empty member}">
 <p>해당 번호의 회원이 없습니다.</p>
 </c:if>
+<<<<<<< HEAD
+=======
+
+>>>>>>> branch 'main' of https://github.com/IntaeHwang/haroo.git
 </section>
 <jsp:include page="/jsp/footer/footer.jsp"/>
 

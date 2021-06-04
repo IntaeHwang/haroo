@@ -132,8 +132,13 @@ text-align: center;
 </head>
 <body>
 <jsp:include page="/jsp/header/header.jsp"/>
+<<<<<<< HEAD
 
 <section>
+=======
+<section>
+
+>>>>>>> branch 'main' of https://github.com/IntaeHwang/haroo.git
 <h1>튜터 상세보기</h1>
 <c:if test="${not empty tutor}">
 <form action='update' method='post' enctype='multipart/form-data'>
@@ -330,6 +335,7 @@ text-align: center;
 </c:if>
 </section>
 
+</section>
 <jsp:include page="/jsp/footer/footer.jsp"/>
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>

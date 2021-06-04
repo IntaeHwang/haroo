@@ -13,7 +13,10 @@
 </head>
 <body>
 <jsp:include page="/jsp/header/header.jsp"/>
+<<<<<<< HEAD
 
+=======
+>>>>>>> branch 'main' of https://github.com/IntaeHwang/haroo.git
 <section>
 <div class="container">
 <h1>튜터 목록</h1>

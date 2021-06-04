@@ -13,7 +13,7 @@
 <body>
 
 <jsp:include page="/jsp/header/header.jsp"/>
-
+<section>
 
 <div class="container">
 <h1>회원 가입</h1>
@@ -96,6 +96,7 @@
 <button class="btn btn-primary btn-sm">등록</button>
 </form>
 
+</section>
 <jsp:include page="/jsp/footer/footer.jsp"/>
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
