@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-  pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
+	pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -11,19 +11,23 @@
      padding: 0;
      margin: 0;
  }
+
  header {
      height: 65px;
      border-bottom: 1px solid #dadada;
      margin-bottom: 50px;
  }
+
  a {
      text-decoration: none;
  }
+
  #har-header {
     margin: 0 auto;
      width: 1100px;
      padding-top: 8px;
  }
+
 #har-logo {
     overflow: hidden;
     display: inline-block;
@@ -34,10 +38,12 @@
     background-position: 0px 0px;
     cursor: pointer;
 }
+
 #har-logo h1 {
     position: relative;
     top: 100px;
 }
+
 #har-menu-btn {
     height: 45px;
     width: 45px;
@@ -51,11 +57,13 @@
     margin-left: 105px;
     margin-right: 20px;
 }
+
 #har-header form {
     display: inline-block;
     position: relative;
     top: -17px;
 }
+
 .har-search {
     width: 530px;
     height: 45px;
@@ -65,6 +73,7 @@
     padding-right: 25px;
     margin-right: 10px;
 }
+
 .har-search-btn {
     width: 55px;
     height: 45px;
@@ -76,6 +85,7 @@
     position: relative;
     top: -1px;
 }
+
 #har-login {
     font-size: 13px;
     color: #666;
@@ -86,13 +96,16 @@
     height: 18px;
     margin-top: 18px;
 }
+
 #har-login:hover {
      border-bottom: 1px solid #0566A3;
 }
+
 #har-member {
     float: right;
     cursor: pointer;
 }
+
 #har-member-pro {
     overflow: hidden;
     width: 50px;
@@ -101,10 +114,12 @@
     display: inline-block;
     margin-left: 15px;
 }
+
 #har-member-pro img {
     width: 50px;
     height: 50px;
 }
+
 .har-member-name {
     font-size: 13px;
     color: #333;
@@ -116,12 +131,14 @@
         margin: 0;
         padding: 0;
     }
+
     footer {
         height: 210px;
         width: 100%;
         border-top: 1px solid #dadada;
         margin-top: 50px;
     }
+
     #har-footer {
         width: 1100px;
         height: 100%;
@@ -131,29 +148,30 @@
     section {
   min-height: 600px;
 }
+
     
 </style>
 </head>
 <body>
-  <header>
-    <div id="har-header">
-      <div id="har-logo" onclick="location.href='../main'">
-        <h1>하루</h1>
-      </div>
+	<header>
+		<div id="har-header">
+			<div id="har-logo" onclick="location.href='../main'">
+				<h1>하루</h1>
+			</div>
 
-      <button type="button" id="har-menu-btn"></button>
+			<button type="button" id="har-menu-btn"></button>
 
-      <form action="" method="GET">
-        <input type="search" name="" placeholder="재미있는 시간, 다양한 클래스를 검색해보세요!"
-          class="har-search"> <input type="submit" value="검색"
-          class="har-search-btn">
-      </form>
+			<form action="" method="GET">
+				<input type="search" name="" placeholder="재미있는 시간, 다양한 클래스를 검색해보세요!"
+					class="har-search"> <input type="submit" value="검색"
+					class="har-search-btn">
+			</form>
       
       <c:if test="${empty loginUser}">
-      <a href="../login_form" id="har-login">로그인/회원가입</a>
-      </c:if>
+			<a href="../login_form" id="har-login">로그인/회원가입</a>
+			</c:if>
 
-       <c:if test="${not empty loginUser}">
+			 <c:if test="${not empty loginUser}">
         <div id="har-member">
           <%-- <span class="har-member-name">${loginUser.name}</span> --%>
           <a id="har-login">로그아웃</a>
@@ -169,13 +187,15 @@
           </div>
         </div>
       </c:if>
-    </div>
-  </header>
+		</div>
+	</header>
 
 
-  <script>
+	<script>
+
+
    
-    
-  </script>
+		
+	</script>
 </body>
 </html>
