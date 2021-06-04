@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import com.bit189.haroo.domain.AttachedFile;
 import com.bit189.haroo.domain.Member;
 import com.bit189.haroo.domain.Post;
@@ -43,13 +44,12 @@ public class QuestionController{
   }
 
   @PostMapping("add")
-  public String add(Question question, Post post, HttpSession session, Part photoFile,
-      AttachedFile attachedFile, HttpServletRequest request)
-          throws Exception {
+  public String add(Question question, Post post, HttpSession session, HttpServletRequest request)
+      throws Exception {
 
     String uploadDir = sc.getRealPath("/upload");
 
-    ArrayList<AttachedFile> attachedFiles = new ArrayList<>();
+
 
     Member loginUser = (Member) session.getAttribute("loginUser");
     question.setWriter(loginUser);
@@ -58,34 +58,31 @@ public class QuestionController{
     s.setNo(1);
     question.setServiceInfo(s);
 
+
+
+    ArrayList<AttachedFile> attachedFiles = new ArrayList<>();
+
     Collection<Part> files = request.getParts();
     for (Part file : files) {
       if (file.getName().equals("file") && file.getSize() > 0) {
         System.out.println(">" + file.getSubmittedFileName());
-
-        // 파일을 선택해서 업로드 했다면,
         String filename = UUID.randomUUID().toString();
 
-        System.out.println("uploadDir2 : " + uploadDir);
-
         file.write(uploadDir + "/" + filename);
-        System.out.println("uploadDir3 : " + uploadDir);
-        System.out.println(uploadDir + "/");
 
-        attachedFile.setName(filename);
+        AttachedFile f = new AttachedFile();
+        f.setName(filename);
 
-        attachedFiles.add(attachedFile);
+        attachedFiles.add(f);
 
-
-        // 썸네일 이미지 생성
         Thumbnails.of(uploadDir + "/" + filename)
-        .size(330, 220)
+        .size(300, 300)
         .outputFormat("jpg")
         .crop(Positions.CENTER)
         .toFiles(new Rename() {
           @Override
           public String apply(String name, ThumbnailParameter param) {
-            return name + "_330x220";
+            return name + "_300x300";
           }
         });
 
@@ -101,9 +98,9 @@ public class QuestionController{
           }
         });
       }
-
-
     }
+
+
 
     serviceQuestionService.add(question, post, attachedFiles);
 
@@ -181,73 +178,73 @@ public class QuestionController{
     model.addAttribute("pno", pno);
   }
 
-  //  @PostMapping("reply/add")
-  //  public String replyAdd(@RequestParam(defaultValue = "0") int pno, Question question,
-  //      Model model, HttpSession session, Part photoFile,
-  //      AttachedFile attachedFile, HttpServletRequest request)
-  //          throws Exception {
-  //
-  //
-  //    Question oldQuestion = serviceQuestionService.get(pno);
-  //    if (oldQuestion == null) {
-  //      throw new Exception("해당 번호의 게시글이 없습니다.");
-  //    }
-  //
-  //    Member loginUser = (Member) session.getAttribute("loginUser");
-  //    if (oldQuestion.getWriter().getNo() != loginUser.getNo()) {
-  //      throw new Exception("작업 권한이 없습니다!");
-  //    }
-  //
-  //    question.setWriter(loginUser);
-  //    question.setNo(oldQuestion.getNo());
-  //
-  //
-  //    String uploadDir = sc.getRealPath("/upload");
-  //
-  //    ArrayList<AttachedFile> replyAttachedFiles = new ArrayList<>();
-  //
-  //    Collection<Part> files = request.getParts();
-  //    for (Part file : files) {
-  //      if (file.getName().equals("file") && file.getSize() > 0) {
-  //        System.out.println(">" + file.getSubmittedFileName());
-  //
-  //        System.out.println("uploadDir1 : " + uploadDir);
-  //
-  //
-  //        String filename = UUID.randomUUID().toString();
-  //
-  //
-  //
-  //        file.write(uploadDir + "/" + filename);
-  //
-  //        System.out.println(uploadDir + "/");
-  //
-  //
-  //        attachedFile.setName(filename);
-  //
-  //        replyAttachedFiles.add(attachedFile);
-  //
-  //
-  //
-  //        Thumbnails.of(uploadDir + "/" + filename)
-  //        .size(500, 500)
-  //        .outputFormat("jpg")
-  //        .crop(Positions.CENTER)
-  //        .toFiles(new Rename() {
-  //          @Override
-  //          public String apply(String name, ThumbnailParameter param) {
-  //            return name + "_300x300";
-  //          }
-  //        });
-  //      }
-  //
-  //
-  //    }
-  //
-  //    serviceQuestionService.replyAdd(question, attachedFile);
-  //
-  //    return "redirect:list";
-  //
-  //
-  //  }    
+  @PostMapping("reply/add")
+  public String replyAdd(@RequestParam(defaultValue = "0") int pno, Question question,
+      Model model, HttpSession session, Part photoFile,
+      AttachedFile attachedFile, HttpServletRequest request)
+          throws Exception {
+
+
+    Question oldQuestion = serviceQuestionService.get(pno);
+    if (oldQuestion == null) {
+      throw new Exception("해당 번호의 게시글이 없습니다.");
+    }
+
+    Member loginUser = (Member) session.getAttribute("loginUser");
+    if (oldQuestion.getWriter().getNo() != loginUser.getNo()) {
+      throw new Exception("작업 권한이 없습니다!");
+    }
+
+    question.setWriter(loginUser);
+    question.setNo(oldQuestion.getNo());
+
+
+    String uploadDir = sc.getRealPath("/upload");
+
+    ArrayList<AttachedFile> replyAttachedFiles = new ArrayList<>();
+
+    Collection<Part> files = request.getParts();
+    for (Part file : files) {
+      if (file.getName().equals("file") && file.getSize() > 0) {
+        System.out.println(">" + file.getSubmittedFileName());
+
+        System.out.println("uploadDir1 : " + uploadDir);
+
+
+        String filename = UUID.randomUUID().toString();
+
+
+
+        file.write(uploadDir + "/" + filename);
+
+        System.out.println(uploadDir + "/");
+
+
+        attachedFile.setName(filename);
+
+        replyAttachedFiles.add(attachedFile);
+
+
+
+        Thumbnails.of(uploadDir + "/" + filename)
+        .size(500, 500)
+        .outputFormat("jpg")
+        .crop(Positions.CENTER)
+        .toFiles(new Rename() {
+          @Override
+          public String apply(String name, ThumbnailParameter param) {
+            return name + "_300x300";
+          }
+        });
+      }
+
+
+    }
+
+    serviceQuestionService.replyAdd(question, attachedFile);
+
+    return "redirect:list";
+
+
+  }    
 }
