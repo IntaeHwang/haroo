@@ -224,7 +224,7 @@ section {
 	<section>
 	 <div id="har-main">
     <a href="learning/list" id="har-class-list" class="har-list">클래스</a> 
-    <a href="tutor/list" id="har-tutor-list" class="har-list">튜터</a> 
+    <a href="tutor/list" id="har-tutor-list" class="har-list">튜터</a>
     </div>
   </section>
    
