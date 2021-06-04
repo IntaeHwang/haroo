@@ -21,14 +21,7 @@
 
 <h1>문의 목록</h1>  <h2>${questions[0].serviceInfo.name}</h2>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
- <form class="d-flex">
-      <input class="form-control me-2" type="search" name="keyword" value='${param.keyword}' placeholder="검색" aria-label="검색">
-      <button class="btn btn-outline-success col-sm-3" type="submit">검색</button>
-      </form>
-</div>
-</nav>
+
 
 <table class="table table-striped table-hover">
 <thead>

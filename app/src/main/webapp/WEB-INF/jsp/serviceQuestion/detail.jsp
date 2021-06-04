@@ -11,7 +11,7 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-<link href="../css/common.css" rel="stylesheet" >
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <jsp:include page="/jsp/header/header.jsp"/>
@@ -50,7 +50,8 @@
         </div>
         <c:if test="${not empty loginUser and loginUser.no == question.writer.no}">
    <div class="card-body">
-      <a href='updateForm?no=${question.no}' class="btn btn-outline-primary btn-sm" type="button">수정</a><a href='delete?no=${question.no}'class="btn btn-outline-primary btn-sm" type="button">삭제</a>
+      <a href='updateForm?no=${question.no}' class="btn btn-outline-primary btn-sm" type="button">수정</a>
+      <button id='har-q-det-del-btn' class="btn btn-outline-primary btn-sm" type="button">삭제</button>
   </div>
   
   <c:if test="${not empty loginUser and loginUser.no == question.writer.no}">
@@ -72,6 +73,19 @@
 <c:if test="${empty question}">
 <p>해당 번호의 문의글이 없습니다.</p>
 </c:if>
+</section>
+  <jsp:include page="/jsp/footer/footer.jsp"/>
+  <script>
 
+
+$('#har-q-det-del-btn').click(()=>{
+  var del = confirm('삭제하시겠습니까?');
+  if(del == true) {
+    location.href='delete?no=${question.no}';
+  } else {
+    location.href='detail?no=${question.no}';
+  }
+});
+</script>
 </body>
 </html>
