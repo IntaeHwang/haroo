@@ -3,6 +3,10 @@ package com.bit189.haroo.service.impl;
 import java.util.HashMap;
 import java.util.List;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
 import com.bit189.haroo.dao.CommentDao;
 import com.bit189.haroo.dao.FeedDao;
 import com.bit189.haroo.dao.LikeDao;
@@ -15,12 +19,16 @@ import com.bit189.haroo.service.FeedService;
 @Service
 public class DefaultFeedService implements FeedService{
 
+  TransactionTemplate transactionTemplate;
+
   FeedDao feedDao;
   CommentDao commentDao;
   LikeDao likeDao;
   PostDao postDao;
 
-  public DefaultFeedService(FeedDao feedDao, CommentDao commentDao, LikeDao likeDao, PostDao postDao) {
+  public DefaultFeedService(PlatformTransactionManager  txManager,
+      FeedDao feedDao, CommentDao commentDao, LikeDao likeDao, PostDao postDao) {
+    this.transactionTemplate = new TransactionTemplate(txManager);
     this.feedDao = feedDao;
     this.commentDao = commentDao;
     this.likeDao = likeDao;
@@ -29,31 +37,48 @@ public class DefaultFeedService implements FeedService{
 
   @Override
   public int add(Post post, List<AttachedFile> files, Feed feed) throws Exception {
-    // 튜터가 스토리를 올리기위한 과정 
-    // : har_post 에 먼저 insert되고, 그때 자동증가 된 pno를 가지고 har_feed테이블에 insert 해야함
+    //    postDao.insert(post);
+    //
+    //    for (AttachedFile file : files) {
+    //      file.setPostNo(post.getNo());
+    //
+    //      postDao.insertFile(file);
+    //    }
+    //
+    //    HashMap<String,Object> param = new HashMap<>();
+    //    param.put("no", post.getNo());
+    //    param.put("feed", feed);
+    //
+    //    return feedDao.insert(param);
+    return transactionTemplate.execute(new TransactionCallback<Integer>(){
+      @Override
+      public Integer doInTransaction(TransactionStatus status) {
+        try {
+          int count = postDao.insert(post);
 
+          for (AttachedFile file : files) {
+            file.setPostNo(post.getNo());
 
-    // 1. 파라미터로 받은 post객체를 har_post에 insert
-    postDao.insert(post);
+            postDao.insertFile(file);
+          }
 
-    for (AttachedFile file : files) {
-      file.setPostNo(post.getNo());
+          HashMap<String,Object> param = new HashMap<>();
+          param.put("no", post.getNo());
+          param.put("feed", feed);
 
-      postDao.insertFile(file);
-    }
+          feedDao.insert(param);
 
-    // 2. 파라미터로 받은 feed 객체와 har_post에 insert 하자마자 자동증가 된 pno를
-    //    한번에 보내 주기위해 HashMap사용하여 insert
-    HashMap<String,Object> param = new HashMap<>();
-    param.put("no", post.getNo());
-    param.put("feed", feed);
-
-    return feedDao.insert(param);
+          return count;
+        } catch (Exception e) {
+          throw new RuntimeException(e);
+        }
+      }
+    });
   }
 
   @Override
-  public List<Feed> list() throws Exception {
-    List<Feed> feeds = feedDao.findAll();
+  public List<Feed> list(int no) throws Exception {
+    List<Feed> feeds = feedDao.findAll(no);
 
     for (Feed f : feeds) {
       f.setCommentCount(Integer.parseInt(commentDao.commentCount(f.getNo())));
@@ -73,6 +98,13 @@ public class DefaultFeedService implements FeedService{
     if (feed != null) {
       postDao.updateViewCount(no);
     }
+
+    return feed;
+  }
+
+  @Override
+  public Feed getCheck(int no) throws Exception {
+    Feed feed = feedDao.findByNo(no);
 
     return feed;
   }
@@ -102,6 +134,30 @@ public class DefaultFeedService implements FeedService{
     params.put("memberNo", memberNo);
 
     return feedDao.deleteLike(params);
+  }
+
+  @Override
+  public int update(Post post, List<AttachedFile> files) throws Exception {
+    return transactionTemplate.execute(new TransactionCallback<Integer>(){
+      @Override
+      public Integer doInTransaction(TransactionStatus status) {
+        try {
+          int count = postDao.update(post);
+
+          postDao.deleteFile(post.getNo());
+
+          for (AttachedFile f : files) {
+            f.setPostNo(post.getNo());
+
+            postDao.insertFile(f);
+          }
+
+          return count;
+        } catch (Exception e) {
+          throw new RuntimeException(e);
+        }
+      }
+    });
   }
 
 

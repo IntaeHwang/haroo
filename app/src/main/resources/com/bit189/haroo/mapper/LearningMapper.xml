@@ -71,8 +71,7 @@
       sgg_no=#{learning.sigunguNo}
     where lno=#{no}
   </update>
-  
-  <!-- PK번호만 기입하였음 -->
+       
   <select id="findAll" resultMap="learningMap">
     select
       l.lno,
@@ -99,6 +98,7 @@
       m.nickname,
       m.profile_pic,
       m.mrno,
+      t.tno,
       t.tintro,
       t.tappl,
       t.prom_dttm,
@@ -140,14 +140,21 @@
       l.max_head,
       l.curriculum,
       l.price,
+      l.zipcode,
+      l.addr,
+      l.det_addr,
       l.rfnd_info,
       e.sche_no,
       e.date,
       e.stm,
       e.etm,
+      n.ncat_no,
       n.ncat_name,
+      b.bcat_no,
       b.bcat_name,
+      g.sgg_no,
       g.sgg_name,
+      d.sido_no,
       d.sido_name,
       t.tno,
       t.tintro

@@ -12,20 +12,20 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 <link href="../../css/har_feed_detail.css" rel="stylesheet" />
 <!-- <script type="text/javascript" src="../../js/har_feed_detail.js"></script> -->
+
 </head>
 <body>
-	<h1>피드 상세보기</h1>
-
+<jsp:include page="/jsp/header/header.jsp"/>
 	<section>
 		<c:if test="${not empty feed}">
 			<fmt:formatDate value="${feed.writingDate}" pattern="yyyy년 MM월 dd일" var="writingDate" />
 			<div class="card">
-				<form action='update' method='post'>
+				<form action='updateForm' method='post'>
 					<input type="hidden" name='no' value='${feed.no}' readonly>
 					<div class="har-feed-info">
 						<div class="har-feed-pro">
 							<c:if test="${not empty feed.writer.profilePicture}">
-								<c:set var="profilePictureUrl">../../upload/${feed.writer.profilePicture}_30x30.jpg</c:set>
+								<c:set var="profilePictureUrl">../../upload/${feed.writer.profilePicture}_110x110.jpg</c:set>
 							</c:if>
 							<c:if test="${empty feed.writer.profilePicture}">
 								<c:set var="profilePictureUrl">../../images/person_30x30.jpg</c:set>
@@ -44,20 +44,26 @@
 
 						<c:if
 							test="${not empty loginUser and loginUser.no == feed.writer.no}">
-							<button type="button" class="btn har-feed-btn">수정</button>
-							<a href="delete?no=${feed.no}" class="btn har-feed-btn">삭제</a>
+							<button type="submit" class="btn har-feed-btn">수정</button>
+							<button type="button" onclick="deleteCheck('delete?no=${feed.no}')" class="btn har-feed-btn" >삭제</button>
 							<%-- <a href="delete?no=${feed.no}">삭제</a> --%>
 						</c:if>
 						<p class="fw-light har-feed-view">${feed.viewCount}view</p>
 					</div>
 
-					<c:forEach items="${feed.attachedFiles}" var="file">
-						<c:if test="${not empty file.name}">
-							<c:set var="photoUrl">../../upload/${file.name}_500x500.jpg</c:set>
-						</c:if>
+					<div id="har-feed-file">
+						<c:forEach items="${feed.attachedFiles}" var="file">
+							<c:if test="${not empty file.name}">
+								<c:set var="photoUrl">../../upload/${file.name}_500x500.jpg</c:set>
+							</c:if>
 
-						<img src='${photoUrl}' class="card-img-top">
-					</c:forEach>
+							<img src='${photoUrl}' class="card-img-top" har-file-no="${file.no}">
+						</c:forEach>
+            <%-- <c:if test="${feed.attachedFiles > 1}"> --%>
+						<button type="button" class="har-feed-btn har-feed-pre har-feed-fileBtn" onclick="preBtn(event)">❮</button>
+						<button type="button" class="har-feed-btn har-feed-next har-feed-fileBtn" onclick="nextBtn(event)">❯</button>
+						<%-- </c:if> --%>
+					</div>
 
 					<div class="card-body">
 						<!-- <div class="like"></div> -->
@@ -115,8 +121,8 @@
 											class="har-cmt-update">수정</button>
 										<button type="button" onclick="cmtConfirm(event)"
 											class="har-cmt-confirm">확인</button>
-										<a href="comment/delete?no=${comment.no}&feedNo=${feed.no}"
-											class="har-cmt-delete-bnt">댓글삭제</a>
+										<button onclick="deleteCheck('comment/delete?no=${comment.no}&feedNo=${feed.no}')" 
+											class="har-cmt-delete-bnt" >댓글삭제</button>
 									</c:if>
 								</div>
 							</c:if>
@@ -161,8 +167,8 @@
 													class="har-cmt-update">수정</button>
 												<button type="button" onclick="cmtConfirm(event)"
 													class="har-cmt-confirm">확인</button>
-												<a
-													href="reComment/delete?no=${reComment.no}&feedNo=${feed.no}">대댓글삭제</a>
+												<button
+													onclick="deleteCheck('reComment/delete?no=${reComment.no}&feedNo=${feed.no}')" >대댓글삭제</button>
 											</c:if>
 										</div>
 									</div>
@@ -176,7 +182,11 @@
 					<form action='comment/add' method='post' id="har-comment-add">
 						<input type="hidden" name="feedNo" value="${feed.no}" />
 						<input type="text" name="content" placeholder="댓글을 달아주세요." class="har-comment-text" />
-						<input type='submit' value='등록' class="har-comment-btn">
+						<c:if test="${empty loginUser}">
+						  <c:set var="login">N</c:set>
+						</c:if>
+						<input type="hidden" value="${login}" class="har-feed-login">
+						<input type='submit' value='등록' class="har-comment-btn" onclick="loginCheck('${login}')">
 					</form>
 				</div>
 			</div>
@@ -187,8 +197,10 @@
 			<p>없는 피드입니다.</p>
 		</c:if>
 
-		<a href='list' class="listBtn">목록</a>
+		<a href='list?no=${feed.writer.no}' class="listBtn">목록</a>
 	</section>
+	
+	<jsp:include page="/jsp/footer/footer.jsp"/>
 	
 	
 	
@@ -209,21 +221,18 @@
 	    data: "no=" + no + "&lType=" + lType,
 	    async: false,
 	    success: function(data) {
-	      console.log(no, data, "피드라이크!");
 
 	      if (data == "no") {
 	        if (lType == 1) {
 	        } else {
 	          l.style.color = "#666";
 	        }
-	        /* var feedLike = document.querySelector(".like");*/
 	      } else if (data == "yes") {
 	        if (lType == 1) {
 	          feedLike.style.backgroundPosition = "-38px -9px";
 	        } else {
 	          l.style.color = "blue";
 	        }
-	        /* var feedLike = document.querySelector(".like");*/
 
 	      }
 	    },
@@ -251,7 +260,6 @@
 	    method: "POST",
 	    data: "no=" + no,
 	    success: function(data) {
-	      console.log(data);
 	      if (data == "yes") {
 	        likeBtn.style.color = "blue";
 	      } else if (data == "no") {
@@ -259,7 +267,8 @@
 	      }
 	    },
 	    error: function(data) {
-	      console.log(data);
+	    	alert("로그인 후 진행해주세요.");
+	    	window.location.href="../login_form";
 	    }
 	  });
 
@@ -271,15 +280,15 @@
 
 	function reCommentAdd(cmtNo, tgNo, fdNo) {
 	  var cmtForm = document.getElementById("har-comment-add");
-	  var originForm = cmtForm.innerHTML;
+	  var login = cmtForm.querySelector(".har-feed-login").value;
 
 	  cmtForm["action"] = "reComment/add";
 
 	  cmtForm.innerHTML = "<input type='hidden' name='commentNo' value='" + cmtNo + "'/>"
 	    + "<input type='hidden' name='taggedMember.no' value='" + tgNo + "'/>"
 	    + "<input type='hidden' name='feedNo' value='" + fdNo + "' />"
-	    + "<input type='text' name='content' placeholder='댓글을 달아주세요.'  class='har-comment-text'/>"
-	    + "<input type='submit' value='등록' class='har-comment-btn'>";
+	    + "<input type='text' name='content' placeholder='답글을 달아주세요.'  class='har-comment-text'/>"
+	    + "<input type='submit' value='등록' class='har-comment-btn' onclick='loginCheck()'>";
 	    
 	    document.querySelector(".har-comment-text").focus();
 	}
@@ -297,14 +306,12 @@
 	}
 
 	function cmtUpdate(e) {
-	  /* console.log("e.target", e.target); */
 	  var recommentDiv = e.target.parentElement;
 	  recommentDiv = recommentDiv.parentElement;
 
 	  recommentDiv.querySelector(".har-cmt-input").style.display = "";
 	  recommentDiv.querySelector(".har-cmt-confirm").style.display = "";
 	  recommentDiv.querySelector(".har-cmt-content").style.display = "none";
-	  /* recommentDiv.querySelector(".har-like-box").style.top = 15px; */
 	  recommentDiv.querySelector(".har-cmt-update").style.display = "none";
 	}
 
@@ -328,17 +335,86 @@
 	    method: "POST",
 	    data: "no=" + no + "&content=" + content,
 	    success: function() {
-	      alert("성공했습니다.");
 	    },
 	    error: function() {
-	      alert("실패했습니다.");
+	      alert("다시 시도해 주세요.");
+	      location.reload();
 	    }
 	  });
 
 	  location.reload();
 	}
-
-
+	
+	
+	var imageDiv = document.getElementById("har-feed-file");
+	var images = imageDiv.querySelectorAll("img");
+	
+	var firstImg = images[0].style.display = "block";
+	
+	var imgIndex = (images[0].getAttribute("har-file-no"));
+	
+	function nextBtn(e) {
+		
+		if (imgIndex == images[images.length-1].getAttribute("har-file-no")) {
+			  imgIndex = (images[0].getAttribute("har-file-no")) -1;
+		} 
+		
+		++imgIndex;
+		
+		for (var i of images) {
+			if (i.getAttribute("har-file-no") == (imgIndex)) {
+				i.style.display = "block";
+			} else {
+				i.style.display = "none";
+			}
+		}
+		
+	}
+	
+	
+	function preBtn(e) {
+		
+    if (imgIndex == images[0].getAttribute("har-file-no")) {
+        imgIndex = parseInt(images[images.length-1].getAttribute("har-file-no")) + 1;
+    }
+    
+    --imgIndex;
+    
+    for (var i of images) {
+      if (i.getAttribute("har-file-no") == (imgIndex)) {
+        i.style.display = "block";
+      } else {
+        i.style.display = "none";
+      }
+    }
+    
+	}
+	
+	
+	function deleteCheck(link) {
+		  var ok = confirm("정말 삭제 하시겠습니까?");
+		  
+		  if (ok == true) {
+			  console.log("옙");
+			  location.href=link;
+		  } else {
+			  return;
+		  }
+	}
+	
+	
+ 	function loginCheck(e, login) {
+		var submitBtn = document.querySelector(".har-comment-btn");
+		
+		console.log(submitBtn);
+		
+	  if (login == "N") {
+		  submitBtn.type="button";
+	    alert("로그인 후 다시 시도해주세요.");
+	    
+	    window.location.href="../login_form";
+	  } 
+	} 
 
 
 	</script>
