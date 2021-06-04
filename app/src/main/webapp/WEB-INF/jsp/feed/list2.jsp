@@ -42,7 +42,7 @@ section {
 </head>
 <body>
 
-<jsp:include page="../header.jsp"/>
+<jsp:include page="/jsp/header/header.jsp"/>
 
 	<section>
 
@@ -85,7 +85,7 @@ section {
 		</c:forEach>
 	</section>
 
-
+<jsp:include page="/jsp/footer/footer.jsp" />
 
 	<script>
 	"use strict"

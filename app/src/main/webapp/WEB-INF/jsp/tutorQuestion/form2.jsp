@@ -10,6 +10,9 @@
 
 </head>
 <body>
+
+<jsp:include page="/jsp/header/header.jsp"/>
+<section>
 <h1>튜터문의 - 답변글</h1>
 <form action="reply/add" method="post" enctype="multipart/form-data">
 <input type = "hidden" name = "pno" value = "${pno}">
@@ -23,5 +26,8 @@
 
 
 </form>
+</section>
+<jsp:include page="/jsp/footer/footer.jsp"/>
+
 </body>
 </html>

@@ -12,6 +12,9 @@
 
 </head>
 <body>
+<jsp:include page="/jsp/header/header.jsp"/>
+
+<section>
 <h1>체험 학습 후기 작성</h1>
 <h2>${learning.name}</h2>
 
@@ -28,5 +31,7 @@
   <input type="hidden" name = "applNo" value="${applNo}"/>
   <input type='submit' value='등록'/> <a href="list?lno=${learning.no}" class='har-lrv-det-up' >취소</a>
 </form>
+</section>
+  <jsp:include page="/jsp/footer/footer.jsp"/>
 </body>
 </html>

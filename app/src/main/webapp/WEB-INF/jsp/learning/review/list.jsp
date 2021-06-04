@@ -15,6 +15,10 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+
+<jsp:include page="/jsp/header/header.jsp"/>
+
+<section>
 <h1>체험 후기 목록</h1>
 <h2>${learning.name}</h2>
 <!-- 러닝.평균평점 만들기 -->
@@ -77,6 +81,8 @@
 </form>
 -->
 </c:if>
+</section>
+<jsp:include page="/jsp/footer/footer.jsp"/>
 <script>
 if (${mode} == 1) {
    var login = confirm("로그인이 필요합니다. 로그인으로 이동합니다.");
