@@ -155,6 +155,7 @@
     section {
       padding: 150px;
       margin: 0 auto;
+      min-height: 600px;
     }
  
 

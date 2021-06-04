@@ -33,6 +33,7 @@ public class QuestionController{
   ServletContext sc;
   ServiceQuestionService serviceQuestionService;
 
+
   public QuestionController(ServiceQuestionService serviceQuestionService, ServletContext sc) {
     this.serviceQuestionService = serviceQuestionService;
     this.sc = sc;
@@ -143,6 +144,7 @@ public class QuestionController{
   @GetMapping("list")
   public void list(Model model) throws Exception {
 
+
     List<Question> questions = serviceQuestionService.list();
 
     model.addAttribute("questions", questions);
@@ -150,7 +152,7 @@ public class QuestionController{
   }    
 
   @PostMapping("update")
-  public String update(int no, Question question, HttpSession session)
+  public String update(int no,  Model model, Question question, HttpSession session)
       throws Exception {
 
     Question oldQuestion = serviceQuestionService.get(question.getNo());
@@ -162,10 +164,11 @@ public class QuestionController{
     if (oldQuestion.getWriter().getNo() != loginUser.getNo()) {
       throw new Exception("변경 권한이 없습니다!");
     }
-
+    model.addAttribute("no", no);
+    model.addAttribute("question", oldQuestion);
     serviceQuestionService.update(question);
 
-    return "redirect:list";
+    return "redirect:detail?no=" + question.getNo();
 
   }
 

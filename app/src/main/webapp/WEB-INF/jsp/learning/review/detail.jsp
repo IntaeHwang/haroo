@@ -15,6 +15,8 @@
 <body>
 
 <jsp:include page="/jsp/header/header.jsp"/>
+
+<section>
 <h1>체험 후기</h1>
 
 <c:if test="${not empty review}">
@@ -77,7 +79,7 @@
 </c:if>
 
 <p><a href='list?lno=${review.serviceInfo.no}'>목록</a></p>
-
+</section>
   <jsp:include page="/jsp/footer/footer.jsp"/>
 <script>
 "use stricet";

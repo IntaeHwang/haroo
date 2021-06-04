@@ -13,7 +13,7 @@
 </head>
 <body>
 <jsp:include page="/jsp/header/header.jsp"/>
-
+<section>
 <div class="container">
 <h1>튜터 목록</h1>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -62,7 +62,7 @@
 </table>
 
 </div>
-
+</section>
 <jsp:include page="/jsp/footer/footer.jsp"/>
 <script>
 var trList = document.querySelectorAll(".har-email");

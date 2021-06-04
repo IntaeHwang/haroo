@@ -14,6 +14,9 @@
 
 </head>
 <body>
+<jsp:include page="/jsp/header/header.jsp"/>
+
+<section>
 <h1>체험 학습 후기 작성</h1>
 <h2>${learning.name}</h2>
 
@@ -28,5 +31,7 @@
   </table>
   <input type='submit' value='등록'/>
 </form>
+</section>
+  <jsp:include page="/jsp/footer/footer.jsp"/>
 </body>
 </html>

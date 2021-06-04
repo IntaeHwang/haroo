@@ -13,7 +13,7 @@
 </head>
 <body>
 <jsp:include page="/jsp/header/header.jsp"/>
-
+<section>
 <div class="container">
 <h1>문의글</h1>
 <form action="add" method="post" enctype="multipart/form-data">
@@ -31,7 +31,7 @@
   </div>
 <div class="custom-file">
             <input type="file" class="custom-file-input" id="file">
-            <label class="custom-file-label" for="file">첨부파일</label>
+            <label class="custom-file-label" for="file"></label>
         </div>
 <div class="form-check">
   <input class="form-check-input" type="radio" value="1" name="secret">
@@ -49,7 +49,7 @@
 <button class="btn btn-outline-primary">등록</button>
 </form>
 </div>
-
+</section>
 <jsp:include page="/jsp/footer/footer.jsp"/>
 </body>
 </html>
