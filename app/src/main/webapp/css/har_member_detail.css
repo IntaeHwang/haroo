@@ -48,10 +48,10 @@ button {
   height: 120px;
 }
 .har-member-pro {
-  width: 60px;
-  height: 60px;
+  width: 110px;
+  height: 110px;
   overflow: hidden;
-  border-radius: 30px;
+  border-radius: 50px;
   float: left;
   margin-right: 15px;
 }
@@ -82,7 +82,7 @@ button {
 }
 
 .har-member-pro img {
-  width: 60px;
+  width: 110px;
 }
 
 .har-member-font {
