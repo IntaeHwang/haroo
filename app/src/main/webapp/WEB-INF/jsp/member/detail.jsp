@@ -12,26 +12,21 @@
 <!--  <link href="../../css/har_member_detail.css" rel="stylesheet" >-->
 
 <style>
-
 .col-sm-1 {
 width: 100px;
 }
-
 .button {
 margin-top: 30px;
     float: left;
     }
-
 a {
   text-decoration: none; 
   color: #333;
 }
-
 body {
   line-height: 1;
   color: #333;
 }
-
 section {
   width: 550px;
     margin: 0 auto;
@@ -40,13 +35,11 @@ section {
     border-radius: 15px;
     height: 887px;
 }
-
 button {
   border: 0;
   background-color: #fff;
   color: #666;
 }
-
 .har-member-info {
   padding: 30px;
   height: 120px;
@@ -59,7 +52,6 @@ button {
   float: left;
   margin-right: 15px;
 }
-
 .btn-primary {
   width: 72px;
   height: 27px;
@@ -71,18 +63,15 @@ button {
   top: -13px;
   margin-right: 15px;
 }
-
 .har-member-pro img {
   width: 110px;
 }
-
 .har-member-font {
   font-size: 15px;
   display: inline;
   position: relative;
   top: 10px;
 }
-
 .har-member-font2 {
   font-size: 13px;
   margin: 3px 0 0 0px;
@@ -90,11 +79,9 @@ button {
   position: relative;
   top: 15px;
 }
-
 #har-member-file {
     position: relative;
   }
-
 #profileFile {
     width: 250px;
     margin-top: 80px;
@@ -103,7 +90,6 @@ button {
   #har-member-file img {
     display: none;
   }
-
   .har-member-fileBtn {
     width: 30px;
     position: absolute;
@@ -117,14 +103,12 @@ button {
     background: #fff;
     position: relative;
 }
-
 .form-control-plaintext {
   width : 200px;
   display : inline-block;
   border: solid 1px #dadada;
   padding: 10px;
 }
-
 h1 {
 text-align: center;
 }
@@ -133,7 +117,7 @@ text-align: center;
 </head>
 <body>
 <jsp:include page="/jsp/header/header.jsp"/>
-<section>
+
 
   
   <section>
@@ -143,19 +127,19 @@ text-align: center;
           <input type="hidden" name='no' value='${member.no}' readonly>
           <div class="har-member-info">
             <div class="har-member-pro">
-						  <c:if test="${not empty member.profilePicture}">
-						    <c:set var="profilePicture110x110Url">../../upload/${member.profilePicture}_110x110.jpg</c:set>
-						    <c:set var="profilePictureUrl">../../upload/${member.profilePicture}</c:set>
-						  </c:if>
-						  <c:if test="${empty member.profilePicture}">
-						    <c:set var="profilePicture80x80Url">../../images/person_80x80.jpg</c:set>
-						    <c:set var="profilePictureUrl"></c:set>
-						  </c:if>
-						  <img src="${profilePictureUrl}">
-						</div>
-						  <input type="file" class="form-control-plaintext form-control-sm" id="profileFile"  name="profileFile" value='${member.profilePicture}' 
-						  style= "border: 0; padding-left : 20px">
-		</div>
+              <c:if test="${not empty member.profilePicture}">
+                <c:set var="profilePicture110x110Url">../../upload/${member.profilePicture}_110x110.jpg</c:set>
+                <c:set var="profilePictureUrl">../../upload/${member.profilePicture}</c:set>
+              </c:if>
+              <c:if test="${empty member.profilePicture}">
+                <c:set var="profilePicture80x80Url">../../images/person_80x80.jpg</c:set>
+                <c:set var="profilePictureUrl"></c:set>
+              </c:if>
+              <img src="${profilePictureUrl}">
+            </div>
+              <input type="file" class="form-control-plaintext form-control-sm" id="profileFile"  name="profileFile" value='${member.profilePicture}' 
+              style= "border: 0; padding-left : 20px">
+    </div>
   <br>
   <br>
   <br>
@@ -193,7 +177,7 @@ text-align: center;
       <input type="text" class="form-control-plaintext form-control-sm" id="zipcode"  name="zipcode" value='${member.zipcode}'>
       <input type="button" onclick="execDaumPostcode()" value="우편번호 찾기">
     </span>
-		
+    
     <span class="box int_id">
     <label for="address" class="col-sm-1 col-form-label">기본주소</label>
       <input type="text" class="form-control-plaintext form-control-sm" id="address" name="address" value='${member.address}'>
@@ -215,39 +199,31 @@ text-align: center;
   <a href='list' class="btn btn-primary btn-sm">목록</a>
   </div>
   
-		</table>
-		</form>
+    </table>
+    </form>
 </c:if>
 
 <c:if test="${empty member}">
 <p>해당 번호의 회원이 없습니다.</p>
 </c:if>
-<<<<<<< HEAD
-=======
-
->>>>>>> branch 'main' of https://github.com/IntaeHwang/haroo.git
 </section>
 <jsp:include page="/jsp/footer/footer.jsp"/>
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-
 function execDaumPostcode() {
     new daum.Postcode({
         oncomplete: function(data) {
             // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
             // 각 주소의 노출 규칙에 따라 주소를 조합한다.
             // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
             var addr = ''; // 주소 변수
-
             //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
             if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
                 addr = data.roadAddress;
             } else { // 사용자가 지번 주소를 선택했을 경우(J)
                 addr = data.jibunAddress;
             }
-
             // 우편번호와 주소 정보를 해당 필드에 넣는다.
             document.getElementById("zipcode").value = data.zonecode;
             document.getElementById("address").value = addr;
@@ -256,7 +232,6 @@ function execDaumPostcode() {
         }
     }).open();
 }
-
 </script>
 </body>
 </html>

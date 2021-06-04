@@ -132,13 +132,8 @@ text-align: center;
 </head>
 <body>
 <jsp:include page="/jsp/header/header.jsp"/>
-<<<<<<< HEAD
 
 <section>
-=======
-<section>
-
->>>>>>> branch 'main' of https://github.com/IntaeHwang/haroo.git
 <h1>튜터 상세보기</h1>
 <c:if test="${not empty tutor}">
 <form action='update' method='post' enctype='multipart/form-data'>
@@ -322,7 +317,7 @@ text-align: center;
       </span>
 	    </c:forEach> 
 	    <div class="button"><button class="btn btn-primary btn-sm">변경</button>
-      <a href='delete?no=${tutor.no}' class="btn btn-primary btn-sm">삭제</a>
+      <a href='delete?no=${tutor.no}' class="btn btn-primary btn-sm">탈퇴</a>
   
    <a href='list' class="btn btn-primary btn-sm">목록</a></div>
 		</tbody>
