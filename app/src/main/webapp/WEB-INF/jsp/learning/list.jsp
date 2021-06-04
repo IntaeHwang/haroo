@@ -10,8 +10,9 @@
 
 </head>
 <body>
-<jsp:include page="/jsp/header/header.jsp"/>
 <section>
+<jsp:include page="/jsp/header/header.jsp"/>
+
 <h1>체험학습 목록</h1>
 
 <c:if test="${loginUser.rank == 1 || loginUser.rank == 2}">

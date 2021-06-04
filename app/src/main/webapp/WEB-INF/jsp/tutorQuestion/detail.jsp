@@ -20,7 +20,7 @@
 <div class="container">
 <h1>문의</h1>
 <c:if test="${not empty tutorQuestion}">
-<h2>${tutorQuestion.tutor.name}</h2>
+<h2>${tutorQuestion.tutor.nickname}</h2>
 <fmt:formatDate value="${tutorQuestion.writingDate}" pattern="yyyy-MM-dd HH:mm:ss" var="writingDate"/>
 <form action='update' method='post'>
 <table border='1'>
