@@ -27,7 +27,7 @@
             <textarea class="form-control" id="exampleFormControlTextarea1" rows="10" name="content">${question.content}</textarea>
         </div>
 
-        <button type="submit" class="btn btn-info">수정하기</button>
+        <button type="submit" >수정하기</button>
         <button type="button" class="btn btn-secondary">뒤로가기</button>
         
     </form>

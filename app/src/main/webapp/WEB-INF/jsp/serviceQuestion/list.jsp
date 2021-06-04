@@ -18,7 +18,8 @@
 <jsp:include page="/jsp/header/header.jsp"/>
 <section>
 <div class="container">
-<h1>문의 목록</h1>
+
+<h1>문의 목록</h1>  <h2>${questions[0].serviceInfo.name}</h2>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
@@ -42,6 +43,7 @@
 <tbody>
 
 <c:forEach items="${questions}" var="question">
+
 <fmt:formatDate value="${question.writingDate}" pattern="yyyy-MM-dd" var="writingDate"/>
 <tr> 
     <c:set var="title" value="${question.secret eq '1' || question.writer.no eq loginUser.no ? question.title : '비밀글은 작성자와 튜터만 볼 수 있습니다.'}"/>
@@ -65,6 +67,7 @@ RE :
 </table>
 <a href='form' class="btn btn-outline-primary btn-sm" type="button">문의하기</a>
 </div>
+
 </section>
 <jsp:include page="/jsp/footer/footer.jsp"/>
 </body>

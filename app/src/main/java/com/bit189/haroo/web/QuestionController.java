@@ -56,7 +56,7 @@ public class QuestionController{
     question.setWriter(loginUser);
 
     ServiceInfo s = new ServiceInfo();
-    s.setNo(2);
+    s.setNo(1);
     question.setServiceInfo(s);
 
     Collection<Part> files = request.getParts();
@@ -247,4 +247,3 @@ public class QuestionController{
 
   }    
 }
-
