@@ -14,6 +14,9 @@
 <link href="../css/common.css" rel="stylesheet" >
 </head>
 <body>
+<jsp:include page="/jsp/header/header.jsp"/>
+<section>
+
 <div class="container">
 
 <h1>문의</h1>
@@ -62,7 +65,5 @@
 <p>해당 번호의 문의글이 없습니다.</p>
 </c:if>
 
-
-</div>
 </body>
 </html>

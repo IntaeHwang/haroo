@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +15,7 @@
  header {
      height: 65px;
      border-bottom: 1px solid #dadada;
-     margin: 0 auto;
+     margin-bottom: 50px;
  }
 
  a {
@@ -126,6 +127,27 @@
     top: -20px;
 }
  
+   body {
+        margin: 0;
+        padding: 0;
+    }
+
+    footer {
+        height: 210px;
+        width: 100%;
+        border-top: 1px solid #dadada;
+        margin-top: 50px;
+    }
+
+    #har-footer {
+        width: 1100px;
+        height: 100%;
+        margin: 0 auto;
+    }
+    
+    section {
+  min-height: 600px;
+}
 
     
 </style>
@@ -133,7 +155,7 @@
 <body>
 	<header>
 		<div id="har-header">
-			<div id="har-logo">
+			<div id="har-logo" onclick="location.href='../main'">
 				<h1>하루</h1>
 			</div>
 
@@ -144,16 +166,27 @@
 					class="har-search"> <input type="submit" value="검색"
 					class="har-search-btn">
 			</form>
+      
+      <c:if test="${empty loginUser}">
+			<a href="../login_form" id="har-login">로그인/회원가입</a>
+			</c:if>
 
-			<!-- <a href="#" id="har-login">로그인/회원가입</a> -->
+			 <c:if test="${not empty loginUser}">
+        <div id="har-member">
+          <%-- <span class="har-member-name">${loginUser.name}</span> --%>
+          <a id="har-login">로그아웃</a>
 
-			 <div id="har-member">
-				<span class="har-member-name">김비트</span>
-
-				<div id="har-member-pro">
-					<img src="다운로드.jpeg" />
-				</div>
-			</div> 
+          <c:if test="${not empty loginUser.profilePicture}">
+            <c:set var="profilePictureUrl">../upload/${loginUser.profilePicture}_110x110.jpg</c:set>
+          </c:if>
+          <c:if test="${empty loginUser.profilePicture}">
+            <c:set var="profilePictureUrl">../images/person_80x80.jpg</c:set>
+          </c:if>
+          <div id="har-member-pro">
+            <img src="${profilePictureUrl}" />
+          </div>
+        </div>
+      </c:if>
 		</div>
 	</header>
 

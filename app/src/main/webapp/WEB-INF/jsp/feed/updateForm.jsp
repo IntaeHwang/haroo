@@ -18,6 +18,10 @@
      padding: 50px 0px;
  }
  
+ footer {
+  display: inline-block;
+ }
+ 
  a {
   text-decoration: none; 
   color: #333;
@@ -127,7 +131,7 @@
 </head>
 <body>
 <c:if test="${not empty feed}">
-<jsp:include page="../header.jsp"/>
+<jsp:include page="/jsp/header/header.jsp"/>
 	<section>
 		<div id="har-feed-add1">
 			<form action="update" method="post" enctype="multipart/form-data">
@@ -165,6 +169,8 @@
 				</form>
 		</div>
 	</section>
+	
+	<jsp:include page="/jsp/footer/footer.jsp" />
 	</c:if>
 	
 	<script>
