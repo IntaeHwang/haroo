@@ -20,10 +20,10 @@
 <div class="container">
 <h1>문의</h1>
 <c:if test="${not empty tutorQuestion}">
-<h2>${tutorQuestion.tutor.name}</h2>
+<h2>${tutorQuestion.tutor.nickname}</h2>
 <fmt:formatDate value="${tutorQuestion.writingDate}" pattern="yyyy-MM-dd HH:mm:ss" var="writingDate"/>
 <form action='update' method='post'>
-<table border='1'>
+
   <tbody>
     <tr><th>번호</th> <td><input type='text' name='no' value='${tutorQuestion.no}' readonly></td>
     <th>조회수</th> <td>${tutorQuestion.viewCount}</td></tr>

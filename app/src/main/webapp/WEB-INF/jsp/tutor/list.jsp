@@ -35,16 +35,11 @@
 </thead>
 <tbody>
 <c:forEach items="${list}" var="t">
-	  <!-- <c:if test="${not empty t.profilePicture}">
-	    <c:set var="profilePictureUrl">../../upload/${t.profilePicture}_30x30.jpg</c:set>
-	  </c:if>
-	  <c:if test="${empty t.profilePicture}">
-	   <c:set var="profilePictureUrl">../../images/person_30x30.jpg</c:set>
-	  </c:if> -->
   <trclass="har-email" data-no="${t.no}">
 		<td>${t.no}</td>
-		<td>${t.name}</td>
-		<td><a href='detail?no=${t.no}'>${t.email}</a></td>
+		<td><a href='../feed/list?no=${t.no}'>${t.name}</a></td>
+		<td><a href='../feed/list?no=${t.no}'>${t.email}</a></td>
+		<!--  <td><a href='detail?no=${t.no}'>${t.email}</a></td>-->
 		<!--  <td><img src='${profilePictureUrl}'></td> -->
 		<td>${t.tel}</td>
 		<td>${t.nickname}</td>
