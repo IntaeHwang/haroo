@@ -51,24 +51,15 @@ public class LearningController {
     ServiceInfo s = new ServiceInfo();
     Learning l = new Learning();
 
-    // 개설자
     Member loginUser = (Member) session.getAttribute("loginUser");
     Tutor tutor = new Tutor();
     tutor.setNo(loginUser.getNo());
     l.setOwner(tutor);
 
-    /* 커버이미지
-     * 서비스이름, 대분류, 소분류
-     * 우편번호 API (기본주소, 광역시도명, 시군구명 자동출력),
-     * 상세주소, 서비스소개, 진행순서, 환불정보, 최소인원수, 최대인원수,
-     * 날짜, 시작시각, 종료시각,
-     * 가격
-     */
     s.setName(request.getParameter("name"));
     s.setBroadCategoryNo(Integer.parseInt(request.getParameter("broadCategoryNo")));
     s.setNarrowCategoryNo(Integer.parseInt(request.getParameter("narrowCategoryNo")));
 
-    // 우편번호 API 추가하기
     l.setZipcode(request.getParameter("zipcode"));
     l.setAddress(request.getParameter("address"));
     l.setSidoNo(Integer.parseInt(request.getParameter("sidoNo")));
@@ -121,7 +112,7 @@ public class LearningController {
 
     learningService.add(s, l);
 
-    // list말고 detail?
+    // 등록한 체험학습으로 연결하기 detail?
     return "redirect:list";
   }
 
@@ -145,6 +136,8 @@ public class LearningController {
   @GetMapping("detail")
   public void detail(int no, Model model) throws Exception {
     model.addAttribute("learning", learningService.get(no));
+    Learning learning = learningService.get(no);
+    System.out.println(learning);
   }
 
   @GetMapping("list")
@@ -158,6 +151,8 @@ public class LearningController {
   @GetMapping("updateForm")
   public void updateForm(int no, Model model) throws Exception {
     model.addAttribute("learning", learningService.get(no));
+    Learning learning = learningService.get(no);
+    System.out.println(learning);
   }
 
   @PostMapping("update")
@@ -180,7 +175,6 @@ public class LearningController {
     s.setBroadCategoryNo(Integer.parseInt(request.getParameter("broadCategoryNo")));
     s.setNarrowCategoryNo(Integer.parseInt(request.getParameter("narrowCategoryNo")));
 
-    // 우편번호 API 추가하기
     l.setZipcode(request.getParameter("zipcode"));
     l.setAddress(request.getParameter("address"));
     l.setSidoNo(Integer.parseInt(request.getParameter("sidoNo")));
@@ -233,7 +227,7 @@ public class LearningController {
 
     learningService.update(s, l);
 
-    // list말고 detail?
+    // 수정한 체험학습으로 연결하기 detail?
     return "redirect:list";
   }
 }

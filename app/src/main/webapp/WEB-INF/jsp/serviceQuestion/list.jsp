@@ -18,7 +18,7 @@
 <div class="container">
 <h1>문의 목록</h1>
 
-<nav class="navbar navbar-dark bg-primary">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
  <form class="d-flex">
       <input class="form-control me-2" type="search" name="keyword" value='${param.keyword}' placeholder="검색" aria-label="검색">

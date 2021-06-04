@@ -13,14 +13,17 @@
 <h1>체험 신청 정보</h1>
 
 <c:if test="${not empty learningApplication}">
-<fmt:formatDate value="${learningApplication.registeredDate}" pattern="yyyy-MM-dd" var="registeredDate"/>
+<fmt:formatDate value="${learningApplication.registeredDate}" pattern="yyyy-MM-dd hh:mm:ss"  var="registeredDate"/>
   <table border='1'>
 <tbody>
 <tr><th>신청 번호</th> <td><input type='text' name='no' value='${learningApplication.no}' readonly></td></tr>
 <tr><th>회원 이름</th> <td><input type='text' id="writer" value='${learningApplication.writer.nickname}' readonly></td></tr>
-<tr><th>날짜</th> <td>${schedules.learningDate[0]}</td></tr>
-<tr><th>시작 시간</th> <td>${schedules.startTime[0]}</td></tr>
-<tr><th>종료 시간</th> <td>${schedules.endTime[0]}</td></tr>
+  <fmt:formatDate value="${learningApplication.schedules[0].learningDate}" pattern="yyyy-MM-dd" var="learningDate"/>
+  <fmt:formatDate value="${learningApplication.schedules[0].startTime}" pattern="HH:mm" var="startTime"/>
+  <fmt:formatDate value="${learningApplication.schedules[0].endTime}" pattern="HH:mm" var="endTime"/>
+  <tr><th>체험날짜</th> <td>${learningDate}</td></tr>
+      <tr><th>시작시간</th> <td>${startTime}</td></tr>
+      <tr><th>종료시간</th> <td>${endTime}</td></tr>
 <tr><th>인원수</th> <td>${learningApplication.applySize}</td></tr>
 <tr><th>등록일</th> <td>${registeredDate}</td></tr>
 </tbody>
