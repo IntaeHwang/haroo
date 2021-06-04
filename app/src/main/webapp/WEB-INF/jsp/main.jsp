@@ -94,8 +94,8 @@
     /* border: 1px solid #0566A3;
     border-radius: 10px; */
     width: 84px;
-    height: 20px;
-    margin-top: 15px;
+    height: 18px;
+    margin-top: 18px;
 }
 
 #har-login:hover {
@@ -186,7 +186,7 @@ section {
 
 	<header>
 		<div id="har-header">
-			<div id="har-logo">
+			<div id="har-logo" onclick="location.href='main'">
 				<h1>하루</h1>
 			</div>
 

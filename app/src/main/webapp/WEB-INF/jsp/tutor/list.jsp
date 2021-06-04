@@ -43,7 +43,7 @@
 	  </c:if> -->
   <trclass="har-email" data-no="${t.no}">
 		<td>${t.no}</td>
-		<td>${t.name}</td>
+		<td><a href='../feed/list?no=${t.no}'>${t.name}</a></td>
 		<td><a href='detail?no=${t.no}'>${t.email}</a></td>
 		<!--  <td><img src='${profilePictureUrl}'></td> -->
 		<td>${t.tel}</td>
