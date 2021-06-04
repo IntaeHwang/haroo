@@ -50,9 +50,9 @@ public class AuthController {
   }
 
   @GetMapping("/logout")
-  public String logout(HttpSession session, int url) throws Exception { 
+  public String logout(HttpSession session) throws Exception {
     session.invalidate();
-    return "redirect:"+url;
+    return "redirect:login_form";
   }
 
   @GetMapping("/user_info")
