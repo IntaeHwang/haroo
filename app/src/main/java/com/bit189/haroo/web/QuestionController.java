@@ -13,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import com.bit189.haroo.domain.AttachedFile;
 import com.bit189.haroo.domain.Member;
 import com.bit189.haroo.domain.Post;
@@ -56,7 +55,7 @@ public class QuestionController{
     question.setWriter(loginUser);
 
     ServiceInfo s = new ServiceInfo();
-    s.setNo(2);
+    s.setNo(1);
     question.setServiceInfo(s);
 
     Collection<Part> files = request.getParts();
@@ -151,6 +150,11 @@ public class QuestionController{
 
   }    
 
+  @GetMapping("updateForm")
+  public void updateForm(int no, Model model) throws Exception {
+    model.addAttribute("question", serviceQuestionService.get(no));
+  }
+
   @PostMapping("update")
   public String update(int no,  Model model, Question question, HttpSession session)
       throws Exception {
@@ -177,74 +181,73 @@ public class QuestionController{
     model.addAttribute("pno", pno);
   }
 
-  @PostMapping("reply/add")
-  public String replyAdd(@RequestParam(defaultValue = "0") int pno, Question question,
-      Model model, HttpSession session, Part photoFile,
-      AttachedFile attachedFile, HttpServletRequest request)
-          throws Exception {
-
-
-    Question oldQuestion = serviceQuestionService.get(pno);
-    if (oldQuestion == null) {
-      throw new Exception("해당 번호의 게시글이 없습니다.");
-    }
-
-    Member loginUser = (Member) session.getAttribute("loginUser");
-    if (oldQuestion.getWriter().getNo() != loginUser.getNo()) {
-      throw new Exception("작업 권한이 없습니다!");
-    }
-
-    question.setWriter(loginUser);
-    question.setNo(oldQuestion.getNo());
-
-
-    String uploadDir = sc.getRealPath("/upload");
-
-    ArrayList<AttachedFile> replyAttachedFiles = new ArrayList<>();
-
-    Collection<Part> files = request.getParts();
-    for (Part file : files) {
-      if (file.getName().equals("file") && file.getSize() > 0) {
-        System.out.println(">" + file.getSubmittedFileName());
-
-        System.out.println("uploadDir1 : " + uploadDir);
-
-
-        String filename = UUID.randomUUID().toString();
-
-
-
-        file.write(uploadDir + "/" + filename);
-
-        System.out.println(uploadDir + "/");
-
-
-        attachedFile.setName(filename);
-
-        replyAttachedFiles.add(attachedFile);
-
-
-
-        Thumbnails.of(uploadDir + "/" + filename)
-        .size(500, 500)
-        .outputFormat("jpg")
-        .crop(Positions.CENTER)
-        .toFiles(new Rename() {
-          @Override
-          public String apply(String name, ThumbnailParameter param) {
-            return name + "_300x300";
-          }
-        });
-      }
-
-
-    }
-
-    serviceQuestionService.replyAdd(question, attachedFile);
-
-    return "redirect:list";
-
-
-  }    
+  //  @PostMapping("reply/add")
+  //  public String replyAdd(@RequestParam(defaultValue = "0") int pno, Question question,
+  //      Model model, HttpSession session, Part photoFile,
+  //      AttachedFile attachedFile, HttpServletRequest request)
+  //          throws Exception {
+  //
+  //
+  //    Question oldQuestion = serviceQuestionService.get(pno);
+  //    if (oldQuestion == null) {
+  //      throw new Exception("해당 번호의 게시글이 없습니다.");
+  //    }
+  //
+  //    Member loginUser = (Member) session.getAttribute("loginUser");
+  //    if (oldQuestion.getWriter().getNo() != loginUser.getNo()) {
+  //      throw new Exception("작업 권한이 없습니다!");
+  //    }
+  //
+  //    question.setWriter(loginUser);
+  //    question.setNo(oldQuestion.getNo());
+  //
+  //
+  //    String uploadDir = sc.getRealPath("/upload");
+  //
+  //    ArrayList<AttachedFile> replyAttachedFiles = new ArrayList<>();
+  //
+  //    Collection<Part> files = request.getParts();
+  //    for (Part file : files) {
+  //      if (file.getName().equals("file") && file.getSize() > 0) {
+  //        System.out.println(">" + file.getSubmittedFileName());
+  //
+  //        System.out.println("uploadDir1 : " + uploadDir);
+  //
+  //
+  //        String filename = UUID.randomUUID().toString();
+  //
+  //
+  //
+  //        file.write(uploadDir + "/" + filename);
+  //
+  //        System.out.println(uploadDir + "/");
+  //
+  //
+  //        attachedFile.setName(filename);
+  //
+  //        replyAttachedFiles.add(attachedFile);
+  //
+  //
+  //
+  //        Thumbnails.of(uploadDir + "/" + filename)
+  //        .size(500, 500)
+  //        .outputFormat("jpg")
+  //        .crop(Positions.CENTER)
+  //        .toFiles(new Rename() {
+  //          @Override
+  //          public String apply(String name, ThumbnailParameter param) {
+  //            return name + "_300x300";
+  //          }
+  //        });
+  //      }
+  //
+  //
+  //    }
+  //
+  //    serviceQuestionService.replyAdd(question, attachedFile);
+  //
+  //    return "redirect:list";
+  //
+  //
+  //  }    
 }
-
