@@ -44,13 +44,12 @@ public class QuestionController{
   }
 
   @PostMapping("add")
-  public String add(Question question, Post post, HttpSession session, Part photoFile,
-      AttachedFile attachedFile, HttpServletRequest request)
-          throws Exception {
+  public String add(Question question, Post post, HttpSession session, HttpServletRequest request)
+      throws Exception {
 
     String uploadDir = sc.getRealPath("/upload");
 
-    ArrayList<AttachedFile> attachedFiles = new ArrayList<>();
+
 
     Member loginUser = (Member) session.getAttribute("loginUser");
     question.setWriter(loginUser);
@@ -59,34 +58,31 @@ public class QuestionController{
     s.setNo(1);
     question.setServiceInfo(s);
 
+
+
+    ArrayList<AttachedFile> attachedFiles = new ArrayList<>();
+
     Collection<Part> files = request.getParts();
     for (Part file : files) {
       if (file.getName().equals("file") && file.getSize() > 0) {
         System.out.println(">" + file.getSubmittedFileName());
-
-        // 파일을 선택해서 업로드 했다면,
         String filename = UUID.randomUUID().toString();
 
-        System.out.println("uploadDir2 : " + uploadDir);
-
         file.write(uploadDir + "/" + filename);
-        System.out.println("uploadDir3 : " + uploadDir);
-        System.out.println(uploadDir + "/");
 
-        attachedFile.setName(filename);
+        AttachedFile f = new AttachedFile();
+        f.setName(filename);
 
-        attachedFiles.add(attachedFile);
+        attachedFiles.add(f);
 
-
-        // 썸네일 이미지 생성
         Thumbnails.of(uploadDir + "/" + filename)
-        .size(330, 220)
+        .size(300, 300)
         .outputFormat("jpg")
         .crop(Positions.CENTER)
         .toFiles(new Rename() {
           @Override
           public String apply(String name, ThumbnailParameter param) {
-            return name + "_330x220";
+            return name + "_300x300";
           }
         });
 
@@ -102,9 +98,9 @@ public class QuestionController{
           }
         });
       }
-
-
     }
+
+
 
     serviceQuestionService.add(question, post, attachedFiles);
 
@@ -150,6 +146,11 @@ public class QuestionController{
     model.addAttribute("questions", questions);
 
   }    
+
+  @GetMapping("updateForm")
+  public void updateForm(int no, Model model) throws Exception {
+    model.addAttribute("question", serviceQuestionService.get(no));
+  }
 
   @PostMapping("update")
   public String update(int no,  Model model, Question question, HttpSession session)

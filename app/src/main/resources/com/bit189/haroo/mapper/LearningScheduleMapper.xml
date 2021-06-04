@@ -31,7 +31,7 @@
     from har_schedule s
       inner join har_learning l on l.lno=s.lno
     where
-      s.lno=#{no}
+      s.sche_no=#{no}
   </select>
   
   <!--

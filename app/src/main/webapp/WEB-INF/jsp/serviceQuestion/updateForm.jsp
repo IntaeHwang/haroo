@@ -5,9 +5,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+<link href="../css/common.css" rel="stylesheet" >
 </head>
 <body>
+<jsp:include page="/jsp/header/header.jsp"/>
+<section>
 <c:if test="${not empty question}">
 <meta charset="UTF-8">
 <div class="container col-md-6">
@@ -27,13 +31,15 @@
             <textarea class="form-control" id="exampleFormControlTextarea1" rows="10" name="content">${question.content}</textarea>
         </div>
 
-        <button type="submit" >수정하기</button>
-        <button type="button" class="btn btn-secondary">뒤로가기</button>
+        <button type="submit" class="btn btn-outline-primary btn-sm" >수정하기</button>
+        <button type="button" class="btn btn-outline-primary btn-sm" onclick="javascript:history.go(-1)">뒤로가기</button>
         
     </form>
+    
 </div>
 </c:if>
-
+</section>
+<jsp:include page="/jsp/footer/footer.jsp"/>
 
 </body>
 </html>

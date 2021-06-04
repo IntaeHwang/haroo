@@ -22,6 +22,7 @@ public class DefaultLearningApplicationService implements LearningApplicationSer
 
   @Override
   public int add(LearningApplication learningApplication) throws Exception {
+
     return learningApplicationDao.insert(learningApplication);
   }
 

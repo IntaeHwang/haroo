@@ -38,11 +38,19 @@
                 <i class="fas fa-align-justify"></i> ${question.viewCount}
             </h6>
             <p class="card-text">${question.content}</p>
-     
+     <h6 class= "card-subtitle text-muted mb-4">   
+       <label for="file" ></label>
+       <c:forEach items="${question.attachedFiles}" var="file">
+            <c:if test="${not empty file.name}">
+             <c:set var="photoUrl">../../upload/${file.name}_300x300.jpg</c:set>
+            </c:if>     
+            <img src='${photoUrl}'> 
+  </c:forEach>
+     </h6>
         </div>
         <c:if test="${not empty loginUser and loginUser.no == question.writer.no}">
    <div class="card-body">
-      <a href='update?no=${question.no}' class="btn btn-outline-primary btn-sm" type="button">수정</a><a href='delete?no=${question.no}'class="btn btn-outline-primary btn-sm" type="button">삭제</a>
+      <a href='updateForm?no=${question.no}' class="btn btn-outline-primary btn-sm" type="button">수정</a><a href='delete?no=${question.no}'class="btn btn-outline-primary btn-sm" type="button">삭제</a>
   </div>
   
   <c:if test="${not empty loginUser and loginUser.no == question.writer.no}">
