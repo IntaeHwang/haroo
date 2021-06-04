@@ -11,64 +11,82 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-<link href="../css/common.css" rel="stylesheet" >
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 
 <jsp:include page="/jsp/header/header.jsp"/>
 <section>
+
 <div class="container">
+
 <h1>문의</h1>
 <c:if test="${not empty tutorQuestion}">
+
 <h2>${tutorQuestion.tutor.nickname}</h2>
 <fmt:formatDate value="${tutorQuestion.writingDate}" pattern="yyyy-MM-dd HH:mm:ss" var="writingDate"/>
 <form action='update' method='post'>
 
-  <tbody>
-    <tr><th>번호</th> <td><input type='text' name='no' value='${tutorQuestion.no}' readonly></td>
-    <th>조회수</th> <td>${tutorQuestion.viewCount}</td></tr>
-    <tr><th>제목</th> <td colspan='5'><input name='title' type='text' value='${tutorQuestion.title}' readonly></td></tr>
-    <tr><th>내용</th> <td colspan='5'><textarea name='content' rows='30' cols='180'>${tutorQuestion.content}</textarea></td></tr>
-    <tr><th>첨부파일</th> <td>
-          <c:forEach items="${tutorQuestion.attachedFiles}" var="file">
+<div class="container col-md-6">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title mb-3">${tutorQuestion.title}</h4>
+            <h6 class="card-subtitle text-muted mb-4">
+                <i class="far fa-user"></i> ${tutorQuestion.writer.name}
+                ·
+                <i class="far fa-clock"></i> ${writingDate}
+                ·
+                <i class="fas fa-align-justify"></i> ${tutorQuestion.viewCount}
+            </h6>
+            <p class="card-text">${tutorQuestion.content}</p>
+     <h6 class= "card-subtitle text-muted mb-4">   
+       <label for="file" ></label>
+       <c:forEach items="${tutorQuestion.attachedFiles}" var="file">
             <c:if test="${not empty file.name}">
-             <c:set var="photoUrl">../upload/${file.name}_500x500.jpg</c:set>
+             <c:set var="photoUrl">../../upload/${file.name}_300x300.jpg</c:set>
             </c:if>     
-            <img src='${photoUrl}'>
-          </c:forEach>
-        </td>
-      </tr>
- <tr><th>작성자</th> <td>${tutorQuestion.writer.name}</td><th>작성일</th> <td colspan='3'>${writingDate}</td></tr>
-    
-  </tbody>
-
- <c:if test="${not empty loginUser and loginUser.no == tutorQuestion.writer.no}">
-  <tfoot>
-  <tr>
-    <td colspan='2'>
-      <input type='submit' value='수정'><a href='delete?no=${tutorQuestion.no}'>삭제</a>
-    </td>
-  </tr>
+            <img src='${photoUrl}'> 
+  </c:forEach>
+     </h6>
+        </div>
+        <c:if test="${not empty loginUser and loginUser.no == tutorQuestion.writer.no}">
+   <div class="card-body">
+      <a href='updateForm?no=${tutorQuestion.no}' class="btn btn-outline-primary btn-sm" type="button">수정</a>
+      <button id='har-q-det-del-btn' class="btn btn-outline-primary btn-sm" type="button">삭제</button>
+  </div>
   
   <c:if test="${not empty loginUser and loginUser.no == tutorQuestion.writer.no}">
-  <td colspan='2'>
-  <a href='form2' class="btn btn-outline-primary btn-sm" type="button">답글</a>
-    </td>
-  </c:if>
-
-  </tfoot>    
+ <div class="card-body">
+  <a href='form2?pno=${question.no}' class="btn btn-outline-primary btn-sm" type="button">답글</a>
+    </div>
   </c:if>
   
-  </table>
+  </c:if>
+        <div class="card-body">
+            <a href='list' class="btn btn-outline-primary btn-sm" role="button">목록으로</a>
+        </div>
+    </div>
+</div>
+
 </form>
 </c:if>
 
 <c:if test="${empty tutorQuestion}">
 <p>해당 번호의 문의글이 없습니다.</p>
 </c:if>
-<p><a href='list'>목록</a></p>
 </section>
 <jsp:include page="/jsp/footer/footer.jsp"/>
+<script>
 
+
+$('#har-q-det-del-btn').click(()=>{
+  var del = confirm('삭제하시겠습니까?');
+  if(del == true) {
+    location.href='delete?no=${tutorQuestion.no}';
+  } else {
+    location.href='detail?no=${tutorQuestion.no}';
+  }
+});
+</script>
 </body>
 </html>

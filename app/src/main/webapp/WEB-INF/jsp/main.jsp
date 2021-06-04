@@ -203,6 +203,8 @@ section {
 			</c:if>
 
 			<c:if test="${not empty loginUser}">
+			<!--  Member loginUser = (Member) session.getAttribute("loginUser");
+    member.setNo(loginUser.getNo());-->
 				<div id="har-member">
 					<%-- <span class="har-member-name">${loginUser.name}</span> --%>
 					<a id="har-login">로그아웃</a>
@@ -214,6 +216,7 @@ section {
 						<c:set var="profilePictureUrl">../images/person_80x80.jpg</c:set>
 					</c:if>
 					<div id="har-member-pro">
+						<a href='member/detail?no=${loginUser.no}'>
 						<img src="${profilePictureUrl}" />
 					</div>
 				</div>
