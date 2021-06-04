@@ -238,7 +238,7 @@
 
 <header>
     <div id="har-header">
-      <div id="har-logo" onclick="location.href='main'">
+      <div id="har-logo">
         <a href="main"><h1>하루</h1></a>
       </div>
 
