@@ -15,7 +15,7 @@
 </head>
 <body>
 <jsp:include page="/jsp/header/header.jsp"/>
-
+<section>
 
 <div class="container">
 
@@ -98,7 +98,7 @@
 <p>해당 번호의 문의글이 없습니다.</p>
 </c:if>
 <p><a href='list'>목록</a></p>
-
+</section>
 <jsp:include page="/jsp/footer/footer.jsp"/>
 
 </body>

@@ -16,7 +16,7 @@
 </head>
 <body>
 <jsp:include page="/jsp/header/header.jsp"/>
-
+<section>
 <div class="container">
 <h1>문의 목록</h1>
 
@@ -65,7 +65,7 @@ RE :
 </table>
 <a href='form' class="btn btn-outline-primary btn-sm" type="button">문의하기</a>
 </div>
-
+</section>
 <jsp:include page="/jsp/footer/footer.jsp"/>
 </body>
 </html>

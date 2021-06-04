@@ -11,7 +11,7 @@
 </head>
 <body>
 <jsp:include page="/jsp/header/header.jsp"/>
-
+<section>
 <h1>체험학습 등록</h1>
 <form action="add" method="post" enctype="multipart/form-data">
 커버이미지: <input type="file" name="coverImage"><br>
@@ -121,7 +121,7 @@
 <input type="submit" value="등록">
 <p><a href='list'>취소</a></p>
 </form>
-
+</section>
 <jsp:include page="/jsp/footer/footer.jsp"/>
 <script>
 var t1 = document.querySelector("#sido");

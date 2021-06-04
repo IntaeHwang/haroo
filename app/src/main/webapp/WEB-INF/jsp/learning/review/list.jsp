@@ -18,6 +18,7 @@
 
 <jsp:include page="/jsp/header/header.jsp"/>
 
+<section>
 <h1>체험 후기 목록</h1>
 <h2>${learning.name}</h2>
 <!-- 러닝.평균평점 만들기 -->
@@ -85,7 +86,7 @@
 <button>검색</button>
 </form>
 </c:if>
-
+</section>
 <jsp:include page="/jsp/footer/footer.jsp"/>
 <script>
 if (${not empty loginUser}) {

@@ -11,7 +11,7 @@
 </head>
 <body>
 <jsp:include page="/jsp/header/header.jsp"/>
-
+<section>
 <h1>체험학습 상세보기</h1>
 
 <c:if test="${not empty learning}">
@@ -84,7 +84,7 @@
 </c:if>
 
 <p><a href='../learning/list'>목록</a></p>
-
+</section>
 <jsp:include page="/jsp/footer/footer.jsp"/>
 </body>
 </html>

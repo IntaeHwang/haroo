@@ -13,7 +13,7 @@
 </head>
 <body>
 <jsp:include page="/jsp/header/header.jsp"/>
-
+<section>
 
 <h1>튜터 상세보기</h1>
 <c:if test="${not empty tutor}">
@@ -215,6 +215,7 @@
 <p>해당 번호의 튜터가 없습니다.</p>
 </c:if>
 
+</section>
 <jsp:include page="/jsp/footer/footer.jsp"/>
 
 <script>
