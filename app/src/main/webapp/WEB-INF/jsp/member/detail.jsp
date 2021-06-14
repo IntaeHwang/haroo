@@ -194,7 +194,7 @@ text-align: center;
     </span>
 
       <div class="button"><button class="btn btn-primary btn-sm">변경</button>
-      <a href='delete?no=${member.no}' class="btn btn-primary btn-sm">삭제</a>
+      <a href='delete?no=${member.no}' class="btn btn-primary btn-sm">회원탈퇴</a>
   
   <a href='list' class="btn btn-primary btn-sm">목록</a>
   </div>

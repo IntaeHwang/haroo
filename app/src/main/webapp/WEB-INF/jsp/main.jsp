@@ -184,48 +184,48 @@ section {
 </head>
 <body>
 
-	<header>
-		<div id="har-header">
-			<div id="har-logo" onclick="location.href='main'">
-				<h1>하루</h1>
-			</div>
+   <header>
+      <div id="har-header">
+         <div id="har-logo" onclick="location.href='main'">
+            <h1>하루</h1>
+         </div>
 
-			<button type="button" id="har-menu-btn"></button>
+         <button type="button" id="har-menu-btn"></button>
 
-			<form action="" method="GET">
-				<input type="search" name="" placeholder="재미있는 시간, 다양한 클래스를 검색해보세요!"
-					class="har-search"> <input type="submit" value="검색"
-					class="har-search-btn">
-			</form>
+         <form action="" method="GET">
+            <input type="search" name="" placeholder="재미있는 시간, 다양한 클래스를 검색해보세요!"
+               class="har-search"> <input type="submit" value="검색"
+               class="har-search-btn">
+         </form>
 
-			<c:if test="${empty loginUser}">
-				<a href="login_form" id="har-login">로그인/회원가입</a>
-			</c:if>
+         <c:if test="${empty loginUser}">
+            <a href="login_form" id="har-login">로그인/회원가입</a>
+         </c:if>
 
-			<c:if test="${not empty loginUser}">
-			<!--  Member loginUser = (Member) session.getAttribute("loginUser");
+         <c:if test="${not empty loginUser}">
+         <!--  Member loginUser = (Member) session.getAttribute("loginUser");
     member.setNo(loginUser.getNo());-->
-				<div id="har-member">
-					<%-- <span class="har-member-name">${loginUser.name}</span> --%>
-					<a id="har-login">로그아웃</a>
+            <div id="har-member">
+               <%-- <span class="har-member-name">${loginUser.name}</span> --%>
+               <a id="har-login">로그아웃</a>
 
-					<c:if test="${not empty loginUser.profilePicture}">
-						<c:set var="profilePictureUrl">../upload/${loginUser.profilePicture}_110x110.jpg</c:set>
-					</c:if>
-					<c:if test="${empty loginUser.profilePicture}">
-						<c:set var="profilePictureUrl">../images/person_80x80.jpg</c:set>
-					</c:if>
-					<div id="har-member-pro">
-						<a href='member/detail?no=${loginUser.no}'>
-						<img src="${profilePictureUrl}" />
-					</div>
-				</div>
-			</c:if>
-		</div>
-	</header>
+               <c:if test="${not empty loginUser.profilePicture}">
+                  <c:set var="profilePictureUrl">../upload/${loginUser.profilePicture}_110x110.jpg</c:set>
+               </c:if>
+               <c:if test="${empty loginUser.profilePicture}">
+                  <c:set var="profilePictureUrl">../images/person_80x80.jpg</c:set>
+               </c:if>
+               <div id="har-member-pro">
+                  <a href='member/detail?no=${loginUser.no}'>
+                  <img src="${profilePictureUrl}" />
+               </div>
+            </div>
+         </c:if>
+      </div>
+   </header>
 
-	<section>
-	 <div id="har-main">
+   <section>
+    <div id="har-main">
     <a href="learning/list" id="har-class-list" class="har-list">클래스</a> 
     <a href="tutor/list" id="har-tutor-list" class="har-list">튜터</a>
     </div>

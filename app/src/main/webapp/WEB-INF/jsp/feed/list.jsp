@@ -180,6 +180,10 @@ section {
 					<button type="button" class="har-follow-btn">
 						<b>+팔로우</b>
 					</button>
+					
+					<a href= "../tutorQuestion/list" class="har-follow-btn" >
+            <b style="width:150px; height:30px;">튜터에게 물어봐</b>
+          </a>
 				</div>
 			</div>
 			</div>
